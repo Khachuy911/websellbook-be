@@ -1,0 +1,1652 @@
+{
+	"info": {
+		"_postman_id": "aef11558-7252-44ec-8c64-00a763d58627",
+		"name": "ProjectVMO",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"nkhuy911\",\r\n    \"password\": \"12345\",\r\n    \"email\": \"khachuy469@gmail.com\",\r\n    \"phone\":\"0987654332\",\r\n    \"age\":\"20\",\r\n    \"address\": \"hanoi\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verify",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/auth/verify?token=DRaIdS&id=76f36e0c-af3f-4aef-8c52-7726e218a5c8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"verify"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": null,
+									"disabled": true
+								},
+								{
+									"key": "token",
+									"value": "DRaIdS"
+								},
+								{
+									"key": "id",
+									"value": "76f36e0c-af3f-4aef-8c52-7726e218a5c8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"jwt\", pm.response.json().token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"khachuy469@gmail.com\",\r\n    \"password\": \"12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refreshToken",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjMWFlYzJjLTMwYmQtNDg1ZS05MDM4LTE2MTY3YTBjOGQxMSIsImlhdCI6MTY1MDc3NTc4NCwiZXhwIjoxNjUxNjM5Nzg0fQ.5bDWEwB1AkjmKvcVwAvAPKTFYoNQmNQkVcVqCfuG-6o\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/refreshToken",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"refreshToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePW",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPW\": \"12345\",\r\n    \"newPW\":\"1234567899\",\r\n    \"repeatNewPW\": \"1234567899\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/updatePW",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"updatePW"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgotPW",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"shadoc@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/forgotPW",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"forgotPW"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPW",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"newPassword\": \"1234567899\",\r\n    \"repeatNewPassword\": \"1234567899\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/resetPW/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjMWFlYzJjLTMwYmQtNDg1ZS05MDM4LTE2MTY3YTBjOGQxMSIsImlhdCI6MTY1MDc3NTk5NywiZXhwIjoxNjUwNzc2NTk3fQ.v3MnYWPgWwLYYWQ3DQiYkUlY6ZecfYTt4lrfTFXXPQM",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"resetPW",
+								"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjMWFlYzJjLTMwYmQtNDg1ZS05MDM4LTE2MTY3YTBjOGQxMSIsImlhdCI6MTY1MDc3NTk5NywiZXhwIjoxNjUwNzc2NTk3fQ.v3MnYWPgWwLYYWQ3DQiYkUlY6ZecfYTt4lrfTFXXPQM"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "role module",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"roleId\": \"df7ccac8-7500-4695-b55d-0c4949cce586\",\r\n    \"isCanRead\":\"1\",\r\n    \"isCanDelete\":\"1\",\r\n    \"isCanEdit\":\"1\",\r\n    \"isCanAdd\":\"1\",\r\n    \"api\": \"/api/user/\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/roleModule",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"roleModule"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "getAllUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/user/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/user/a4b45b42-5fe6-4e07-bfd1-8d3a5ef86615",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"a4b45b42-5fe6-4e07-bfd1-8d3a5ef86615"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"age\": \"21\",\r\n    \"phone\": \"0339118095\",\r\n    \"address\": \"Ha Noi\",\r\n    \"username\":\"Nguyen Khac Huy\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/a4b45b42-5fe6-4e07-bfd1-8d3a5ef86615",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"a4b45b42-5fe6-4e07-bfd1-8d3a5ef86615"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deteleSoftUser",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/user/deletesoft/a4b45b42-5fe6-4e07-bfd1-8d3a5ef86615",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"deletesoft",
+								"a4b45b42-5fe6-4e07-bfd1-8d3a5ef86615"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteHard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/user/3c1aec2c-30bd-485e-9038-16167a0c8d11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"3c1aec2c-30bd-485e-9038-16167a0c8d11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Voucher",
+			"item": [
+				{
+					"name": "createVoucher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Voucher\",\r\n    \"discountAmount\": \"15\",\r\n    \"expireDate\": \"2022-04-29 12:00:00\",\r\n    \"quantity\": \"15\"\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/voucher/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"voucher",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateVoucher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New Voucher\",\r\n    \"quantity\": \"9\",\r\n    \"discountAmount\": \"19000\",\r\n    \"expireDate\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/voucher/0290f878-44e4-4f84-894e-207e72acd6ad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"voucher",
+								"0290f878-44e4-4f84-894e-207e72acd6ad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getVoucher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/voucher/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"voucher",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDetailVoucher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/voucher/0290f878-44e4-4f84-894e-207e72acd6ad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"voucher",
+								"0290f878-44e4-4f84-894e-207e72acd6ad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSoftVoucher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/voucher/deletesoft/0290f878-44e4-4f84-894e-207e72acd6ad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"voucher",
+								"deletesoft",
+								"0290f878-44e4-4f84-894e-207e72acd6ad"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteHardVoucher",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/voucher/0290f878-44e4-4f84-894e-207e72acd6ad",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"voucher",
+								"0290f878-44e4-4f84-894e-207e72acd6ad"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "createCategory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Book",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/KhacHuy/Pictures/anh-nen-nhe-nhang-don-gian-de-thuong_025018936.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCaregory",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/category/?page=1&type=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"category",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "title",
+									"value": "name",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDetailCate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/category/2a067dcd-328d-4e1d-85a7-ac8337312cab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"category",
+								"2a067dcd-328d-4e1d-85a7-ac8337312cab"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSoftCate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\": [\"7b5391c0-a180-46f7-ba61-f50bb3e0771f\", \"ebd043eb-5de0-471d-bdf7-aad457b5c769\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/category/deletesoft/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"category",
+								"deletesoft",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteHard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\": [\"76149224-ed2c-461b-b2a1-1b6c3901cd06\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"category",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateCate",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "update",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": "/C:/Users/KhacHuy/Pictures/hinh1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/category/2a067dcd-328d-4e1d-85a7-ac8337312cab",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"category",
+								"2a067dcd-328d-4e1d-85a7-ac8337312cab"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "createPro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "HUAWEI",
+									"type": "text"
+								},
+								{
+									"key": "barCode",
+									"value": "45555",
+									"type": "text"
+								},
+								{
+									"key": "priceImport",
+									"value": "500",
+									"type": "text"
+								},
+								{
+									"key": "priceSelling",
+									"value": "550",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "3.5",
+									"type": "text"
+								},
+								{
+									"key": "quantity",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "NEW",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": [
+										"/C:/Users/KhacHuy/Pictures/61a41917a054fc513bb419e2ed1bef51.png",
+										"/C:/Users/KhacHuy/Pictures/1001-hinh-nen-may-tinh-3D-dep-chat-nhat-ban.jpg",
+										"/C:/Users/KhacHuy/Pictures/hinh1.jpg"
+									]
+								},
+								{
+									"key": "categoryId",
+									"value": "72a35ac0-7595-4cd5-8b5a-0a8ec984f046",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/product/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"product",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getProduct",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/product/?page=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"product",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDetail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/product/4c6c8761-9733-4f35-88a1-4e0f8ca186b5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"product",
+								"4c6c8761-9733-4f35-88a1-4e0f8ca186b5"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updatePro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ASUS 1",
+									"type": "text"
+								},
+								{
+									"key": "priceSelling",
+									"value": "599",
+									"type": "text"
+								},
+								{
+									"key": "image",
+									"type": "file",
+									"src": [
+										"/C:/Users/KhacHuy/Pictures/277897526_1451529215299729_6295044910032556022_n.png",
+										"/C:/Users/KhacHuy/Pictures/anh-nen-nhe-nhang-don-gian-de-thuong_025018936.jpg"
+									]
+								},
+								{
+									"key": "weight",
+									"value": "4.5",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/product/4c6c8761-9733-4f35-88a1-4e0f8ca186b5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"product",
+								"4c6c8761-9733-4f35-88a1-4e0f8ca186b5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletesoftPro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\": [\"3d16000e-5993-456c-9e99-9c7ef05e63ee\", \"5121a8be-6cad-42ba-81d8-cfde918ccc7e\", \"ed440779-c623-45b2-8dee-73e73ff82794\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/product/deletesoft/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"product",
+								"deletesoft",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteHardPro",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\": [\"3d16000e-5993-456c-9e99-9c7ef05e63ee\", \"3bcffeed-3642-4b10-8fb9-601e490ed95e\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/product/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"product",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FlashSale",
+			"item": [
+				{
+					"name": "createFlashSale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Plus--\",\r\n    \"startDate\": \"2022-04-27 17:30:00\",\r\n    \"endDate\": \"2022-04-28 22:30:00\",\r\n    \"description\": \"Flash sale day 01-05\",\r\n    \"discountAmount\": \"10\",\r\n    \"productId\": [\"9bf0254b-efdb-4698-b01b-011355bbda25\", \"5121a8be-6cad-42ba-81d8-cfde918ccc7e\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/flashsale/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flashsale",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllFlashSale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/flashsale/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flashsale",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getDetail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/flashsale/2e0959dc-5ebd-4845-ba7c-03a17bef92ac",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flashsale",
+								"2e0959dc-5ebd-4845-ba7c-03a17bef92ac"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateFlashSale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Plus++\",\r\n    \"startDate\": \"2022-04-30 15:30:00\",\r\n    \"endDate\": \"2022-05-01 20:30:00\",\r\n    \"description\": \"Flash sale day 01-05\",\r\n    \"discountAmount\": \"10000\",\r\n    \"productId\": [\"c57d0e4e-e37b-429e-8b51-2b287948ce94\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/flashsale/2e0959dc-5ebd-4845-ba7c-03a17bef92ac",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flashsale",
+								"2e0959dc-5ebd-4845-ba7c-03a17bef92ac"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSoft",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/flashsale/deletesoft/2e0959dc-5ebd-4845-ba7c-03a17bef92ac",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flashsale",
+								"deletesoft",
+								"2e0959dc-5ebd-4845-ba7c-03a17bef92ac"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteHard",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/flashsale/2e0959dc-5ebd-4845-ba7c-03a17bef92ac",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"flashsale",
+								"2e0959dc-5ebd-4845-ba7c-03a17bef92ac"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Order",
+			"item": [
+				{
+					"name": "createOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product\": [{\"id\":\"dfb23eda-fe54-4fa7-bcda-ed5bfe15a97b\", \"quantity\":\"3\"},{\"id\":\"ed440779-c623-45b2-8dee-73e73ff82794\", \"quantity\":\"3\"}],\r\n    \"voucherCode\": \"CODE-92263\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/order/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "confirmOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/order/confirm/ab53a69d-6a3f-4591-a270-25b9151ff24a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								"confirm",
+								"ab53a69d-6a3f-4591-a270-25b9151ff24a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "shippingStatus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/order/shipping/f24e8bcb-952e-4351-adc3-fe2ad40354af",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								"shipping",
+								"f24e8bcb-952e-4351-adc3-fe2ad40354af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delivereOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/order/delivere/f24e8bcb-952e-4351-adc3-fe2ad40354af",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								"delivere",
+								"f24e8bcb-952e-4351-adc3-fe2ad40354af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "doneOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/order/done/f24e8bcb-952e-4351-adc3-fe2ad40354af",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								"done",
+								"f24e8bcb-952e-4351-adc3-fe2ad40354af"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cancelOrder",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{jwt}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/order/cancel/ab53a69d-6a3f-4591-a270-25b9151ff24a",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"order",
+								"cancel",
+								"ab53a69d-6a3f-4591-a270-25b9151ff24a"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
