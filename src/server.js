@@ -34,7 +34,7 @@ app.set("view engine", "ejs");
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.listen(port, () => {
-  console.log(`Server run with port ${port}`);
+  console.log(`Server run with port http://localhost:${port}/product`);
 });
 
 module.exports = app;
