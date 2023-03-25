@@ -10,7 +10,7 @@ const CommentRouter = require("./commentRouter");
 
 function route(app) {
   app.use("/api/comment", CommentRouter);
-  app.use("/api/auth", AuthRouter);
+  app.use("/auth", AuthRouter);
   app.use("/api/user", UserRouter);
   app.use("/api/voucher", VoucherRouter);
   app.use("/api/category", CategoryRouter);

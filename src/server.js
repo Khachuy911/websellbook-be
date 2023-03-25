@@ -4,7 +4,7 @@ require("dotenv").config();
 const port = process.env.PORT || 8080;
 var cors = require("cors");
 const bodyParser = require("body-parser");
-
+const path = require("path")
 const connectDB = require("./config/connectDB");
 const task = require("./helper/cronjobSendMail");
 const task2 = require("./helper/cronjobVoucher");
@@ -23,6 +23,7 @@ connectDB;
 
 //config route
 route(app);
+app.use(express.static(path.join(__dirname, 'public')));
 
 //config view engine
 app.set("view engine", "ejs");
@@ -30,6 +31,8 @@ app.set("view engine", "ejs");
 // cronjob
 // task.start();
 // task2.start();
+app.set('views',path.join(__dirname,'../view'));
+const methodOverride = require('method-override')
 
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 

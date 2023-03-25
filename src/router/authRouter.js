@@ -13,7 +13,7 @@ Route.post('/refreshToken', AuthController.refreshAccessToken);
 Route.patch('/updatePW', Auth.checkToken, AsyncHandle(AuthController.updatePW));
 Route.post('/forgotPW', AsyncHandle(AuthController.forgotPW));
 Route.patch('/resetPW/:reset', AsyncHandle(AuthController.resetPW));
-Route.get('/user/login', (req,res,next)=>{res.render("../view/authPage/login")});
+Route.get('/views/login', (req,res,next)=>{res.render("../view/authPage/login")});
 
 Route.get('/roleModule', AuthController.roleModule);
 

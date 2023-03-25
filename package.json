@@ -27,11 +27,13 @@
     "generate-password": "^1.7.0",
     "jsonwebtoken": "^8.5.1",
     "md5": "^2.3.0",
+    "method-override": "^3.0.0",
     "moment": "^2.29.3",
     "multer": "^1.4.4",
     "mysql2": "^2.3.3",
     "node-cron": "^3.0.0",
     "nodemailer": "^6.7.3",
+    "path": "^0.12.7",
     "random-number": "^0.0.9",
     "sequelize": "^6.19.0",
     "uuid": "^8.3.2"
