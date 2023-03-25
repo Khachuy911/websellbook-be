@@ -9,6 +9,9 @@ const ErrorResponse = require("../helper/errorResponse");
 const { getPagination, getSort, search, filter } = require("../helper/helper");
 const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require("../helper/constant");
 const Category = require("../model/categoryModel");
+const FlashSaleProduct = require("../model/flashSaleProductModel");
+const FlashSale = require("../model/flashSaleModel");
+const User = require("../model/userModel");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -91,11 +94,16 @@ module.exports = {
         ...search(req.query.search),
         ...filter("categoryId", req.query.category),
       },
-      include: {
-        model: ProductImage,
-        model: Comment,
-        model: Category,
-      },
+      include: [
+        { model: Category },
+        { model: ProductImage },
+        { model: Comment },
+        {
+          model: FlashSaleProduct,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          required: false,
+        },
+      ],
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
@@ -114,8 +122,8 @@ module.exports = {
     // res.status(HTTP_CODE.SUCCESS).json({
     //   isSuccess: true,
     //   message: MESSAGE.SUCCESS,
-    //   data
-    // })
+    //   data,
+    // });
 
     console.log("=====>Product:" + JSON.stringify(product));
 
@@ -127,19 +135,68 @@ module.exports = {
       where: {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         ...search(req.query.search),
-        ...filter("categoryId", req.query.category),
+        // ...filter("categoryId", req.query.category),
       },
-      include: {
-        model: ProductImage,
-        model: Comment,
-        model: {
-          path: Category,
+      include: [
+        {
+          model: Category,
           where: {
-            name: req.query.category,
+            name: req.query?.category || null,
           },
         },
+        {
+          model: FlashSaleProduct,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          required: false,
+        },
+      ],
+
+      // ...getPagination(req.query.page),
+      ...getSort(req.query.title, req.query.type),
+    };
+
+    const product = await Product.findAndCountAll(condition);
+
+    const pageSize = req.query.pageSize || process.env.DEFAULT_LIMIT_PAGE;
+    const data = {
+      pageSize,
+      pageIndex: req.query.page || process.env.DEFAULT_PAGE,
+      totalPage: Math.ceil(product.count / +pageSize),
+      totalSize: product.rows.length || 0,
+      rows: product.rows,
+    };
+
+    if(req.query.response === 'api'){
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data,
+      });
+
+    }
+
+    console.log("=====>Product:" + JSON.stringify(product));
+
+    res.render("../view/productByCategory.ejs", { data: data });
+  },
+
+  searchProduct: async (req, res, next) => {
+    const condition = {
+      where: {
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        ...search(req.query.search),
+        ...filter("categoryId", req.query.category),
       },
-      ...getPagination(req.query.page),
+      include: [
+        { model: Category },
+        { model: ProductImage },
+        {
+          model: FlashSaleProduct,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          required: false,
+        },
+      ],
+      // ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
 
@@ -157,8 +214,8 @@ module.exports = {
     // res.status(HTTP_CODE.SUCCESS).json({
     //   isSuccess: true,
     //   message: MESSAGE.SUCCESS,
-    //   data
-    // })
+    //   data,
+    // });
 
     console.log("=====>Product:" + JSON.stringify(product));
 
@@ -173,17 +230,40 @@ module.exports = {
         id: id,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
       },
-      include: {
-        model: ProductImage,
-      },
+      include: [
+        { model: Category },
+        { model: ProductImage },
+        {
+          model: Comment,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          required: false,
+          include: {
+            model: User,
+            required: false,
+            where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          },
+        },
+        {
+          model: FlashSaleProduct,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          required: false,
+          include: {
+            model: FlashSale,
+            required: false,
+            where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          },
+        },
+      ],
     };
     const product = await Product.findOne(condition);
 
-    res.status(HTTP_CODE.SUCCESS).json({
-      isSuccess: true,
-      message: MESSAGE.SUCCESS,
-      data: product,
-    });
+    // res.status(HTTP_CODE.SUCCESS).json({
+    //   isSuccess: true,
+    //   message: MESSAGE.SUCCESS,
+    //   data: product,
+    // });
+    console.log("==============> product detail: " + JSON.stringify(product));
+    res.render("../view/productDetail.ejs", { data: product });
   },
 
   update: async (req, res, next) => {

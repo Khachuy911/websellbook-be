@@ -111,7 +111,7 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      justify-content: space-between;
+      justify-content: flex-start;
       align-items: baseline;
       align-content: stretch;
     }
@@ -119,7 +119,9 @@
     .card {
       flex-basis:19%;
       margin-bottom: 20px;
+      height: 330px;
       cursor: pointer;
+      margin: 5px;
     }
 
     .card:hover {
@@ -186,12 +188,21 @@
       flex-direction: row-reverse;
     }
 
+    a{
+      text-decoration: none;
+      color:black;
+    }
+    a:hover {
+      color: rgb(105, 192, 233);
+    }
+
     /* ======================== */
     /* FOOTER */
     footer {
       background-color: rgb(105, 192, 233);
       padding: 10%;
       /* height: 500px; */
+      margin-top: 50px;
     }
 
   </style>
@@ -249,15 +260,15 @@
                 Danh Mục
               </span>
               <ul class="dropdown-menu">
-                <li><a class="custom-dropdown-item  dropdown-item" href="#">Action</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Another action</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
+                <li><a class="custom-dropdown-item  dropdown-item" href="#">Sách kinh doanh</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách thiếu nhi</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
               </ul>
             </div>
             </li>    
@@ -267,8 +278,8 @@
       </ul>
 
       <!-- Search -->
-      <form class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3">
-        <input type="search" class="form-control" placeholder="Bạn cần tìm gì ?" aria-label="Search">
+      <form action="/product/search" class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3">
+        <input type="search" name="search" class="form-control" placeholder="Bạn cần tìm gì ?" aria-label="Search">
       </form>
 
       <!-- Profile -->
@@ -291,6 +302,9 @@
     <!-- BODY -->
     <div class="container-xl">
 
+      <% if(data?.rows.length ==0){ %>
+        RỖNG
+        <%}else{%>
       <div class="section">
         <!-- image voucher and flashsale -->
         <div class="custom-carousel">
@@ -335,32 +349,40 @@
           </a>
         </div>
         <!-- book sell -->
-  
+        <!-- sách kinh doanh -->
         <div class="book-sell">
           <div class="title-category">
             <div class="title-category-name">
-              <h3>Sách giảm giá</h1>
+              <h3>Sách kinh doanh</h1>
             </div>
             <div class="title-category-seemore">
-              <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="">Xem thêm
+              <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="/product/productByCategory?category=Sách kinh doanh">Xem thêm
               </a>
             </div>
           </div>
           <div class="book-sell-new">
               <% data.rows.forEach(element => { %>
+                <%if(element.Category?.name === "Sách kinh doanh"){%>                  
               <div class="card" style="width: 18rem;">
+                <a href="/product/<%=element.id%>">
                 <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title"><%= element.name %></h5>
+                    <h5 class="card-title"><%= element.name %></h5>
                   <p class="card-description"><%= element.description %></p>
                   <div class="text-left">
+                    <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
                     <span class="card-price text-decoration-line-through text-black font-monospace">
                       <%= element.priceSelling %>đ
-                    </span><span class="text-light custom-flashsale">  -7000đ</span>
+                    </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
+                    <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
+                    <% }else{ %>
                     <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
+                    <%}%>
                   </div>
                 </div>
+              </a>
               </div>  
+              <%}%>
               <% }); %>
             </div>
         </div>
@@ -384,64 +406,83 @@
           </div>
         </div>
   
+        <!-- sách thiếu nhi -->
         <div class="book-sell">
           <div class="title-category">
             <div class="title-category-name">
-              <h3>Sách bán chạy</h1>
+              <h3>Sách thiếu nhi</h1>
             </div>
             <div class="title-category-seemore">
-              <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="">Xem thêm
+              <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="/product/productByCategory?category=Sách thiếu nhi">Xem thêm
   
               </a>
             </div>
           </div>
   
           <div class="book-sell-new">
-              <% data.rows.forEach(element => { %>
-              <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= element.name %></h5>
-                  <p class="card-description"><%= element.description %></p>
-                  <div class="text-left">
-                    <p class="card-price">Giá: <%= element.priceSelling %>đ</p>
-                    <!-- <a href="#" class="custom-btn-seemore btn">Xem thêm</a> -->
-  
-                  </div>
+            <% data.rows.forEach(element => { %>
+              <%if(element.Category?.name === "Sách thiếu nhi"){%>
+            <div class="card" style="width: 18rem;">
+              <a href="/product/<%=element.id%>">
+              <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= element.name %></h5>
+                <p class="card-description"><%= element.description %></p>
+                <div class="text-left">
+                  <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
+                  <span class="card-price text-decoration-line-through text-black font-monospace">
+                    <%= element.priceSelling %>đ
+                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
+                  <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
+                  <% }else{ %>
+                  <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
+                  <%}%>
                 </div>
-              </div>  
-              <% }); %>
-            </div>
+              </div>
+            </a>
+            </div>  
+            <%}%>
+            <% }); %>
+          </div>
         </div>
         
+        <!-- sách tâm lý -->
         <div class="book-sell">
           <div class="title-category">
             <div class="title-category-name">
-              <h3>Sách kinh doanh</h1>
+              <h3>Sách tâm lý</h1>
               </div>
             <div class="title-category-seemore">
-              <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="">Xem thêm
-  
+              <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="/product/productByCategory?category=Sách tâm lý">Xem thêm
               </a>
             </div>
           </div>
   
           <div class="book-sell-new">
-              <% data.rows.forEach(element => { %>
-              <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= element.name %></h5>
-                  <p class="card-description"><%= element.description %></p>
-                  <div class="text-left">
-                    <p class="card-price">Giá: <%= element.priceSelling %>đ</p>
-                    <!-- <a href="#" class="custom-btn-seemore btn">Xem thêm</a> -->
-  
-                  </div>
+            <% data.rows.forEach(element => { %>
+              <%if(element.Category?.name === "Sách tâm lý"){%>
+            <div class="card" style="width: 18rem;">
+              <a href="/product/<%=element.id%>">
+              <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= element.name %></h5>
+                <p class="card-description"><%= element.description %></p>
+                <div class="text-left">
+                  <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
+                  <span class="card-price text-decoration-line-through text-black font-monospace">
+                    <%= element.priceSelling %>đ
+                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
+                  <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
+                  <% }else{ %>
+                  <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
+                  <%}%>
                 </div>
-              </div>  
-              <% }); %>
-            </div>
+              </div>
+              </a>
+            </div>  
+            <%}%>
+            <% }); %>
+          </div>
         </div>
 
         <div class="book-outstanding">
@@ -453,9 +494,9 @@
               <img src="https://picsum.photos/200/300" height="350px" width="100%" alt="">
             </div>
             <div class="book-outstanding-text-title ">
-              <h3 class="book-outstanding-text-title-name"><%= data.rows[2].name %></h3>     
-              <p>Giá: <%= data.rows[2].priceSelling %>đ</p> 
-              <span class="book-outstanding-text-title-description"><%= data.rows[2].description %>...</span> 
+              <h3 class="book-outstanding-text-title-name"><%= data.rows[1].name %></h3>     
+              <p>Giá: <%= data.rows[1].priceSelling %>đ</p> 
+              <span class="book-outstanding-text-title-description"><%= data.rows[1].description %>...</span> 
               <div class="text-center">
                 <a class="d-block text-decoration-none text-primary-emphasis text-opacity-50" href="#">xem chi tiết</a>
               </div>
@@ -463,37 +504,47 @@
           </div>
         </div>
 
+        <!-- sách giáo dục -->
         <div class="book-sell">
           <div class="title-category">
             <div class="title-category-name">
               <h3>Sách giáo dục</h1>
             </div>
             <div class="title-category-seemore">
-              <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="">Xem thêm
-  
+              <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="/product/productByCategory?category=Sách giáo dục">Xem thêm 
               </a>
             </div>
           </div>
   
           <div class="book-sell-new">
-              <% data.rows.forEach(element => { %>
-              <div class="card" style="width: 18rem;">
-                <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title"><%= element.name %></h5>
-                  <p class="card-description"><%= element.description %></p>
-                  <div class="text-left">
-                    <p class="card-price">Giá: <%= element.priceSelling %>đ</p>
-                    <!-- <a href="#" class="custom-btn-seemore btn">Xem thêm</a> -->
-  
-                  </div>
+            <% data.rows.forEach(element => { %>
+              <%if(element.Category?.name === "Sách giáo dục"){%>
+            <div class="card" style="width: 18rem;">
+              <a href="/product/<%=element.id%>">
+              <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title"><%= element.name %></h5>
+                <p class="card-description"><%= element.description %></p>
+                <div class="text-left">
+                  <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
+                  <span class="card-price text-decoration-line-through text-black font-monospace">
+                    <%= element.priceSelling %>đ
+                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
+                  <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
+                  <% }else{ %>
+                  <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
+                  <%}%>
                 </div>
-              </div>  
-              <% }); %>
-            </div>
+              </div>
+              </a>
+            </div>  
+            <%}%>
+            <% }); %>
+          </div>
         </div>
   
       </div>
+      <%}%>
     </div>
 
     <!-- FOOTER -->
