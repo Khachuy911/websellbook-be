@@ -1,5 +1,6 @@
 const Product = require('../model/productModel');
 const Category = require('../model/categoryModel');
+const Auth = require('../model/authorModel');
 const ErrorResponse = require('../helper/errorResponse');
 const { getPagination, getSort, search } = require('../helper/helper');
 const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require('../helper/constant');
