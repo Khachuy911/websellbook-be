@@ -1,12 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng ký</title>
-</head>
+    <meta charset="utf-8">
+    <title>Đăng ký tài khoản</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/fonts/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
+</head> 
 <body>
+         <div class="modal">
+            <div class="modal__overlay">
+            </div>
+            <div class="modal__body">
+
+                 <div class="auth-form">
+                    <div class="auth-form__container">
+                        <div class="container d-flex"  style="align-items: center;text-align: center;margin-bottom:16px">
+                            <a href="/" class="auth-link-home" style="text-decoration: none;">
+                                <h1 class="auth-header" style="color: blue;">Khắc Huy Shop</h1>
+                            </a>                   
+                        </div>
+                        <div class="auth-form-form">
+                            <div class="auth-form__header">
+                                <h3 class="auth-form__heading">
+                                    Đăng ký
+                                </h3>
+                                <a href="/auth/views/login" class="auth-link para-text">
+                                    <span class="auth-form__switch-btn">Đăng nhập</span>
+                                </a>
+                            </div>
+                        </div>
+                        <form id="authFormSign" action="/auth/sign" method="post">
+                            <div class="auth-form__form">
+                                    <div class="auth-form__group">
+                                        <input id="emailSignup" class="auth-form__input" type="Email"  name="username" placeholder="Email của bạn" size="30" >
+                                    </div>
+                                    <div class="auth-form__group" style="position:relative">
+                                        <input id="passwordSignup1" class="auth-form__input paswordInput"type="password" name="password" placeholder="Mật khẩu" type="password">
+                                        <span style="padding: 2px;cursor: pointer;position:absolute; top:50%; right:4%;font-size:13px"><i id="show-btn1"  class="far fa-eye"></i></span>
+                                    </div>
+                                <div class="auth-form__group" style="position:relative">
+                                    <input id="passwordSignup2" class="auth-form__input paswordInput" placeholder="Nhập lại mật khẩu"type="password">
+                                    <span style="padding: 2px;cursor: pointer;position:absolute; top:50%; right:4%;font-size:13px"><i id="show-btn2"class="far fa-eye"></i></span>
+                                </div>
+                            </div>
+                            <script>
+                                const passField1 = document.getElementById("passwordSignup1");
+                                const showBtn1 = document.getElementById("show-btn1");
+                                showBtn1.onclick = (()=>{
+                                    if(passField1.type === "password"){
+                                        passField1.type = "text";
+                                        showBtn1.classList.toggle("fa-eye");
+                                        showBtn1.classList.toggle("fa-eye-slash");
+                                    }else{
+                                        passField1.type = "password";
+                                        showBtn1.classList.toggle("fa-eye");
+                                        showBtn1.classList.toggle("fa-eye-slash");
+                                    }
+                                });
+                                const passField2 = document.getElementById("passwordSignup2");
+                                const showBtn2 = document.getElementById("show-btn2");
+                                showBtn2.onclick = (()=>{
+                                    if(passField2.type === "password"){
+                                        passField2.type = "text";
+                                        showBtn2.classList.toggle("fa-eye");
+                                        showBtn2.classList.toggle("fa-eye-slash");
+                                    }else{
+                                        passField2.type = "password";
+                                        showBtn2.classList.toggle("fa-eye");
+                                        showBtn2.classList.toggle("fa-eye-slash");
+                                    }
+                                });
+                            </script>
+                            <div class="auth-form__aside">
+                                <p class="auth-form__policy-text">
+                                    Bằng việc đăng ký, bạn đã đồng ý với chúng tôi về
+                                    <a href="" class="auth-form__policy-link para-text">Điều khoản dịch vụ</a>
+                                    &
+                                    <a href="" class="auth-form__policy-link para-text">Chính cách bảo mật</a>
+                                </p>
+                            </div>
+                            <div style="position: absolute;">
+                                <div id="text_logout" class="auth-form__aside text-logout-none">
+                                    <style>
+                                        #text_logout{
+                                            content: "";
+                                            position: relative;
+                                            top: -30px;
+                                        }
+                                    </style>
+                                </div>
+                            </div>
+                            <div class="auth-form__controls">
+                                <a id="goBack" onclick="goback()" class="btn btn--normal auth-form__controls--back" style="color: black" type="submit">Trở lại</a>
+                                <button type="submit" class="btn btn--primary para-text"id="signup">Đăng ký</button>
+                            </div>
+                        </form>
+                    </div>
     
+                    <div class="auth-form__socials">
+                        <a href="http://facebook.com" class="para-text btn auth-form__socials--facebook btn--size-s btn--with-icon">
+                            <i class="fa-brands fa-facebook auth-form__socials-icon"></i>
+                            <span class="auth-form__socials--title">
+                                Kết nối với facebook    
+                            </span>
+                        </a>
+                        <a href="http://google.com" class="para-text auth-form__socials--google btn btn--size-s btn--with-icon">
+                            <i class="fa-brands fa-google auth-form__socials-icon"></i>
+                            <span class="auth-form__socials--title">
+                                Kết nối với google    
+                            </span>
+                        </a>
+                    </div>
+                </div> 
+            </div>
+         </div>
 </body>
 </html>
+
+<script>
+    function goback(){
+        location.replace("/");
+    }
+</script>
+
+<script>
+    let passwordSignup1 = document.getElementById("passwordSignup1");
+    let passwordSignup2 = document.getElementById("passwordSignup2");
+    let signup = document.getElementById("signup");
+    let emailSignup = document.getElementById("emailSignup");
+    let text_logout = document.getElementById("text_logout");
+
+        // emailSignup.addEventListener("keyup", function(e) {
+
+        //     if(emailSignup.value.length<5||emailSignup.value.length>15){
+        //         signup.classList.remove("btn--primary");
+        //         signup.classList.add("error");
+        //         signup.disabled=true;
+        //     }
+        //     else{
+        //         if (passwordSignup1.value !== passwordSignup2.value||passwordSignup1.value==""||passwordSignup2.value==""||passwordSignup1.value.length<5||passwordSignup2.value.length<5) {
+        //             signup.classList.remove("btn--primary");
+        //             signup.classList.add("error");
+        //             signup.disabled=true;
+        //         }
+        //         else{
+        //             signup.classList.add("btn--primary");
+        //             signup.classList.remove("error");
+        //             signup.disabled=false;   
+                    
+        //         }   
+        //     }
+
+        //     if(signup.disabled){
+        //         console.log("true");
+        //         text_logout.classList.remove("text-logout-none")
+        //         text_logout.innerHTML = `<p class="auth-form__policy-text" style="color:red;margin-top:-24px; text-align:left">
+        //                                 Tên tài khoản phải có 5-30 ký tự, không phân biệt chữ hoa chữ thường
+        //                             </p>
+        //                             <p class="auth-form__policy-text" style="color:red;margin-top:-10px; text-align:left">
+        //                                 Mật khẩu của bạn phải dài trên 5 ký tự
+        //                             </p>`
+        //     }
+        //     else{
+        //         console.log("false");
+        //         text_logout.classList.add("text-logout-none")
+                
+        //     }
+        // })   
+
+        // passwordSignup1.addEventListener("keyup", function(e) {
+        //     if (passwordSignup1.value !== passwordSignup2.value||passwordSignup1.value==""||passwordSignup2.value==""||passwordSignup1.value.length<5||passwordSignup2.value.length<5) {
+        //             signup.classList.remove("btn--primary");
+        //             signup.classList.add("error");
+        //             signup.disabled=true;
+        //         }
+        //     else{
+        //         if(emailSignup.value.length<5||emailSignup.value.length>15){
+        //             signup.classList.remove("btn--primary");
+        //             signup.classList.add("error");
+        //             signup.disabled=true;
+        //         }
+        //         else{
+        //             signup.classList.add("btn--primary");
+        //             signup.classList.remove("error");
+        //             signup.disabled=false;   
+        //         }   
+        //     } 
+        //     if(signup.disabled){
+        //         console.log("true");
+        //         text_logout.classList.remove("text-logout-none")
+        //         text_logout.innerHTML = `<p class="auth-form__policy-text" style="color:red;margin-top:-24px; text-align:left">
+        //                                 Tên tài khoản phải có 5-30 ký tự, không phân biệt chữ hoa chữ thường
+        //                             </p>
+        //                             <p class="auth-form__policy-text" style="color:red;margin-top:-10px; text-align:left">
+        //                                 Mật khẩu của bạn phải dài trên 5 ký tự
+        //                             </p>`
+        //     }
+        //     else{
+        //         console.log("false");
+        //         text_logout.classList.add("text-logout-none")
+                
+        //     }  
+        // })
+        // passwordSignup2.addEventListener("keyup", function(e) {
+        //     if (passwordSignup1.value !== passwordSignup2.value||passwordSignup1.value==""||passwordSignup2.value==""||passwordSignup1.value.length<5||passwordSignup2.value.length<5) {
+        //             signup.classList.remove("btn--primary");
+        //             signup.classList.add("error");
+        //             signup.disabled=true;
+        //         }
+        //     else{
+        //         if(emailSignup.value.length<5||emailSignup.value.length>15){
+        //             signup.classList.remove("btn--primary");
+        //             signup.classList.add("error");
+        //             signup.disabled=true;
+        //         }
+        //         else{
+        //             signup.classList.add("btn--primary");
+        //             signup.classList.remove("error");
+        //             signup.disabled=false;   
+        //         }   
+        //     }
+        //     if(signup.disabled){
+        //         console.log("true");
+        //         text_logout.classList.remove("text-logout-none")
+        //         text_logout.innerHTML = `<p class="auth-form__policy-text" style="color:red;margin-top:-24px; text-align:left">
+        //                                 Tên tài khoản phải có 5-30 ký tự, không phân biệt chữ hoa chữ thường
+        //                             </p>
+        //                             <p class="auth-form__policy-text" style="color:red;margin-top:-10px; text-align:left">
+        //                                 Mật khẩu của bạn phải dài trên 5 ký tự
+        //                             </p>`
+        //     }
+        //     else{
+        //         console.log("false");
+        //         text_logout.classList.add("text-logout-none")
+                
+        //     }     
+        // })
+
+    
+    signup.addEventListener("submit", function(e) {
+        if(passwordSignup1.value === passwordSignup2.value && passwordSignup1.value &&passwordSignup2.value){
+            let authFormSign = document.getElementById("authFormSign");
+            authFormSign.action = '/auth/signup'  + '?_method=POST'
+            authFormSign.submit()
+        }
+    })
+    
+
+</script>
+
+<style>
+    .error{
+        background-color: rgb(119, 109, 109);
+        cursor: default;
+    }
+    .error:hover{
+        opacity: 1;
+    }
+    .text-logout-none{
+        display: none;
+    }
+</style>
