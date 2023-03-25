@@ -10,14 +10,13 @@
   <title>HuyKhac Shop</title>
   <style>
 
-    body{
+body{
       font-family: 'Roboto Slab', serif;
       /* font-family: 'Roboto Mono', monospace; */
       /* font-family: 'Noto Serif', serif; */
     }
 
     /* HEAD */
-
     .custom-menu-header{
       color: black;
     }
@@ -52,11 +51,76 @@
 
     /* ======================== */
     /* SECTION */
+    .custom-section {
+      background-color: aqua;
+      margin: 10px 0px;
+    }
 
-    .section{
-      width:100%;
-      height: 100%;
-      /* background-color: rgb(243, 240, 236); */
+    .custom-image {
+      /* padding: 1px; */
+      border: 1px solid;
+      height: 425px;
+    } 
+    
+    .custom-image-child {
+      margin: 11px 0px;
+    }
+
+
+    .infor-detail {
+      padding: 10px;
+    }
+
+    .infor-detail {
+      border: 1px solid;
+    }
+
+    .infor-delivery {
+      border: 1px solid;
+      margin: 5% 0px;
+      padding: 10px;
+    }
+
+    .input-buy {
+      border: 1px solid;
+      padding: 5px;
+    }
+
+    .custom-sale {
+      /* width: 304px;
+      height: 300px; */
+      border: 1px solid;
+      padding: 10px;
+    }
+
+    .comment-book {
+      background-color: brown;
+      height: 500px;
+    }
+
+    .custom-comment-book {
+      display: flex;
+    }
+
+    .image-avatar {
+      border: 1px solid rgb(105, 192, 233);
+      border-radius:180px;
+      margin: 0px 20px;
+    }
+
+    .title-category {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: baseline;
+      align-content: stretch;
+      width: 100%;
+      height: 50px;
+      /* background-color: rgb(146, 147, 243); */
+      margin: 25px 0px 20px 0px;
+      padding: 10px;
+      border-radius: 8px;
     }
 
     p {
@@ -86,6 +150,7 @@
     .card {
       flex-basis:19%;
       margin-bottom: 20px;
+      height: 330px;
       cursor: pointer;
       margin: 5px;
     }
@@ -120,28 +185,13 @@
       margin-left: 10px;
     }
 
-    .title-category {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: baseline;
-      align-content: stretch;
-      width: 100%;
-      height: 50px;
-      /* background-color: rgb(146, 147, 243); */
-      margin: 25px 0px 20px 0px;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
     /* ======================== */
     /* FOOTER */
     footer {
       background-color: rgb(105, 192, 233);
       padding: 10%;
-      margin-top: 50px;
       /* height: 500px; */
+      margin-top: 50px;
     }
 
   </style>
@@ -199,15 +249,15 @@
                 Danh Mục
               </span>
               <ul class="dropdown-menu">
-                <li><a class="custom-dropdown-item  dropdown-item" href="#">Action</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Another action</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
+                <li><a class="custom-dropdown-item  dropdown-item" href="#">Sách kinh doanh</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách thiếu nhi</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
               </ul>
             </div>
             </li>    
@@ -217,8 +267,8 @@
       </ul>
 
       <!-- Search -->
-      <form class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3">
-        <input type="search" class="form-control" placeholder="Bạn cần tìm gì ?" aria-label="Search">
+      <form action="/product/search" class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3">
+        <input type="search" name="search" class="form-control" placeholder="Bạn cần tìm gì ?" aria-label="Search">
       </form>
 
       <!-- Profile -->
@@ -240,37 +290,75 @@
 
     <!-- BODY -->
     <div class="container-xl">
-      <% if(data?.rows.length === 0){ %>
-        RỖNG
-        <%}else{%>
+      <%if(!data){%>
+        <h1>Rỗng</h1>
+        <%}else {%>
       <div class="section">
-        <div class="book-sell">
-          <div class="title-category">
-            <div class="title-category-name">
-              <h3><%= data.rows[0]?.Category?.name %></h1>
+        <div class="row custom-section">
+          <div class="col-md-3 custom-image">
+            <img width="100%" height="400px" class="custom-image-child" src="https://picsum.photos/200" alt="image product">
+          </div>
+          <div class="col-md-6 custom-text"> 
+            <div class="infor-detail">
+              <h3><%= data.name%></h3>              
+              <span>Danh mục: </span><span id="category"><%= data.Category.name%></span>
+              <%if(data.FlashSaleProducts.length > 0){%>
+                <% if(data.FlashSaleProducts[0]?.discountAmount){ %>
+                  <p>Khuyến mãi: <%= data?.FlashSaleProducts[0]?.FlashSale?.name%></p>
+                  <p>Thời gian khuyến mãi: <%= data?.FlashSaleProducts[0]?.FlashSale?.startDate%> - <%= data?.FlashSaleProducts[0]?.FlashSale?.endDate%></p>
+                  <span class="card-price text-decoration-line-through text-black font-monospace">
+                    <%= data.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
+                  </span><span class="text-light custom-flashsale">  -<%= data.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
+                  <p class="card-price ">Giá: <%= (data.priceSelling - data.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
+  
+                  <% } %>                
+                <%}else{ %>
+                  <p class="card-price ">Giá: <%= data.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
+                  <%}%>
+              <p>Số trang: <%= data.weight %> trang</p>
+              <p>Số lượng: <%= data.quantityDisplay %></p>
+              <span>Mô tả: <%= data.description %>.</span>     
+            </div>    
+            <div class="infor-delivery">
+              <p>a</p>
+              <p>a</p>
+              <p>a</p>
+              <p>a</p>
+            </div>   
+            <div class="input-buy">
+              <form class="row g-3">
+                <div class="col-2">
+                  <label for="staticEmail2" class="visually-hidden">Email</label>
+                  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Số lượng">
+                </div>
+                <div class="col-auto">
+                  <label for="inputPassword2" class="visually-hidden">Password</label>
+                  <input type="text" width="100%" class="form-control" id="inputPassword2" placeholder="..." value="1">
+                </div>
+                <div class="col-auto">
+                  <button type="submit" class="btn btn-primary mb-3">add order</button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+          <div class="col-md-3 custom-sale">description sale</div>
+        </div>
+        <div class=" comment-book">
+          <% data.Comments.forEach(element => {%>
+          <div class="custom-comment-book">
+            <div class="img-avatar-comment ">
+              <img width="70px" height="70px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
+            </div>
+            <div class="comment-text ">
+              <span><%= element.User.username%></span>
+              <p><%= element.text%></p>
             </div>
           </div>
-          <div class="book-sell-new">
-            <% data.rows.forEach(element => { %>
-            <div class="card" style="width: 18rem;">
-              <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
-              <div class="card-body">
-                <h5 class="card-title"><%= element.name %></h5>
-                <p class="card-description"><%= element.description %></p>
-                <div class="text-left">
-                  <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
-                  <span class="card-price text-decoration-line-through text-black font-monospace">
-                    <%= element.priceSelling %>đ
-                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
-                  <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
-                  <% }else{ %>
-                  <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
-                  <%}%>
-                </div>
-              </div>
-            </div>  
             <% }); %>
-          </div>
+          <p></p>
+        </div>
+        <div id="relation-book">
         </div>
       </div>
       <%}%>
@@ -326,9 +414,55 @@
       </footer>
     </div>
   <!-- </div> -->
-<script>
 
-</script>
+  <script>
+    const textCate = document.getElementById('category');
+    const categoryProduct = textCate.textContent;
+    async function callApi (){
+      const data = await fetch(`http://localhost:3000/product/productByCategory?response=api&&category=${categoryProduct}`)
+      .then(data=>{
+        return data.json();
+      })
+      .then(result =>{
+        console.log(result);
+        document.getElementById('relation-book').innerHTML = 
+        `
+        <div class="title-category">
+          <div class="title-category-name">
+            <h3>Sách liên quan</h1>
+            </div>
+          <div class="title-category-seemore">
+            <a class="d-block link-dark text-decoration-none dropdown-toggle text-primary-emphasis" href="/product/productByCategory?category=${categoryProduct}">Xem thêm
+            </a>
+          </div>
+        </div>`
+        let genHTML = `<div class="book-sell-new">`;
+        result?.data?.rows.forEach(element => {
+          genHTML +=
+          //
+          `
+              <div class="card" style="width: 18rem;">
+                <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">${ element.name }</h5>
+                  <p class="card-description">${ element.description }</p>
+                  <div class="text-left">
+                    <p class="card-price ">Giá: ${ element.priceSelling }đ</p> 
+                </div>
+              </div>  
+            </div>`
+
+            // 
+            
+          });
+          document.getElementById('relation-book').innerHTML += genHTML + "</div> ";
+
+      })
+    }
+    callApi();
+
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>

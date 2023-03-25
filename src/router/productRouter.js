@@ -18,8 +18,11 @@ Route.delete(
   AsyncHandle(ProductController.deleteSoft)
 );
 
-Route.route("/productBycategory") 
-  .get(AsyncHandle(ProductController.getProductByCategory))
+Route.route("/productBycategory").get(
+  AsyncHandle(ProductController.getProductByCategory)
+);
+
+Route.route("/search").get(AsyncHandle(ProductController.searchProduct));
 
 Route.route("/:id")
   .patch(
@@ -48,7 +51,6 @@ Route.route("/")
     Auth.permission("/api/product/", DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ),
     AsyncHandle(ProductController.deleteHard)
   );
-
 
 /**
  * @swagger
