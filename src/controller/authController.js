@@ -16,9 +16,11 @@ module.exports = {
   register: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
+      console.log(req.body)
       const { username, password, email, phone, age, address } = req.body;
 
       if (!username || !password || !email || !phone) {
+        await t.rollback();
         return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_LACK));
       }
 

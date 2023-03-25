@@ -42,21 +42,21 @@
                                 <span style="padding: 2px;cursor: pointer;position:absolute; top:50%; right:4%;font-size:16px"><i id="show-btn"class="far fa-eye"></i></span>
 
                             </div>
-                            <script>
-                                const passField = document.getElementById("password");
-                                const showBtn = document.getElementById("show-btn");
-                                showBtn.onclick = (()=>{
-                                    if(passField.type === "password"){
-                                        passField.type = "text";
-                                        showBtn.classList.toggle("fa-eye");
-                                        showBtn.classList.toggle("fa-eye-slash");
-                                    }else{
-                                        passField.type = "password";
-                                        showBtn.classList.toggle("fa-eye");
-                                        showBtn.classList.toggle("fa-eye-slash");
-                                    }
-                                });
-                            </script>
+                                    <script>
+                                        const passField = document.getElementById("password");
+                                        const showBtn = document.getElementById("show-btn");
+                                        showBtn.onclick = (()=>{
+                                            if(passField.type === "password"){
+                                                passField.type = "text";
+                                                showBtn.classList.toggle("fa-eye");
+                                                showBtn.classList.toggle("fa-eye-slash");
+                                            }else{
+                                                passField.type = "password";
+                                                showBtn.classList.toggle("fa-eye");
+                                                showBtn.classList.toggle("fa-eye-slash");
+                                            }
+                                        });
+                                    </script>
                         </div>
                         <div class="auth-form__aside">
                             <div class="auth-form__help">
