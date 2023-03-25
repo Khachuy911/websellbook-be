@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Đăng ký tài khoản</title>
+    <title>Đăng nhập tài khoản</title>
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/fonts/css/all.min.css">
+    
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/3068/3068327.png">
+    
 
 </head>
 <body>
@@ -32,10 +36,10 @@
                             </a>
                         </div>
                     </div>
-                    <form id="formLogin" method="post" action="/auth/login">
+                    <form id="formLogin">
                         <div class="auth-form__form">
                             <div class="auth-form__group">
-                                <input id="username"name="username" type="text" class="auth-form__input" placeholder="Email của bạn">
+                                <input id="username"name="username" type="email" class="auth-form__input" placeholder="Email của bạn">
                             </div>
                             <div class="auth-form__group"  style="position:relative">
                                 <input id="password" name="password" type="password" class="auth-form__input" placeholder="Mật khẩu">
@@ -70,7 +74,7 @@
                         </div>
                         <div class="auth-form__controls">
                             <a id="goBack" onclick="goback()" class="btn btn--normal auth-form__controls--back" style="color: black" type="submit">Trở lại</a>
-                            <button id="login" class="btn btn--primary hover">Đăng nhập</button>
+                            <button id="login" type="submit" class="btn btn--primary hover">Đăng nhập</button>
                         </div>
                     </form>
 
@@ -94,7 +98,75 @@
     </div>
 </body>
 </html>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<!-- <script type="text/javascript" src="https://phonuiit.com/noel/it.snow.js"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $("#formLogin").submit(e=>{
+        e.preventDefault();
+        const username = $("#username").val()
+        const password = $("#password").val()
+        if(username&&password){
+            $.ajax({
+                url: `/auth/login`,
+                type: "POST",
+                data:{email: username,password:password},
+                success: (data) => {
+                    console.log(data)
+                    Toastify({
+                        text: data.message,
+                        duration: 2000,
+                        destination: "http://localhost:3000/",
+                        newWindow: true,
+                        //close: true,
+                        offset: {
+                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                        },
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, green, green)",
+                            width:"250px",
+                            fontSize:"16px"
+                        },
+                        onClick: function(){} // Callback after click
+                    }).showToast();
+                    
+                },
+                error:(data) => {
+                    message = data?.message||data.responseJSON.errorCode
+                    console.log(data)
+                    Toastify({
+                        text: message,
+                        duration: 2000,
+                        destination: "http://localhost:3000/",
+                        newWindow: true,
+                        //close: true,
+                        offset: {
+                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                        },
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, red, red)",
+                            width:"250px",
+                            fontSize:"16px"
+                        },
+                        onClick: function(){} // Callback after click
+                    }).showToast();
+                }
+            })
+        }
+        
+    })
+</script>
 <script>
     function goback(){
         history.go(-1)

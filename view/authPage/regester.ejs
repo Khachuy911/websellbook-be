@@ -52,24 +52,24 @@
 
                                        <div style="width: 100%;">
                                            <div class="auth-form__group" style="position:relative;">
-                                               <input id="emailSignup" class="auth-form__input" type="Email"  name="username" placeholder="Email của bạn" >
+                                               <input id="emailSignup" class="auth-form__input" type="Email"  name="username" placeholder="Email của bạn" required>
                                                <span id="spanEmail" style="display: none; position: absolute; bottom: -15px; right: 5px;color: red;">Hãy nhập email của bạn</span>
                                             </div>
                                            <div class="auth-form__group" style="position:relative;">
-                                               <input id="passwordSignup1" class="auth-form__input paswordInput"type="password" name="password" placeholder="Mật khẩu" type="password">
+                                               <input id="passwordSignup1" class="auth-form__input paswordInput"type="password" name="password" placeholder="Mật khẩu" type="password"required>
                                                <span style="padding: 2px;cursor: pointer;position:absolute; top:50%; right:4%;font-size:13px"><i id="show-btn1"  class="far fa-eye"></i></span>
                                                <span id="spanPassword" style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Mật khẩu phải có độ dài hơn 10 ký tự</span>
                                             </div>
                                            <div class="auth-form__group" style="position:relative;">
-                                               <input id="fullName" class="auth-form__input"type="text" name="fullName" placeholder="Họ và tên">
+                                               <input id="fullName" class="auth-form__input"type="text" name="fullName" placeholder="Họ và tên"required>
                                                <span id="spanFullName" style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy nhập tên của bạn</span>
                                             </div>
                                            <div class="auth-form__group" style="position:relative;">
-                                               <input id="phone" class="auth-form__input"type="text" name="phone" placeholder="Số điện thoại">
+                                               <input id="phone" class="auth-form__input"type="text" name="phone" placeholder="Số điện thoại"required>
                                                <span id="spanPhone" style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy nhập số điện thoại của bạn</span>
                                             </div>
                                            <div class="auth-form__group" style="position:relative;">
-                                               <input id="address" class="auth-form__input"type="text" name="phone" placeholder="Địa chỉ">
+                                               <input id="address" class="auth-form__input"type="text" name="phone" placeholder="Địa chỉ"required>
                                                <span id="spanAddress" style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy nhập địa chỉ của bạn</span>
                                             </div>
                                        </div>
@@ -138,7 +138,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script type="text/javascript" src="https://phonuiit.com/noel/it.snow.js"></script>
+<!-- <script type="text/javascript" src="https://phonuiit.com/noel/it.snow.js"></script> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
@@ -236,6 +236,8 @@
                     setTimeout(() => {
                         location.reload();
                     }, "1000")
+                    let url = '/user/verify?email=' + email;
+                    window.location.replace(url);
                 },
                 error:(data) => {
                     message = data?.message||data.responseJSON.errorCode

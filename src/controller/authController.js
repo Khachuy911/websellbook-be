@@ -170,7 +170,7 @@ module.exports = {
 
     // if (!user || await !Bcrypt.compareSync(password, user.password))
     if (!user || md5(password) !== user.password) {
-      return next(new ErrorResponse(HTTP_CODE.SUCCESS, MESSAGE.INFOR_WRONG));
+      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_WRONG));
     }
 
     // let token = generator.generate({
