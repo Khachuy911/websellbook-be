@@ -23,7 +23,7 @@ connectDB;
 
 //config route
 route(app);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'static')));
 
 //config view engine
 app.set("view engine", "ejs");
