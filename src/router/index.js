@@ -7,8 +7,10 @@ const ProductRouter = require("./productRouter");
 const FlashSaleRouter = require("./flashSaleRouter");
 const OrderRouter = require("./orderRouter");
 const CommentRouter = require("./commentRouter");
+const AdminRouter = require("./adminRouter");
 
 function route(app) {
+  app.use("/admin", AdminRouter);
   app.use("/api/comment", CommentRouter);
   app.use("/auth", AuthRouter);
   app.use("/api/user", UserRouter);
