@@ -3,7 +3,7 @@ const User = require('../model/userModel');
 
 class adminMiddleWWare{
 
-    checkUser(req,res,next){
+    getUser(req,res,next){
         try {
             let token = req.cookies.token
             let idUser = jwt.verify(token,process.env.JWT_SECRET_KEY)
