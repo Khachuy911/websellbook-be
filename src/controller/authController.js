@@ -189,13 +189,7 @@ module.exports = {
     // <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`
     // sendMail(user.email, text, html);
 
-    if (user.status === 0) {
-      return res.status(HTTP_CODE.SUCCESS).json({
-        isSuccess: true,
-        message: MESSAGE.IS_NOT_VERIFY,
-        data: null,
-      });
-    }
+    
 
     const token = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN
@@ -203,6 +197,14 @@ module.exports = {
     const refreshToken = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN_REFRESH_TOKEN
     });
+    if (user.status === 0) {
+      return res.status(403).json({
+        isSuccess: true,
+        message: MESSAGE.IS_NOT_VERIFY,
+        data: {token},
+      });
+    }
+    res.cookie("token",token,{ maxAge: 9000000, httpOnly: true })
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,

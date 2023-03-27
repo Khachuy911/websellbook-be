@@ -211,7 +211,6 @@
                 type: "POST",
                 data:{username: fullName,password:password, email: email,phone:phone,address:address},
                 success: (data) => {
-                    console.log(data.message)
                     Toastify({
                         text: data.message,
                         duration: 2000,
@@ -234,10 +233,9 @@
                     }).showToast();
                     
                     setTimeout(() => {
-                        location.reload();
+                        let url = '/auth/views/verify?email=' + email;
+                        window.location.replace(url);
                     }, "1000")
-                    let url = '/user/verify?email=' + email;
-                    window.location.replace(url);
                 },
                 error:(data) => {
                     message = data?.message||data.responseJSON.errorCode

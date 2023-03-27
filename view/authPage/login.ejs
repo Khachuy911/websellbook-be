@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Đăng nhập tài khoản</title>
@@ -7,12 +8,13 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/fonts/css/all.min.css">
-    
+
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/3068/3068327.png">
-    
+
 
 </head>
+
 <body>
 
     <div class="modal">
@@ -20,12 +22,12 @@
         <div class="modal__body">
             <div class="auth-form">
                 <div class="auth-form__container">
-                    <div class="container d-flex"  style="align-items: center;text-align: center;margin-bottom:16px">
+                    <div class="container d-flex" style="align-items: center;text-align: center;margin-bottom:16px">
                         <a href="/" class="auth-link-home" style="text-decoration: none;">
-                                <!-- <i class="fa-solid fa-bag-shopping" style="color: #fe6433; font-size:48px"></i> -->
-                                <h1 class="auth-header" style="color: blue;">Khắc Huy Shop</h1>
-                        </a>                   
-                     </div>
+                            <!-- <i class="fa-solid fa-bag-shopping" style="color: #fe6433; font-size:48px"></i> -->
+                            <h1 class="auth-header" style="color: blue;">Khắc Huy Shop</h1>
+                        </a>
+                    </div>
                     <div class="auth-form-form">
                         <div class="auth-form__header">
                             <h3 class="auth-form__heading">
@@ -39,28 +41,32 @@
                     <form id="formLogin">
                         <div class="auth-form__form">
                             <div class="auth-form__group">
-                                <input id="username"name="username" type="email" class="auth-form__input" placeholder="Email của bạn">
+                                <input id="username" name="username" type="email" class="auth-form__input"
+                                    placeholder="Email của bạn">
                             </div>
-                            <div class="auth-form__group"  style="position:relative">
-                                <input id="password" name="password" type="password" class="auth-form__input" placeholder="Mật khẩu">
-                                <span style="padding: 2px;cursor: pointer;position:absolute; top:50%; right:4%;font-size:16px"><i id="show-btn"class="far fa-eye"></i></span>
+                            <div class="auth-form__group" style="position:relative">
+                                <input id="password" name="password" type="password" class="auth-form__input"
+                                    placeholder="Mật khẩu">
+                                <span
+                                    style="padding: 2px;cursor: pointer;position:absolute; top:50%; right:4%;font-size:16px"><i
+                                        id="show-btn" class="far fa-eye"></i></span>
 
                             </div>
-                                    <script>
-                                        const passField = document.getElementById("password");
-                                        const showBtn = document.getElementById("show-btn");
-                                        showBtn.onclick = (()=>{
-                                            if(passField.type === "password"){
-                                                passField.type = "text";
-                                                showBtn.classList.toggle("fa-eye");
-                                                showBtn.classList.toggle("fa-eye-slash");
-                                            }else{
-                                                passField.type = "password";
-                                                showBtn.classList.toggle("fa-eye");
-                                                showBtn.classList.toggle("fa-eye-slash");
-                                            }
-                                        });
-                                    </script>
+                            <script>
+                                const passField = document.getElementById("password");
+                                const showBtn = document.getElementById("show-btn");
+                                showBtn.onclick = (() => {
+                                    if (passField.type === "password") {
+                                        passField.type = "text";
+                                        showBtn.classList.toggle("fa-eye");
+                                        showBtn.classList.toggle("fa-eye-slash");
+                                    } else {
+                                        passField.type = "password";
+                                        showBtn.classList.toggle("fa-eye");
+                                        showBtn.classList.toggle("fa-eye-slash");
+                                    }
+                                });
+                            </script>
                         </div>
                         <div class="auth-form__aside">
                             <div class="auth-form__help">
@@ -73,47 +79,54 @@
 
                         </div>
                         <div class="auth-form__controls">
-                            <a id="goBack" onclick="goback()" class="btn btn--normal auth-form__controls--back" style="color: black" type="submit">Trở lại</a>
+                            <a id="goBack" onclick="goback()" class="btn btn--normal auth-form__controls--back"
+                                style="color: black" type="submit">Trở lại</a>
                             <button id="login" type="submit" class="btn btn--primary hover">Đăng nhập</button>
                         </div>
                     </form>
 
                 </div>
                 <div class="auth-form__socials">
-                    <a href="http://facebook.com" class="hover btn auth-form__socials--facebook btn--size-s btn--with-icon">
+                    <a href="http://facebook.com"
+                        class="hover btn auth-form__socials--facebook btn--size-s btn--with-icon">
                         <i class="fa-brands fa-facebook auth-form__socials-icon"></i>
                         <span class="auth-form__socials--title">
-                            Kết nối với facebook    
+                            Kết nối với facebook
                         </span>
                     </a>
-                    <a href="http://mail.google.com" class="hover auth-form__socials--google btn btn--size-s btn--with-icon">
+                    <a href="http://mail.google.com"
+                        class="hover auth-form__socials--google btn btn--size-s btn--with-icon">
                         <i class="fa-brands fa-google auth-form__socials-icon"></i>
                         <span class="auth-form__socials--title">
-                            Kết nối với google    
+                            Kết nối với google
                         </span>
                     </a>
                 </div>
-            </div> 
+            </div>
         </div>
     </div>
 </body>
+
 </html>
+
+<!-- toastify -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
+<!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <!-- <script type="text/javascript" src="https://phonuiit.com/noel/it.snow.js"></script> -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    $("#formLogin").submit(e=>{
+    $("#formLogin").submit(e => {
         e.preventDefault();
         const username = $("#username").val()
         const password = $("#password").val()
-        if(username&&password){
+        if (username && password) {
             $.ajax({
                 url: `/auth/login`,
                 type: "POST",
-                data:{email: username,password:password},
+                data: { email: username, password: password },
                 success: (data) => {
                     console.log(data)
                     Toastify({
@@ -131,58 +144,90 @@
                         stopOnFocus: true, // Prevents dismissing of toast on hover
                         style: {
                             background: "linear-gradient(to right, green, green)",
-                            width:"250px",
-                            fontSize:"16px"
+                            width: "250px",
+                            fontSize: "16px"
                         },
-                        onClick: function(){} // Callback after click
+                        onClick: function () { } // Callback after click
                     }).showToast();
-                    
+
                 },
-                error:(data) => {
-                    message = data?.message||data.responseJSON.errorCode
-                    console.log(data)
-                    Toastify({
-                        text: message,
-                        duration: 2000,
-                        destination: "http://localhost:3000/",
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, red, red)",
-                            width:"250px",
-                            fontSize:"16px"
-                        },
-                        onClick: function(){} // Callback after click
-                    }).showToast();
+                error: (error) => {
+                    if (error.status == 403) {
+                        let data = error?.responseJSON
+                        let token = data.data.token
+
+                        Toastify({
+                            text: data.message,
+                            duration: 2000,
+                            destination: "http://localhost:3000/",
+                            newWindow: true,
+                            //close: true,
+                            offset: {
+                                x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                                y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                            },
+                            gravity: "top", // `top` or `bottom`
+                            position: "right", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            style: {
+                                background: "linear-gradient(to right, red, red)",
+                                width: "250px",
+                                fontSize: "16px"
+                            },
+                            onClick: function () { } // Callback after click
+                        }).showToast();
+                        setTimeout(() => {
+                            let url = '/auth/views/verify?token=' + token + '&isLogin='+ true;
+                            window.location.replace(url);
+                        }, "1000")
+                    }
+                    else {
+                        message = error?.message || error.responseJSON.errorCode
+                        Toastify({
+                            text: message,
+                            duration: 2000,
+                            destination: "http://localhost:3000/",
+                            newWindow: true,
+                            //close: true,
+                            offset: {
+                                x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                                y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                            },
+                            gravity: "top", // `top` or `bottom`
+                            position: "right", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            style: {
+                                background: "linear-gradient(to right, red, red)",
+                                width: "250px",
+                                fontSize: "16px"
+                            },
+                            onClick: function () { } // Callback after click
+                        }).showToast();
+
+                    }
                 }
             })
         }
-        
+
     })
 </script>
 <script>
-    function goback(){
+    function goback() {
         history.go(-1)
     }
 </script>
 <style>
-    .auth-form__controls{
+    .auth-form__controls {
         margin-top: 20px;
         display: flex;
         justify-content: flex-end;
     }
-    #auth-form__logindefault{
+
+    #auth-form__logindefault {
         margin: 10px 0 50px;
 
     }
 </style>
 <script>
-    let checkLogin=document.getElementById("auth-form__logindefault")
+    let checkLogin = document.getElementById("auth-form__logindefault")
 </script>

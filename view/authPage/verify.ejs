@@ -26,7 +26,7 @@
                         <p style="text-align: left; line-height: 1.6;">Chúng tôi đã gửi một xác minh đến email: <strong id="params" style="color: var(--prymary-color);"></strong></p>
                         <script>
                             const urlParams = new URLSearchParams(window.location.search)
-                            document.getElementById("params").innerText = urlParams.get("email")
+                            document.getElementById("params").innerText = urlParams.get("token")
                         </script>
                         <p style="text-align: left; line-height: 1.6;">Vui lòng nhập mã bên dưới để xác minh tài khoản của bạn.</p>
                         <form id="formSubmit">
@@ -50,7 +50,7 @@
 <script>
     $("#formSubmit").submit(e=>{
         e.preventDefault();
-        const email = URLSearchParams(window.location.search).get("email")
+        const email = URLSearchParams(window.location.search).get("token")
         const verifyCode = code
         if(email&&verifyCode){
             console.log("verify code...")
