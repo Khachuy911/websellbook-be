@@ -12,7 +12,7 @@ const CommentRouter = require("./commentRouter");
 const AdminRouter = require("./adminRouter");
 
 function route(app) {
-  app.use("/admin",AdminMiddleware.getUser,AdminRouter);
+  app.use("/admin" ,AdminMiddleware.getUser,AdminMiddleware.checkAdmin,AdminRouter);
   app.use("/api/comment", CommentRouter);
   app.use("/auth", AuthRouter);
   app.use("/api/user", UserRouter);
