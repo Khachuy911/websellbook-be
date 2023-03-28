@@ -5,9 +5,17 @@ class adminMiddleWWare{
 
     getUser(req,res,next){
         try {
+            console.log(req)
             let token = req.cookies.token
-            let idUser = jwt.verify(token,process.env.JWT_SECRET_KEY)
-            User.findOne(idUser)
+            let idUser = jwt.verify(token,process.env.JWT_SECRET_KEY).id
+            const condition = {
+                where: {
+                  id: idUser,
+                  status: !0
+                }
+              };
+              console.log(idUser);
+            User.findOne(condition)
             .then((data)=>{
                 let {password,...user} =data
                 res.user = user
@@ -21,6 +29,7 @@ class adminMiddleWWare{
     checkAdmin(req,res,next){
         try {
             const user = req.user;
+            console.log(user)
             if(user.role == 3){
                 res.user = user
                 next()

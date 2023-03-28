@@ -11,8 +11,10 @@ const task2 = require("./helper/cronjobVoucher");
 const route = require("./router/index");
 const swaggerSpec = require("../swagger/apiDoc");
 const swaggerUI = require("swagger-ui-express");
+const cookieParser = require('cookie-parser') 
 
 app.use(cors());
+app.use(cookieParser())
 
 //config body Parser
 app.use(bodyParser.urlencoded({ extended: false }));
