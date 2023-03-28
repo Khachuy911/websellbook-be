@@ -63,7 +63,7 @@ module.exports = {
       }
 
       const text = `Click here to Verify your Account, you can verify in 5 minutes`;
-      const link = `${req.protocol}://${req.get("host")}/auth/verify?token=${token}&id=${user.id}`;
+      const link = `${req.protocol}://${req.get("host")}/auth/views/check-verify?token=${token}&id=${user.id}`;
       const html = `<button style="background-color: red; width: 100px; height: 50px; border: 1px solid red">
       <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`
       sendMail(user.email, text, html);
@@ -214,42 +214,45 @@ module.exports = {
     // sendMail(user.email, text, html);
 
 
-
-    const token2 = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+    const token = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN
     });
-    const refreshToken = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: process.env.JWT_EXPIRES_IN_REFRESH_TOKEN
-    });
+    
 
     if (user.status === 0) {
-      let token = generator.generate({
+      let token2 = generator.generate({
         length: DEFAULT_VALUE.LENGTH_TOKEN_VERIFY,
         uppercase: true
       });
 
-      user.verifyCode = token;
+      user.verifyCode = token2;
       user.verifyCodeValid = moment().add(DEFAULT_VALUE.MINUTE_VERIFY, DEFAULT_VALUE.TYPE_DATE_VERIFY);
 
       await user.save();
 
       const text = `Click here to Verify your Account, you can verify in 5 minutes`;
-      const link = `${req.protocol}://${req.get("host")}/auth/verify?token=${token}&id=${user.id}`;
+      const link = `${req.protocol}://${req.get("host")}/auth/views/check-verify?token=${token2}&id=${user.id}`;
       const html = `<button style="background-color: red; width: 100px; height: 50px; border: 1px solid red">
       <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`
       sendMail(user.email, text, html);
       return res.status(403).json({
         isSuccess: true,
         message: MESSAGE.IS_NOT_VERIFY,
-        data: { token:token2 },
+        data: { token:token},
       });
     }
-    res.cookie("token", token2, { maxAge: 9000000, httpOnly: true })
+
+
+    
+    const refreshToken = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: process.env.JWT_EXPIRES_IN_REFRESH_TOKEN
+    });
+    res.cookie("token", token, { maxAge: 9000000, httpOnly: true })
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      // data: { token, refreshToken },
+      data: { token, refreshToken },
     });
   },
 

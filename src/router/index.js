@@ -1,5 +1,4 @@
 
-const AdminMiddleware = require("../middleware/adminMiddleware");
 const ErrorHandle = require("../middleware/errorHandle");
 const AuthRouter = require("./authRouter");
 const UserRouter = require("./userRouter");

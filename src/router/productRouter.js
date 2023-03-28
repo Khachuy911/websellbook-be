@@ -7,6 +7,11 @@ const AsyncHandle = require("../middleware/asyncHandle");
 const upload = require("../middleware/multer");
 const { DEFAULT_VALUE } = require("../helper/constant");
 
+Route.get("/create",(req,res,next)=>{
+  res.render("../view/admin/ListUser")
+})
+
+
 Route.delete(
   "/deletesoft/",
   Auth.checkToken,
