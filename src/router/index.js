@@ -1,3 +1,5 @@
+
+const AdminMiddleware = require("../middleware/adminMiddleware");
 const ErrorHandle = require("../middleware/errorHandle");
 const AuthRouter = require("./authRouter");
 const UserRouter = require("./userRouter");
@@ -7,8 +9,10 @@ const ProductRouter = require("./productRouter");
 const FlashSaleRouter = require("./flashSaleRouter");
 const OrderRouter = require("./orderRouter");
 const CommentRouter = require("./commentRouter");
+const AdminRouter = require("./adminRouter");
 
 function route(app) {
+  app.use("/admin",AdminMiddleware.getUser,AdminRouter);
   app.use("/api/comment", CommentRouter);
   app.use("/auth", AuthRouter);
   app.use("/api/user", UserRouter);

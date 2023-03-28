@@ -16,9 +16,11 @@ module.exports = {
   register: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
+      console.log(req.body)
       const { username, password, email, phone, age, address } = req.body;
 
       if (!username || !password || !email || !phone) {
+        await t.rollback();
         return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_LACK));
       }
 
@@ -122,7 +124,31 @@ module.exports = {
       data: null,
     });
   },
+  verify: (req, res, next) => {
+    let token = req.query.token
+    let idUser = jwt.verify(token, process.env.JWT_SECRET_KEY).id
+    const condition = {
+      where: {
+        id: idUser,
+        status: 0
+      }
+    };
+    User.findOne(condition)
+      .then((data) => {
+        if (data) {
+          let { password, email, ...user } = data?.dataValues
+          res.status(200).render("../view/authPage/verify", {
+            email: email
+          })
 
+        }
+        else {
+          res.status(400).render("../view/authPage/forbidden")
+        }
+      })
+      .catch((error) => res.status(500).json({ message: "Lỗi server" }))
+
+  },
   verifyEmail: async (req, res, next) => {
     const { token, id } = req.query;
 
@@ -168,7 +194,7 @@ module.exports = {
 
     // if (!user || await !Bcrypt.compareSync(password, user.password))
     if (!user || md5(password) !== user.password) {
-      return next(new ErrorResponse(HTTP_CODE.SUCCESS, MESSAGE.INFOR_WRONG));
+      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_WRONG));
     }
 
     // let token = generator.generate({
@@ -187,13 +213,7 @@ module.exports = {
     // <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`
     // sendMail(user.email, text, html);
 
-    if (user.status === 0) {
-      return res.status(HTTP_CODE.SUCCESS).json({
-        isSuccess: true,
-        message: MESSAGE.IS_NOT_VERIFY,
-        data: null,
-      });
-    }
+
 
     const token = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN
@@ -201,11 +221,19 @@ module.exports = {
     const refreshToken = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN_REFRESH_TOKEN
     });
+    if (user.status === 0) {
+      return res.status(403).json({
+        isSuccess: true,
+        message: MESSAGE.IS_NOT_VERIFY,
+        data: { token },
+      });
+    }
+    res.cookie("token", token, { maxAge: 9000000, httpOnly: true })
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      data: { token, refreshToken },
+      // data: { token, refreshToken },
     });
   },
 

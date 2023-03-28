@@ -1,0 +1,79 @@
+#myTable {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #myTable th {
+    background-color: #3498db;
+    color: white;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  #myTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #myTable tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  #myTable tr:hover {
+    background-color: #ddd;
+  }
+  
+  .dataTables_filter {
+    float: right;
+    margin-bottom: 10px;
+  }
+  
+  .dataTables_length {
+    float: left;
+    margin-bottom: 10px;
+  }
+  
+  .dataTables_paginate {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .dataTables_paginate .paginate_button {
+    background-color: #3498db;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 5px;
+    cursor: pointer;
+  }
+
+
+  .dataTables_wrapper .dataTables_paginate .paginate_button{
+    color: white!important;
+  }
+  
+  .dataTables_paginate .paginate_button.current {
+    background-color: #7f8c8d;
+  }
+  
+
+  .btn-follow{
+    background-color: #3498db;
+    border: none;
+    color: aliceblue;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+  .btn-follow:hover{
+    opacity: 0.8;
+  }
+  .dataTables_info {
+    margin-top: 10px;
+  }
+  
+  .dataTables_empty {
+    text-align: center;
+    font-style: italic;
+    color: #777;
+  }
