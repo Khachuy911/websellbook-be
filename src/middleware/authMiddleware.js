@@ -11,9 +11,12 @@ const { DEFAULT_VALUE, HTTP_CODE, MESSAGE } = require('../helper/constant');
 module.exports.checkToken = async (req, res, next) => {
   try {
     let token;
-    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
-      token = req.headers.authorization.split(' ')[1];
-
+    // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
+    //   token = req.headers.authorization.split(' ')[1];
+    if(req.cookies.token){
+      token = req.cookies.token
+    }
+    
     if (!token)
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.NOT_LOGIN))
 
