@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Verify Code</title>
+    <title>Xác nhận email</title>
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/main.css">
@@ -22,26 +22,23 @@
         <div class="modal__overlay"></div>
         <div class="modal__body">
             <div class="auth-form">
-                <div class="container" style="max-width: 600px;">
+                <div class="container" style="max-width: 700px;">
                     <div class="form" style="line-height:1.6rem">
-                        <h2 style="color: var(--prymary-color); margin-bottom: 16px;">Verify Code</h2>
-                        <p style="text-align: left; line-height: 1.6;">Chúng tôi đã gửi một xác minh đến email: <strong
+                        <h2 style="color: var(--prymary-color); margin-bottom: 16px;">Xác nhận Email</h2>
+                        <p style="text-align: left; line-height: 1.6;">Chúng tôi đã gửi một đường dẫn xác minh đến email: <strong
                                 id="params" style="color: var(--prymary-color);">
                                 <% if (email) { %>
                                     <%=email%>
                                 <%}%>
                             </strong></p>
-                        <script>
-
-                        </script>
-                        <p style="text-align: left; line-height: 1.6;">Vui lòng nhập mã bên dưới để xác minh tài khoản
-                            của bạn.</p>
-                        <form id="formSubmit">
+                        
+                        <p style="text-align: left; line-height: 1.6;">Vui lòng kiểm tra email của bạn <a href="https://gmail.com">Tại đây</a>.</p>
+                        <!--<form id="formSubmit">
                             <input id="code" type="text" placeholder="Enter verification code" required>
                             <button type="submit">Verify</button>
                         </form>
                         <p class="resend"><button id="resend" style="border: unset; background-color: unset;">Resend
-                                code</button></p>
+                                code</button></p> -->
                     </div>
                 </div>
             </div>
@@ -50,12 +47,12 @@
 </body>
 
 </html>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<!-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
 <!-- <script type="text/javascript" src="https://phonuiit.com/noel/it.snow.js"></script> -->
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
     $("#formSubmit").submit(e => {
         e.preventDefault();
@@ -139,4 +136,4 @@
 </style>
 <script>
     let checkLogin = document.getElementById("auth-form__logindefault")
-</script>
+</script> -->
