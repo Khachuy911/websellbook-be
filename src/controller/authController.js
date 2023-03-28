@@ -124,7 +124,31 @@ module.exports = {
       data: null,
     });
   },
+  verify: (req, res, next) => {
+    let token = req.query.token
+    let idUser = jwt.verify(token, process.env.JWT_SECRET_KEY).id
+    const condition = {
+      where: {
+        id: idUser,
+        status: 0
+      }
+    };
+    User.findOne(condition)
+      .then((data) => {
+        if (data) {
+          let { password, email, ...user } = data?.dataValues
+          res.status(200).render("../view/authPage/verify", {
+            email: email
+          })
 
+        }
+        else {
+          res.status(400).render("../view/authPage/forbidden")
+        }
+      })
+      .catch((error) => res.status(500).json({ message: "Lỗi server" }))
+
+  },
   verifyEmail: async (req, res, next) => {
     const { token, id } = req.query;
 
@@ -189,7 +213,7 @@ module.exports = {
     // <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`
     // sendMail(user.email, text, html);
 
-    
+
 
     const token = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN
@@ -201,15 +225,15 @@ module.exports = {
       return res.status(403).json({
         isSuccess: true,
         message: MESSAGE.IS_NOT_VERIFY,
-        data: {token},
+        data: { token },
       });
     }
-    res.cookie("token",token,{ maxAge: 9000000, httpOnly: true })
+    res.cookie("token", token, { maxAge: 9000000, httpOnly: true })
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      data: { token, refreshToken },
+      // data: { token, refreshToken },
     });
   },
 

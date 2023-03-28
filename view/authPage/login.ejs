@@ -17,7 +17,7 @@
 
 <body>
 
-    <div class="modal">
+    <div class="modal-main">
         <div class="modal__overlay"></div>
         <div class="modal__body">
             <div class="auth-form">
@@ -70,7 +70,8 @@
                         </div>
                         <div class="auth-form__aside">
                             <div class="auth-form__help">
-                                <a href="" class="auth-form__help--link hover">Quên mật khẩu</a>
+                                <a href="/auth/views/forgot-password" class="auth-form__help--link hover">Quên mật
+                                    khẩu</a>
                                 <span class="auth-form__helt-separate"></span>
                                 <a href="" class="auth-form__help--link hover">Cần trợ giúp?</a>
                             </div>
@@ -115,8 +116,8 @@
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <!-- <script type="text/javascript" src="https://phonuiit.com/noel/it.snow.js"></script> -->
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
 <script>
     $("#formLogin").submit(e => {
         e.preventDefault();
@@ -128,9 +129,8 @@
                 type: "POST",
                 data: { email: username, password: password },
                 success: (data) => {
-                    console.log(data)
                     Toastify({
-                        text: data.message,
+                        text: "Đăng nhập thành công",
                         duration: 2000,
                         destination: "http://localhost:3000/",
                         newWindow: true,
@@ -149,6 +149,9 @@
                         },
                         onClick: function () { } // Callback after click
                     }).showToast();
+                    setTimeout(() => {
+                        window.location.href = "/product";
+                    }, "2000")
 
                 },
                 error: (error) => {
@@ -177,8 +180,8 @@
                             onClick: function () { } // Callback after click
                         }).showToast();
                         setTimeout(() => {
-                            let url = '/auth/views/verify?token=' + token + '&isLogin='+ true;
-                            window.location.replace(url);
+                            let url = '/auth/views/verify?token=' + token + '&isLogin=' + true;
+                            window.location.href = url;
                         }, "1000")
                     }
                     else {
@@ -206,6 +209,8 @@
 
                     }
                 }
+            
+            
             })
         }
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Đăng ký tài khoản</title>
@@ -7,98 +8,124 @@
     <link rel="stylesheet" href="/css/base.css">
     <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/fonts/css/all.min.css">
-    
+
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/3068/3068327.png">
-    
+
     <style>
-        .auth-form__header{
+        .auth-form__header {
             margin-bottom: 0px;
         }
     </style>
-</head> 
-<body>
-         <div class="modal">
-            <div class="modal__overlay">
-            </div>
-            <div class="modal__body">
-                <form id="FormSubmit" action="">
-                    <div class="auth-form">
-                       <div class="auth-form__container">
-                           <div class="container d-flex"  style="align-items: center;text-align: center;margin-bottom:16px">
-                               <a href="/product" class="auth-link-home" style="text-decoration: none;">
-                                   <h1 class="auth-header" style="color: blue;">Khắc Huy Shop</h1>
-                               </a>                   
-                           </div>
-                           <div class="auth-form-form">
-                               <div class="auth-form__header">
-                                   <h3 class="auth-form__heading">
-                                       Đăng ký
-                                   </h3>
-                                   <a href="/auth/views/login" class="auth-link para-text">
-                                       <span class="auth-form__switch-btn">Đăng nhập</span>
-                                   </a>
-                               </div>
-                           </div>
-                               <div class="auth-form__form">
-                                   <div style="display: flex;">
-                                       <div style="width: 100px;" > 
-                                           <div for="emailSignup" style="font-size:15px;margin-top: 24px;line-height: 1.4;"><label for="emailSignup">Email<strong style="color: red;">*</strong></label> </div>
-                                           <div for="passwordSignup1" style="font-size:15px; margin-top: 40px;"><label for="passwordSignup1">Mật khẩu<strong style="color: red;">*</strong></label> </div>
-                                           <div style="margin-top: 40px;"><label for="fullName" style="font-size:15px;">Họ và tên<strong style="color: red;">*</strong></label></div>
-                                           <div style="margin-top: 40px;"><label for="phone" style="font-size:15px;">Điện thoại<strong style="color: red;">*</strong></label></div>
-                                           <div style="margin-top: 40px;"><label for="address" style="font-size:15px;">Địa chỉ<strong style="color: red;">*</strong></label></div>
-                                       </div>
+</head>
 
-                                       <div style="width: 100%;">
-                                           <div class="auth-form__group" style="position:relative;">
-                                               <input id="emailSignup" class="auth-form__input" type="Email"  name="username" placeholder="Email của bạn" required>
-                                               <span id="spanEmail" style="display: none; position: absolute; bottom: -15px; right: 5px;color: red;">Hãy nhập email của bạn</span>
-                                            </div>
-                                           <div class="auth-form__group" style="position:relative;">
-                                               <input id="passwordSignup1" class="auth-form__input paswordInput"type="password" name="password" placeholder="Mật khẩu" type="password"required>
-                                               <span style="padding: 2px;cursor: pointer;position:absolute; top:50%; right:4%;font-size:13px"><i id="show-btn1"  class="far fa-eye"></i></span>
-                                               <span id="spanPassword" style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Mật khẩu phải có độ dài hơn 10 ký tự</span>
-                                            </div>
-                                           <div class="auth-form__group" style="position:relative;">
-                                               <input id="fullName" class="auth-form__input"type="text" name="fullName" placeholder="Họ và tên"required>
-                                               <span id="spanFullName" style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy nhập tên của bạn</span>
-                                            </div>
-                                           <div class="auth-form__group" style="position:relative;">
-                                               <input id="phone" class="auth-form__input"type="text" name="phone" placeholder="Số điện thoại"required>
-                                               <span id="spanPhone" style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy nhập số điện thoại của bạn</span>
-                                            </div>
-                                           <div class="auth-form__group" style="position:relative;">
-                                               <input id="address" class="auth-form__input"type="text" name="phone" placeholder="Địa chỉ"required>
-                                               <span id="spanAddress" style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy nhập địa chỉ của bạn</span>
-                                            </div>
-                                       </div>
-                                   </div>
-                               </div>
-                               <script>
-                                   const passField1 = document.getElementById("passwordSignup1");
-                                   const showBtn1 = document.getElementById("show-btn1");
-                                   showBtn1.onclick = (()=>{
-                                       if(passField1.type === "password"){
-                                           passField1.type = "text";
-                                           showBtn1.classList.toggle("fa-eye");
-                                           showBtn1.classList.toggle("fa-eye-slash");
-                                       }else{
-                                           passField1.type = "password";
-                                           showBtn1.classList.toggle("fa-eye");
-                                           showBtn1.classList.toggle("fa-eye-slash");
-                                       }
-                                   });
-                               </script>
-                               <div class="auth-form__aside">
-                                   <p class="auth-form__policy-text">
-                                       Bằng việc đăng ký, bạn đã đồng ý với chúng tôi về
-                                       <a href="" class="auth-form__policy-link para-text">Điều khoản dịch vụ</a>
-                                       &
-                                       <a href="" class="auth-form__policy-link para-text">Chính cách bảo mật</a>
-                                   </p>
-                               </div>
-                               <!-- <div style="position: absolute;">
+<body>
+    <div class="modal-main">
+        <div class="modal__overlay">
+        </div>
+        <div class="modal__body">
+            <form id="FormSubmit" action="">
+                <div class="auth-form">
+                    <div class="auth-form__container">
+                        <div class="container d-flex" style="align-items: center;text-align: center;margin-bottom:16px">
+                            <a href="/product" class="auth-link-home" style="text-decoration: none;">
+                                <h1 class="auth-header" style="color: blue;">Khắc Huy Shop</h1>
+                            </a>
+                        </div>
+                        <div class="auth-form-form">
+                            <div class="auth-form__header">
+                                <h3 class="auth-form__heading">
+                                    Đăng ký
+                                </h3>
+                                <a href="/auth/views/login" class="auth-link para-text">
+                                    <span class="auth-form__switch-btn">Đăng nhập</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="auth-form__form">
+                            <div style="display: flex;">
+                                <div style="width: 100px;">
+                                    <div for="emailSignup" style="font-size:15px;margin-top: 24px;line-height: 1.4;">
+                                        <label for="emailSignup">Email<strong style="color: red;">*</strong></label>
+                                    </div>
+                                    <div for="passwordSignup1" style="font-size:15px; margin-top: 40px;"><label
+                                            for="passwordSignup1">Mật khẩu<strong style="color: red;">*</strong></label>
+                                    </div>
+                                    <div style="margin-top: 40px;"><label for="fullName" style="font-size:15px;">Họ và
+                                            tên<strong style="color: red;">*</strong></label></div>
+                                    <div style="margin-top: 40px;"><label for="phone" style="font-size:15px;">Điện
+                                            thoại<strong style="color: red;">*</strong></label></div>
+                                    <div style="margin-top: 40px;"><label for="address" style="font-size:15px;">Địa
+                                            chỉ<strong style="color: red;">*</strong></label></div>
+                                </div>
+
+                                <div style="width: 100%;">
+                                    <div class="auth-form__group" style="position:relative;">
+                                        <input id="emailSignup" class="auth-form__input" type="Email" name="username"
+                                            placeholder="Email của bạn" required>
+                                        <span id="spanEmail"
+                                            style="display: none; position: absolute; bottom: -15px; right: 5px;color: red;">Hãy
+                                            nhập email của bạn</span>
+                                    </div>
+                                    <div class="auth-form__group" style="position:relative;">
+                                        <input id="passwordSignup1" class="auth-form__input paswordInput"
+                                            type="password" name="password" placeholder="Mật khẩu" type="password"
+                                            required>
+                                        <span
+                                            style="padding: 2px;cursor: pointer;position:absolute; top:50%; right:4%;font-size:13px"><i
+                                                id="show-btn1" class="far fa-eye"></i></span>
+                                        <span id="spanPassword"
+                                            style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Mật
+                                            khẩu phải có độ dài hơn 10 ký tự</span>
+                                    </div>
+                                    <div class="auth-form__group" style="position:relative;">
+                                        <input id="fullName" class="auth-form__input" type="text" name="fullName"
+                                            placeholder="Họ và tên" required>
+                                        <span id="spanFullName"
+                                            style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy
+                                            nhập tên của bạn</span>
+                                    </div>
+                                    <div class="auth-form__group" style="position:relative;">
+                                        <input id="phone" class="auth-form__input" type="text" name="phone"
+                                            placeholder="Số điện thoại" required>
+                                        <span id="spanPhone"
+                                            style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy
+                                            nhập số điện thoại của bạn</span>
+                                    </div>
+                                    <div class="auth-form__group" style="position:relative;">
+                                        <input id="address" class="auth-form__input" type="text" name="phone"
+                                            placeholder="Địa chỉ" required>
+                                        <span id="spanAddress"
+                                            style="display: none;position: absolute; bottom: -15px; right: 5px;color: red;">Hãy
+                                            nhập địa chỉ của bạn</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <script>
+                            const passField1 = document.getElementById("passwordSignup1");
+                            const showBtn1 = document.getElementById("show-btn1");
+                            showBtn1.onclick = (() => {
+                                if (passField1.type === "password") {
+                                    passField1.type = "text";
+                                    showBtn1.classList.toggle("fa-eye");
+                                    showBtn1.classList.toggle("fa-eye-slash");
+                                } else {
+                                    passField1.type = "password";
+                                    showBtn1.classList.toggle("fa-eye");
+                                    showBtn1.classList.toggle("fa-eye-slash");
+                                }
+                            });
+                        </script>
+                        <div class="auth-form__aside">
+                            <p class="auth-form__policy-text">
+                                Bằng việc đăng ký, bạn đã đồng ý với chúng tôi về
+                                <a href="" class="auth-form__policy-link para-text">Điều khoản dịch vụ</a>
+                                &
+                                <a href="" class="auth-form__policy-link para-text">Chính cách bảo mật</a>
+                            </p>
+                        </div>
+                        <!-- <div style="position: absolute;">
                                    <div id="text_logout" class="auth-form__aside">sss
                                        <style>
                                            #text_logout{
@@ -109,31 +136,35 @@
                                        </style>
                                    </div>
                                </div> -->
-                               <div class="auth-form__controls">
-                                   <a id="goBack" onclick="goback()" class="btn btn--normal auth-form__controls--back" style="color: black" type="submit">Trở lại</a>
-                                   <button type="submit" class="btn btn--primary para-text"id="signup">Đăng ký</button>
-                               </div>
-                       </div>
-       
-                       <div class="auth-form__socials">
-                           <a href="http://facebook.com" class="para-text btn auth-form__socials--facebook btn--size-s btn--with-icon">
-                               <i class="fa-brands fa-facebook auth-form__socials-icon"></i>
-                               <span class="auth-form__socials--title">
-                                   Kết nối với facebook    
-                               </span>
-                           </a>
-                           <a href="http://google.com" class="para-text auth-form__socials--google btn btn--size-s btn--with-icon">
-                               <i class="fa-brands fa-google auth-form__socials-icon"></i>
-                               <span class="auth-form__socials--title">
-                                   Kết nối với google    
-                               </span>
-                           </a>
-                       </div>
-                    </div> 
-                </form>
-            </div>
-         </div>
+                        <div class="auth-form__controls">
+                            <a id="goBack" onclick="goback()" class="btn btn--normal auth-form__controls--back"
+                                style="color: black" type="submit">Trở lại</a>
+                            <button type="submit" class="btn btn--primary para-text" id="signup">Đăng ký</button>
+                        </div>
+                    </div>
+
+                    <div class="auth-form__socials">
+                        <a href="http://facebook.com"
+                            class="para-text btn auth-form__socials--facebook btn--size-s btn--with-icon">
+                            <i class="fa-brands fa-facebook auth-form__socials-icon"></i>
+                            <span class="auth-form__socials--title">
+                                Kết nối với facebook
+                            </span>
+                        </a>
+                        <a href="http://google.com"
+                            class="para-text auth-form__socials--google btn btn--size-s btn--with-icon">
+                            <i class="fa-brands fa-google auth-form__socials-icon"></i>
+                            <span class="auth-form__socials--title">
+                                Kết nối với google
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
@@ -142,21 +173,21 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script>
-    function goback(){
+    function goback() {
         location.replace("/");
     }
 </script>
 
 <script>
-   
 
-    document.getElementById("passwordSignup1").oninput= ()=>{$("#spanPassword")[0].style.display = "none"}
-    document.getElementById("emailSignup").oninput= ()=>{$("#spanEmail")[0].style.display = "none"}
-    document.getElementById("fullName").oninput= ()=>{$("#spanFullName")[0].style.display = "none"}
-    document.getElementById("phone").oninput= ()=>{$("#spanPhone")[0].style.display = "none"}
-    document.getElementById("address").oninput= ()=>{$("#spanAddress")[0].style.display = "none"}
-    
-    $("#FormSubmit").submit(e=>{
+
+    document.getElementById("passwordSignup1").oninput = () => { $("#spanPassword")[0].style.display = "none" }
+    document.getElementById("emailSignup").oninput = () => { $("#spanEmail")[0].style.display = "none" }
+    document.getElementById("fullName").oninput = () => { $("#spanFullName")[0].style.display = "none" }
+    document.getElementById("phone").oninput = () => { $("#spanPhone")[0].style.display = "none" }
+    document.getElementById("address").oninput = () => { $("#spanAddress")[0].style.display = "none" }
+
+    $("#FormSubmit").submit(e => {
         e.preventDefault();
         const password = document.getElementById("passwordSignup1").value;
         const email = document.getElementById("emailSignup").value;
@@ -164,55 +195,56 @@
         const phone = document.getElementById("phone").value;
         const address = document.getElementById("address").value;
         let count = 0;
-        if(email==""){
+        if (email == "") {
             $("#spanEmail")[0].style.display = "block"
-            count+=1;
+            count += 1;
         }
-        else{
+        else {
             $("#spanEmail")[0].style.display = "none"
         }
-        if(password?.length<10){
+        if (password?.length < 10) {
             $("#spanPassword")[0].style.display = "block"
-            count = count+1;
+            count = count + 1;
         }
-        else{
+        else {
             $("#spanPassword")[0].style.display = "none"
         }
 
-        if(fullName==""){
+        if (fullName == "") {
             $("#spanFullName")[0].style.display = "block"
-            count = count+1;
+            count = count + 1;
         }
-        else{
+        else {
             $("#spanFullName")[0].style.display = "none"
         }
 
-        if(phone?.length<8||phone.length>15||isNaN((phone))){
+        if (phone?.length < 8 || phone.length > 15 || isNaN((phone))) {
             $("#spanPhone")[0].style.display = "block"
-            count = count+1;
+            count = count + 1;
 
         }
-        else{
+        else {
             $("#spanPhone")[0].style.display = "none"
         }
 
-        if(address==""){
+        if (address == "") {
             $("#spanAddress")[0].style.display = "block"
-            count = count+1;
+            count = count + 1;
 
         }
-        else{
+        else {
             $("#spanAddress")[0].style.display = "none"
         }
 
-        if(!count){
+        if (!count) {
             $.ajax({
                 url: `/auth/register`,
                 type: "POST",
-                data:{username: fullName,password:password, email: email,phone:phone,address:address},
+                data: { username: fullName, password: password, email: email, phone: phone, address: address },
                 success: (data) => {
+                    console.log(data)
                     Toastify({
-                        text: data.message,
+                        text: "Đăng ký tài khoản thành công",
                         duration: 2000,
                         destination: "http://localhost:3000/",
                         newWindow: true,
@@ -226,19 +258,33 @@
                         stopOnFocus: true, // Prevents dismissing of toast on hover
                         style: {
                             background: "linear-gradient(to right, green, green)",
-                            width:"250px",
-                            fontSize:"16px"
+                            width: "250px",
+                            fontSize: "16px"
                         },
-                        onClick: function(){} // Callback after click
+                        onClick: function () { } // Callback after click
                     }).showToast();
-                    
                     setTimeout(() => {
-                        let url = '/auth/views/verify?email=' + email;
-                        window.location.replace(url);
-                    }, "1000")
+                        $.ajax({
+                            url: `/auth/login`,
+                            type: "POST",
+                            data: { password: password, email: email },
+                            success: (login) => {
+                                
+                            },
+                            error: (error) => {
+                                if (error.status == 403) {
+                                    let data = error?.responseJSON
+                                    let token = data.data.token
+                                    let url = `/auth/views/verify?token=${token}&isLogin=${false}`;
+                                    window.location.href = url;
+                                }
+                            }
+
+                        })
+                    }, "2000")
                 },
-                error:(data) => {
-                    message = data?.message||data.responseJSON.errorCode
+                error: (data) => {
+                    message = data?.message || data.responseJSON.errorCode
                     console.log(data)
                     Toastify({
                         text: message,
@@ -255,10 +301,10 @@
                         stopOnFocus: true, // Prevents dismissing of toast on hover
                         style: {
                             background: "linear-gradient(to right, red, red)",
-                            width:"250px",
-                            fontSize:"16px"
+                            width: "250px",
+                            fontSize: "16px"
                         },
-                        onClick: function(){} // Callback after click
+                        onClick: function () { } // Callback after click
                     }).showToast();
                 }
             })
@@ -268,14 +314,16 @@
 </script>
 
 <style>
-    .error{
+    .error {
         background-color: rgb(119, 109, 109);
         cursor: default;
     }
-    .error:hover{
+
+    .error:hover {
         opacity: 1;
     }
-    .text-logout-none{
+
+    .text-logout-none {
         display: none;
     }
 </style>
