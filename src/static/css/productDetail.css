@@ -123,6 +123,14 @@ img:hover {
   margin: 0px 20px;
 }
 
+a{
+  text-decoration: none;
+  color:black;
+}
+a:hover {
+  color: rgb(105, 192, 233);
+}
+
 .title-category {
   display: flex;
   flex-direction: row;

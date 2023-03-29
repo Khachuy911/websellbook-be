@@ -19,7 +19,7 @@ function route(app) {
   app.use("/api/category", CategoryRouter);
   app.use("/product", ProductRouter);
   app.use("/api/flashsale", FlashSaleRouter);
-  app.use("/api/order", OrderRouter);
+  app.use("/order", OrderRouter);
 
   app.use(ErrorHandle);
 }
