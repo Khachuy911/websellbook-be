@@ -6,15 +6,15 @@ const AsyncHandle = require('../middleware/asyncHandle');
 const Auth = require('../middleware/authMiddleware');
 const { DEFAULT_VALUE } = require('../helper/constant');
 
-Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/api/voucher/deletesoft/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE, DEFAULT_VALUE.EDIT), AsyncHandle(VoucherController.deleteSoft))
+Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/voucher/deletesoft/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE, DEFAULT_VALUE.EDIT), AsyncHandle(VoucherController.deleteSoft))
 
 Route.route('/:id')
-  .patch(Auth.checkToken, Auth.permission('/api/voucher/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(VoucherController.update))
-  .get(Auth.checkToken, Auth.permission('/api/voucher/:id/', DEFAULT_VALUE.READ), AsyncHandle(VoucherController.getDetail))
-  .delete(Auth.checkToken, Auth.permission('/api/voucher/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(VoucherController.deleteHard))
+  .patch(Auth.checkToken, Auth.permission('/voucher/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(VoucherController.update))
+  .get(Auth.checkToken, Auth.permission('/voucher/:id/', DEFAULT_VALUE.READ), AsyncHandle(VoucherController.getDetail))
+  .delete(Auth.checkToken, Auth.permission('/voucher/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(VoucherController.deleteHard))
 
 Route.route('/')
-  .post(Auth.checkToken, Auth.permission('/api/voucher/', DEFAULT_VALUE.READ, DEFAULT_VALUE.ADD), AsyncHandle(VoucherController.create))
+  .post(Auth.checkToken, Auth.permission('/voucher/', DEFAULT_VALUE.READ, DEFAULT_VALUE.ADD), AsyncHandle(VoucherController.create))
   .get(Auth.checkToken, AsyncHandle(VoucherController.getVoucher))
 
 /**
@@ -43,7 +43,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/voucher/:
+ * /voucher/:
  *  post:
  *      summary: create a new voucher
  *      description: post a new voucher
@@ -79,7 +79,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/voucher/:
+ * /voucher/:
  *  get:
  *      summary: return list of the voucher
  *      description: get all voucher 
@@ -112,7 +112,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/voucher/{id}:
+ * /voucher/{id}:
  *  get:
  *      summary: return a voucher
  *      description: get a voucher by id
@@ -142,7 +142,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/voucher/deletesoft/{id}:
+ * /voucher/deletesoft/{id}:
  *  delete:
  *      summary: delete soft flash sale
  *      description: delete soft a voucher by id
@@ -173,7 +173,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/voucher/{id}:
+ * /voucher/{id}:
  *  delete:
  *      summary: delete hard voucher
  *      description: delete a voucher by id
@@ -205,7 +205,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/voucher/{id}:
+ * /voucher/{id}:
  *  patch:
  *      summary: update a voucher
  *      description: update a voucher by id

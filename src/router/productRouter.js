@@ -16,7 +16,7 @@ Route.delete(
   "/deletesoft/",
   Auth.checkToken,
   Auth.permission(
-    "/api/product/deletesoft/",
+    "/product/deletesoft/",
     DEFAULT_VALUE.DELETE,
     DEFAULT_VALUE.READ
   ),
@@ -33,7 +33,7 @@ Route.route("/:id")
   .patch(
     Auth.checkToken,
     Auth.permission(
-      "/api/product/:id/",
+      "/product/:id/",
       DEFAULT_VALUE.EDIT,
       DEFAULT_VALUE.READ,
       DEFAULT_VALUE.DELETE
@@ -47,13 +47,13 @@ Route.route("/")
   .get(AsyncHandle(ProductController.getProduct))
   .post(
     Auth.checkToken,
-    Auth.permission("/api/product/", DEFAULT_VALUE.ADD, DEFAULT_VALUE.READ),
+    Auth.permission("/product/", DEFAULT_VALUE.ADD, DEFAULT_VALUE.READ),
     upload.any(),
     AsyncHandle(ProductController.create)
   )
   .delete(
     Auth.checkToken,
-    Auth.permission("/api/product/", DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ),
+    Auth.permission("/product/", DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ),
     AsyncHandle(ProductController.deleteHard)
   );
 
@@ -97,7 +97,7 @@ Route.route("/")
 
 /**
  * @swagger
- * /api/product/:
+ * /product/:
  *  post:
  *      summary: create a new product
  *      description: post a new product
@@ -133,7 +133,7 @@ Route.route("/")
 
 /**
  * @swagger
- * /api/product/:
+ * /product/:
  *  get:
  *      summary: return list of the product
  *      description: get all product
@@ -173,7 +173,7 @@ Route.route("/")
 
 /**
  * @swagger
- * /api/product/{id}:
+ * /product/{id}:
  *  get:
  *      summary: return a product
  *      description: get a product by id
@@ -201,7 +201,7 @@ Route.route("/")
 
 /**
  * @swagger
- * /api/product/deletesoft/:
+ * /product/deletesoft/:
  *  delete:
  *      summary: delete soft product
  *      description: delete soft a product by ids
@@ -232,7 +232,7 @@ Route.route("/")
 
 /**
  * @swagger
- * /api/product/:
+ * /product/:
  *  delete:
  *      summary: delete hard product
  *      description: delete a product by ids
@@ -264,7 +264,7 @@ Route.route("/")
 
 /**
  * @swagger
- * /api/product/{id}:
+ * /product/{id}:
  *  patch:
  *      summary: update a product
  *      description: update a product by id

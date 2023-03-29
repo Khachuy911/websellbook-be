@@ -6,15 +6,15 @@ const Auth = require('../middleware/authMiddleware');
 const AsyncHandle = require('../middleware/asyncHandle');
 const { DEFAULT_VALUE } = require('../helper/constant');
 
-Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/api/user/deletesoft/:id', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(UserController.deleteSoft));
+Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/user/deletesoft/:id', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(UserController.deleteSoft));
 Route.get('/getme', Auth.checkToken, AsyncHandle(UserController.getMe));
 
 Route.route('/:id')
-    .delete(Auth.checkToken, Auth.permission('/api/user/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(UserController.deleteHard))
+    .delete(Auth.checkToken, Auth.permission('/user/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(UserController.deleteHard))
 
 Route.route('/')
     .patch(Auth.checkToken, AsyncHandle(UserController.updateUser))
-    .get(Auth.checkToken, Auth.permission('/api/user/', DEFAULT_VALUE.READ), AsyncHandle(UserController.getUser));
+    .get(Auth.checkToken, Auth.permission('/user/', DEFAULT_VALUE.READ), AsyncHandle(UserController.getUser));
 
 
 
@@ -59,7 +59,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/user/:
+ * /user/:
  *  get:
  *      summary: return list of the user
  *      description: get all user 
@@ -92,7 +92,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/user/getme:
+ * /user/getme:
  *  get:
  *      summary: return a user
  *      description: get a user by id
@@ -116,7 +116,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/user/{id}:
+ * /user/{id}:
  *  delete:
  *      summary: delete hard user
  *      description: delete a user by id
@@ -148,7 +148,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/user/deletesoft/{id}:
+ * /user/deletesoft/{id}:
  *  delete:
  *      summary: delete soft user
  *      description: delete soft a user by id
@@ -179,7 +179,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/user/{id}:
+ * /user/{id}:
  *  patch:
  *      summary: update a user
  *      description: update a user by id

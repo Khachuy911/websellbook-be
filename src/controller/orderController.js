@@ -570,7 +570,7 @@ module.exports = {
       totalPage: Math.ceil(order.count / +pageSize),
       totalSize: order.rows.length || 0,
       rows: order.rows,
-      currentUser: req.user,
+      currentUser: req.currentUser,
     };
 
     // res.status(HTTP_CODE.SUCCESS).json({
