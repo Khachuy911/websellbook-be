@@ -16,7 +16,7 @@ function route(app) {
   app.use("/auth", AuthRouter);
   app.use("/api/user", UserRouter);
   app.use("/api/voucher", VoucherRouter);
-  app.use("/api/category", CategoryRouter);
+  app.use("/category", CategoryRouter);
   app.use("/product", ProductRouter);
   app.use("/api/flashsale", FlashSaleRouter);
   app.use("/api/order", OrderRouter);
