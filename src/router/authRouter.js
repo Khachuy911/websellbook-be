@@ -16,6 +16,7 @@ Route.patch('/resetPW/:reset', AsyncHandle(AuthController.resetPW));
 Route.get('/views/login', (req,res,next)=>{res.render("../view/authPage/login")});
 Route.get('/views/regester', (req,res,next)=>{res.render("../view/authPage/regester")});
 Route.get('/views/verify', AuthController.verify);
+Route.get('/views/check-verify', (req,res,next)=>{res.render("../view/authPage/check-verify",{token:req.query.token,id:req.query.id})});
 Route.get('/views/forgot-password',(req,res,next)=>{res.render("../view/authPage/forgotpassword")});
 
 Route.get('/roleModule', AuthController.roleModule);

@@ -12,7 +12,7 @@ module.exports.checkToken = async (req, res, next) => {
   try {
     let token;
     // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
-    //   token = req.headers.authorization.split(' ')[1];
+    //   token = req.headers.authorization.split(' ')[1];\
     if(req.cookies.token){
       token = req.cookies.token
     }
@@ -24,15 +24,16 @@ module.exports.checkToken = async (req, res, next) => {
 
     const condition = {
       where: {
-        id: decode.id
+        id: decode.id,
+        status:1
       }
     }
     const user = await User.findOne(condition);
 
     if (!user)
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST));
-
-    req.user = user.id;
+      let {password,...data} =user.dataValues
+      req.user = data;
 
     next();
 
@@ -40,6 +41,7 @@ module.exports.checkToken = async (req, res, next) => {
     return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message));
   }
 }
+
 
 module.exports.permission = (url, ...role) => {
   return async (req, res, next) => {

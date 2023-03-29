@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Xác nhận email</title>
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/fonts/css/all.min.css">
+    <link rel="stylesheet" href="/css/verify.css">
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/3068/3068327.png">
+
+
+</head>
+
+<body>
+    <div id="id" style="display: none;" value='<% if(id) { %><%=id%><%}%>'></div>
+    <div id="token" style="display: none;" value="<% if(token) { %><%=token%><%}%>"></div>
+    <div class="modal-main" style="top: -20%;">
+        <div class="modal__overlay"></div>
+        <div class="modal__body">
+            <div class="auth-form">
+                <div class="container" style="max-width: 700px;">
+                    <div class="form" style="line-height:1.6rem">
+
+                        <h2 style="color: var(--prymary-color); margin-bottom: 16px;" id="email"></h2>
+                        <p style="text-align: center; line-height: 1.6;" id="check-verify"></p>
+
+                        <p style="text-align: center; line-height: 1.6;">
+                            <a href="/auth/views/login" style="margin: 5px;">Đăng nhập</a>
+                            <a href="/auth/views/login" style="margin: 5px;">Trang chủ</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    const id = document.getElementById("id").getAttribute("value")
+    const token = document.getElementById("token").getAttribute("value")
+    let email = document.getElementById("email")
+    let checkVerify = document.getElementById("check-verify")
+    $.ajax({
+        url: `/auth/verify`,
+        type: "get",
+        data: { id: id, token: token },
+        success: (data) => {
+            email.innerText="Xác thực email thành công!"
+            checkVerify.innerText="Chúc mừng bạn đã xác thực email thành công!"
+        },
+        error: (data) => {
+            email.innerText="Xác thực email không thành công!"
+            checkVerify.innerText="Vui lòng kiểm tra lại email của bạn!"
+        }
+    })
+</script>
