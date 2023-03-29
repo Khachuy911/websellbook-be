@@ -1,0 +1,63 @@
+body{
+  font-family: 'Roboto Slab', serif;
+  /* font-family: 'Roboto Mono', monospace; */
+  /* font-family: 'Noto Serif', serif; */
+}
+
+/* HEAD */
+.custom-menu-header{
+  color: black;
+}
+
+.custom-menu-header .active{ 
+  color: red;
+}
+
+.custom-menu-header:hover{
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  opacity: 70%;
+  color: rgb(105, 192, 233);
+  cursor: pointer;
+}
+
+.custom-dropdown-item:hover {
+  background-color: rgb(105, 192, 233);
+}
+
+header {
+  /* background-color: rgb(235, 231, 231); */
+  padding: 10px;
+  background-color: rgb(105, 192, 233);
+  
+}
+
+img:hover {
+  opacity: 90%;
+  transform: scale(1.01);
+}
+
+/* ======================== */
+/* SECTION */
+
+.custom-table {
+  height: 350px;
+}
+
+a{
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+}
+
+
+/* ======================== */
+/* FOOTER */
+footer {
+  background-color: rgb(105, 192, 233);
+  padding: 10%;
+  /* height: 500px; */
+  margin-top: 50px;
+}

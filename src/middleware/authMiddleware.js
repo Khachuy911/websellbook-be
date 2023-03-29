@@ -33,7 +33,8 @@ module.exports.checkToken = async (req, res, next) => {
     if (!user)
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST));
       let {password,...data} =user.dataValues
-      req.user = data;
+      req.user = data.id;
+      req.currentUser = data;
 
     next();
 

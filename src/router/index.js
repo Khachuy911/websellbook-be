@@ -12,14 +12,14 @@ const AdminRouter = require("./adminRouter");
 
 function route(app) {
   app.use("/admin", AdminRouter);
-  app.use("/api/comment", CommentRouter);
+  app.use("/comment", CommentRouter);
   app.use("/auth", AuthRouter);
-  app.use("/api/user", UserRouter);
-  app.use("/api/voucher", VoucherRouter);
+  app.use("/user", UserRouter);
+  app.use("/voucher", VoucherRouter);
   app.use("/category", CategoryRouter);
   app.use("/product", ProductRouter);
-  app.use("/api/flashsale", FlashSaleRouter);
-  app.use("/api/order", OrderRouter);
+  app.use("/flashsale", FlashSaleRouter);
+  app.use("/order", OrderRouter);
 
   app.use(ErrorHandle);
 }

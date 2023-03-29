@@ -39,7 +39,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/comment/:
+ * /comment/:
  *  post:
  *      summary: create a new comment
  *      description: post a new comment
@@ -68,7 +68,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/comment/:
+ * /comment/:
  *  get:
  *      summary: return list of the comment
  *      description: get all comment 
@@ -99,7 +99,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/comment/{id}:
+ * /comment/{id}:
  *  get:
  *      summary: return a comment
  *      description: get a comment by id
@@ -130,7 +130,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/comment/deletesoft/{id}:
+ * /comment/deletesoft/{id}:
  *  delete:
  *      summary: delete soft comment
  *      description: delete soft a comment by id
@@ -160,7 +160,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/comment/{id}:
+ * /comment/{id}:
  *  patch:
  *      summary: update a comment
  *      description: update a comment by id
