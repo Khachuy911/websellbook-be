@@ -127,7 +127,7 @@ module.exports = {
 
     console.log("=====>Product:" + JSON.stringify(product));
 
-    res.render("../view/homePage/home.ejs", { data: data });
+    res.render("../view/home.ejs", { data: data });
   },
 
   getProductByCategory: async (req, res, next) => {

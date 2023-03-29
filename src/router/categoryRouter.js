@@ -7,16 +7,18 @@ const Auth = require('../middleware/authMiddleware');
 const Upload = require('../middleware/multer');
 const { DEFAULT_VALUE } = require('../helper/constant');
 
-Route.delete('/deletesoft/', Auth.checkToken, Auth.permission('/api/category/deletesoft/', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), CategoryController.deleteSoft);
+Route.delete('/deletesoft/', Auth.checkToken, Auth.permission('/category/deletesoft/', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), CategoryController.deleteSoft);
 
 Route.route('/:id')
     .get(Auth.checkToken, AsyncHandle(CategoryController.getDetail))
-    .patch(Auth.checkToken, Auth.permission('/api/category/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), Upload.single('image'), AsyncHandle(CategoryController.update))
+    .patch(Auth.checkToken, Auth.permission('/category/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), Upload.single('image'), AsyncHandle(CategoryController.update))
 
 Route.route('/')
-    .delete(Auth.checkToken, Auth.permission('/api/category/', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), AsyncHandle(CategoryController.deleteHard))
-    .post(Auth.checkToken, Auth.permission('/api/category/', DEFAULT_VALUE.ADD, DEFAULT_VALUE.READ), Upload.single('image'), AsyncHandle(CategoryController.create))
-    .get(Auth.checkToken, Auth.permission('/api/category/', DEFAULT_VALUE.READ), AsyncHandle(CategoryController.getCategory))
+    .delete(Auth.checkToken, Auth.permission('/category/', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), AsyncHandle(CategoryController.deleteHard))
+    .post(Auth.checkToken, Auth.permission('/category/', DEFAULT_VALUE.ADD, DEFAULT_VALUE.READ), Upload.single('image'), AsyncHandle(CategoryController.create))
+    .get(
+        Auth.checkToken, Auth.permission('/category/', DEFAULT_VALUE.READ), 
+        AsyncHandle(CategoryController.getCategory))
 
 
 
@@ -45,7 +47,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/category/:
+ * /category/:
  *  post:
  *      summary: create a new category
  *      description: post a new category
@@ -81,7 +83,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/category/:
+ * /category/:
  *  get:
  *      summary: return list of the category
  *      description: get all category 
@@ -112,7 +114,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/category/{id}:
+ * /category/{id}:
  *  get:
  *      summary: return a category
  *      description: get a category by id
@@ -142,7 +144,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/category/deletesoft/:
+ * /category/deletesoft/:
  *  delete:
  *      summary: delete soft flash sale
  *      description: delete soft a category by ids
@@ -173,7 +175,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/category/:
+ * /category/:
  *  delete:
  *      summary: delete hard category
  *      description: delete a category by ids
@@ -205,7 +207,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/category/{id}:
+ * /category/{id}:
  *  patch:
  *      summary: update a category
  *      description: update a category by id

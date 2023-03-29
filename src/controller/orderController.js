@@ -193,6 +193,7 @@ module.exports = {
     }
   },
 
+  // 1 dat hang
   confirmStauts: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -262,6 +263,7 @@ module.exports = {
     }
   },
 
+  // 2 xac nhan
   shippingStauts: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -304,6 +306,7 @@ module.exports = {
     }
   },
 
+  // 3 dang giao
   delivereStauts: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -346,6 +349,7 @@ module.exports = {
     }
   },
 
+  // 4 done
   doneStauts: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -386,6 +390,7 @@ module.exports = {
     }
   },
 
+  // 5 huy
   cancelOrder: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -412,7 +417,7 @@ module.exports = {
 
       const order = await Order.findOne(condition);
 
-      if (order.orderStatus > 3) {
+      if (order.orderStatus >= 3) {
         await t.rollback();
         return next(
           new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.NOT_CANCEL)
@@ -545,8 +550,7 @@ module.exports = {
   getMyOrder: async (req, res, next) => {
     const condition = {
       where: {
-        userId: "e8f44822-f5fc-4b2b-a92b-d115167bfe17",
-        // req.user,
+        userId: req.user.id,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         // ...search(req.query.search)
       },
@@ -566,6 +570,7 @@ module.exports = {
       totalPage: Math.ceil(order.count / +pageSize),
       totalSize: order.rows.length || 0,
       rows: order.rows,
+      currentUser: req.user,
     };
 
     // res.status(HTTP_CODE.SUCCESS).json({
@@ -574,10 +579,9 @@ module.exports = {
     //   data,
     // });
 
+    console.log("========> Order: " + JSON.stringify(data));
 
-    console.log("========> Order: "+ JSON.stringify(data));
-
-    res.render('../view/order.ejs', {data});
+    res.render("../view/order.ejs", { data });
   },
 
   getDetail: async (req, res, next) => {
@@ -604,11 +608,14 @@ module.exports = {
 
     const order = await Order.findOne(condition);
 
-    res.status(HTTP_CODE.SUCCESS).json({
-      isSuccess: true,
-      message: MESSAGE.SUCCESS,
-      data: order,
-    });
-  },
+    // res.status(HTTP_CODE.SUCCESS).json({
+    //   isSuccess: true,
+    //   message: MESSAGE.SUCCESS,
+    //   data: order,
+    // });
 
+    console.log("========> Order: " + JSON.stringify(order));
+
+    res.render("../view/orderDetail.ejs", { data: order });
+  },
 };

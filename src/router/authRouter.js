@@ -83,7 +83,7 @@ Route.get('/roleModule', AuthController.roleModule);
 
 /**
  * @swagger
- * /api/auth/register:
+ * /auth/register:
  *  post:
  *      summary: return a new user
  *      description: post a new user
@@ -118,7 +118,7 @@ Route.get('/roleModule', AuthController.roleModule);
 
 /**
  * @swagger
- * /api/auth/resendemail/:
+ * /auth/resendemail/:
  *  post:
  *      summary: return a verify account 
  *      description: verify a your account
@@ -150,7 +150,7 @@ Route.get('/roleModule', AuthController.roleModule);
 
 /**
  * @swagger
- * /api/auth/verify/:
+ * /auth/verify/:
  *  get:
  *      summary: return verify account 
  *      description: verify a your account
@@ -178,7 +178,7 @@ Route.get('/roleModule', AuthController.roleModule);
 
 /**
  * @swagger
- * /api/auth/login:
+ * /auth/login:
  *  post:
  *    summary: return token and refreshToken
  *    description: post to login
@@ -213,7 +213,7 @@ Route.get('/roleModule', AuthController.roleModule);
 
 /**
  * @swagger
- * /api/auth/refreshToken:
+ * /auth/refreshToken:
  *  post:
  *    summary: return a refreshAccessToken
  *    description: post to sign refresh token
@@ -244,7 +244,7 @@ Route.get('/roleModule', AuthController.roleModule);
 
 /**
  * @swagger
- * /api/auth/updatePW:
+ * /auth/updatePW:
  *  patch:
  *    summary: return message success
  *    description: patch to update user
@@ -283,7 +283,7 @@ Route.get('/roleModule', AuthController.roleModule);
 
 /**
  * @swagger
- * /api/auth/forgotPW:
+ * /auth/forgotPW:
  *  post:
  *    summary: return a link to reset PW
  *    description: post to sign link
@@ -314,7 +314,7 @@ Route.get('/roleModule', AuthController.roleModule);
 
 /**
 * @swagger
-* /api/auth/resetPW/{reset}:
+* /auth/resetPW/{reset}:
 *  patch:
 *    summary: return a new PW
 *    description: patch to reset PW
