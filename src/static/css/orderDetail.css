@@ -40,16 +40,8 @@ img:hover {
 /* ======================== */
 /* SECTION */
 
-.custom-table {
-  height: 350px;
-}
-
-a{
-  text-decoration: none;
-}
-
-a:hover {
-  color: black;
+.section{
+  background-color: silver;
 }
 
 

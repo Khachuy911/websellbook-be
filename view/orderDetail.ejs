@@ -9,7 +9,7 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="/fonts/css/all.min.css">
   <title>HuyKhac Shop</title>
-  <link rel="stylesheet" href="/css/order.css">
+  <link rel="stylesheet" href="/css/orderDetail.css">
 </head>
 
 <body>
@@ -104,58 +104,41 @@
     </header>
 
     <!-- BODY -->
+
     <div class="container">
-      <h3>Xin chào, <%= data?.currentUser?.username%></h3>
-      <div class="custom-table">
-        <table class=" table text-center">
-          <thead>
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Mã đơn</th>
-              <th scope="col">Thuế</th>
-              <th scope="col">Thanh toán</th>
-              <th scope="col">Thời gian đặt</th>
-              <th scope="col"
-              data-bs-toggle="tooltip" data-bs-placement="top"
-              class="custom-tooltip"
-              data-bs-title="This top tooltip is themed via CSS variables.">Trạng thái đơn</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% data?.rows.forEach(element => { %>
-              <tr class="custom-table-order">
-              <th scope="row"><i class="fa-solid fa-cart-shopping"></i></th>
-              <td><%= element.orderCode %></td>
-              <td><%= element.tax %>%</td>
-              <td><%= element.totalPrice.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>            
-              <td><%= element.createdAt %></td>
-              <%if(element.orderStatus === 0){%>
-                <td class="table-danger">Chưa đặt hàng</td>
-                <td><a href="/order/<%= element.id%>" class="text-danger">Tiến hàng đặt hàng</a></td>
-                <% } else if(element.orderStatus === 1) {%>
-                  <td class="table-success">Đã đặt hàng</td>
-                  <td><a href="/order/<%= element.id%>" class="text-success" >Xem trạng thái đơn</a></td>
-                  <%}else if(element.orderStatus === 2) {%>
-                    <td class="table-success" >Shop xác nhận đơn</td>
-                    <td><a href="/order/<%= element.id%>" class="text-success">Xem trạng thái đơn</a></td>
-                    <%}else if(element.orderStatus === 3) {%>
-                      <td class="table-success">Đang giao hàng</td>
-                      <td><a href="/order/<%= element.id%>" class="text-success">Xem trạng thái đơn</a></td>
-                      <%}else if(element.orderStatus === 4) {%>
-                        <td class="table-success">Đã giao</td>
-                        <td><a href="/order/<%= element.id%>" class="text-success">Xem trạng thái đơn</a></td>
-                        <%}else if(element.orderStatus === 5) {%>
-                          <td class="table-danger">Đã huỷ đơn</td>
-                          <td><a href="/order/<%= element.id%>" class="text-success">Xem trạng thái đơn</a></td>
-                          <%}%>
-            </tr>
-            <% }); %>
-          </tbody>
-        </table>
-    </div>
+      <div class="section">
+        <p>Mã đơn hàng: <%= data.orderCode%></p>
+        <p>Tổng tiền đơn: <%= data.totalPrice%></p>
+        <p>Trạng thái đơn: <%= data.orderStatus%></p>
+        <p>Thời gian đặt: <%= data.createdAt%></p>
+        <p><%= data.userId%></p>
+        <p>Voucher: <%= data.voucherId%></p>
+        <%if(data.orderStatus === 0){%>
+          <p>Trạng thái đơn: Chưa đặt hàng</p>      
+        <% } else if(data.orderStatus === 1) {%>
+          <p>Trạng thái đơn: Đã đặt hàng</p>        
+        <%}else if(data.orderStatus === 2) {%>
+          <p>Trạng thái đơn: Shop xác nhận đơn</p>          
+        <%}else if(data.orderStatus === 3) {%>
+          <p>Trạng thái đơn: Đang giao hàng</p>            
+        <%}else if(data.orderStatus === 4) {%>
+          <p>Trạng thái đơn: Đã giao</p>              
+        <%}else if(data.orderStatus === 5) {%>
+          <p>Trạng thái đơn: Đã huỷ đơn</p>                
+        <%}%>
+        <% data.OrderDetails.forEach(element => { %>
+          <hr>
+          <p>Giá sách: <%= element.Product.name%></p>
+          <p>Giá sách: <%= element.Product.author%></p>
+          <p>Số lượng: <%= element.quantity%></p>
+          <p>Giá bán: <%= element.Product.priceSelling%>/1cuốn</p>
+        <% }); %>
+      </div>
     </div>
     
+    
+
+      
 
     <!-- FOOTER -->
     <div class="footer">
