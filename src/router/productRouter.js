@@ -8,7 +8,7 @@ const upload = require("../middleware/multer");
 const { DEFAULT_VALUE } = require("../helper/constant");
 
 Route.get("/create",(req,res,next)=>{
-  res.render("../view/admin/ListUser")
+  res.render("../view/admin/CreateProduct")
 })
 
 
