@@ -6,15 +6,15 @@ const AsyncHandle = require('../middleware/asyncHandle');
 const Auth = require('../middleware/authMiddleware');
 const { DEFAULT_VALUE } = require('../helper/constant');
 
-Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/api/flashsale/deletesoft/:id', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), FlashSaleController.deleteSoft);
+Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/flashsale/deletesoft/:id', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), FlashSaleController.deleteSoft);
 
 Route.route('/:id')
-    .patch(Auth.checkToken, Auth.permission('/api/flashsale/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ), AsyncHandle(FlashSaleController.update))
+    .patch(Auth.checkToken, Auth.permission('/flashsale/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ), AsyncHandle(FlashSaleController.update))
     .get(Auth.checkToken, AsyncHandle(FlashSaleController.getDetail))
-    .delete(Auth.checkToken, Auth.permission('/api/flashsale/:id/', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), AsyncHandle(FlashSaleController.deleteHard))
+    .delete(Auth.checkToken, Auth.permission('/flashsale/:id/', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), AsyncHandle(FlashSaleController.deleteHard))
 
 Route.route('/')
-    .post(Auth.checkToken, Auth.permission('/api/flashsale/', DEFAULT_VALUE.ADD, DEFAULT_VALUE.READ), AsyncHandle(FlashSaleController.create))
+    .post(Auth.checkToken, Auth.permission('/flashsale/', DEFAULT_VALUE.ADD, DEFAULT_VALUE.READ), AsyncHandle(FlashSaleController.create))
     .get(Auth.checkToken, AsyncHandle(FlashSaleController.getFlashSale))
 
 /**
@@ -47,7 +47,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/flashsale/:
+ * /flashsale/:
  *  post:
  *      summary: create a new flashsale
  *      description: post a new flashsale
@@ -83,7 +83,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/flashsale/:
+ * /flashsale/:
  *  get:
  *      summary: return list of the flashsale
  *      description: get all flashsale 
@@ -116,7 +116,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/flashsale/{id}:
+ * /flashsale/{id}:
  *  get:
  *      summary: return a flashsale
  *      description: get a flashsale by id
@@ -147,7 +147,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/flashsale/deletesoft/{id}:
+ * /flashsale/deletesoft/{id}:
  *  delete:
  *      summary: delete soft flash sale
  *      description: delete soft a flashsale by ids
@@ -177,7 +177,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/flashsale/{id}:
+ * /flashsale/{id}:
  *  delete:
  *      summary: delete hard flashsale
  *      description: delete a flashsale by id
@@ -208,7 +208,7 @@ Route.route('/')
 
 /**
  * @swagger
- * /api/flashsale/{id}:
+ * /flashsale/{id}:
  *  patch:
  *      summary: update a flashsale
  *      description: update a flashsale by id
