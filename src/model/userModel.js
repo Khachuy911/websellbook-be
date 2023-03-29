@@ -15,7 +15,6 @@ User.init({
   username: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: { msg: 'username is exist !' }
   },
   password: {
     type: DataTypes.STRING,

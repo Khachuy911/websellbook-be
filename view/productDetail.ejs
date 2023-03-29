@@ -7,194 +7,9 @@
   <link rel="stylesheet" href="home.css">
   <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/3068/3068327.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <link rel="stylesheet" href="/fonts/css/all.min.css">
   <title>HuyKhac Shop</title>
-  <style>
-
-body{
-      font-family: 'Roboto Slab', serif;
-      /* font-family: 'Roboto Mono', monospace; */
-      /* font-family: 'Noto Serif', serif; */
-    }
-
-    /* HEAD */
-    .custom-menu-header{
-      color: black;
-    }
-
-    .custom-menu-header .active{ 
-      color: red;
-    }
-
-    .custom-menu-header:hover{
-      background-color: rgb(255, 255, 255);
-      border-radius: 10px;
-      opacity: 70%;
-      color: rgb(105, 192, 233);
-      cursor: pointer;
-    }
-
-    .custom-dropdown-item:hover {
-      background-color: rgb(105, 192, 233);
-    }
-
-    header {
-      /* background-color: rgb(235, 231, 231); */
-      padding: 10px;
-      background-color: rgb(105, 192, 233);
-      
-    }
-
-    img:hover {
-      opacity: 90%;
-      transform: scale(1.01);
-    }
-
-    /* ======================== */
-    /* SECTION */
-    .custom-section {
-      background-color: aqua;
-      margin: 10px 0px;
-    }
-
-    .custom-image {
-      /* padding: 1px; */
-      border: 1px solid;
-      height: 425px;
-    } 
-    
-    .custom-image-child {
-      margin: 11px 0px;
-    }
-
-
-    .infor-detail {
-      padding: 10px;
-    }
-
-    .infor-detail {
-      border: 1px solid;
-    }
-
-    .infor-delivery {
-      border: 1px solid;
-      margin: 5% 0px;
-      padding: 10px;
-    }
-
-    .input-buy {
-      border: 1px solid;
-      padding: 5px;
-    }
-
-    .custom-sale {
-      /* width: 304px;
-      height: 300px; */
-      border: 1px solid;
-      padding: 10px;
-    }
-
-    .comment-book {
-      background-color: brown;
-      height: 500px;
-    }
-
-    .custom-comment-book {
-      display: flex;
-    }
-
-    .image-avatar {
-      border: 1px solid rgb(105, 192, 233);
-      border-radius:180px;
-      margin: 0px 20px;
-    }
-
-    .title-category {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: baseline;
-      align-content: stretch;
-      width: 100%;
-      height: 50px;
-      /* background-color: rgb(146, 147, 243); */
-      margin: 25px 0px 20px 0px;
-      padding: 10px;
-      border-radius: 8px;
-    }
-
-    p {
-    overflow: hidden;
-    white-space: nowrap; 
-    text-overflow: ellipsis;
-    margin: 1px;
-    }
-
-    .card-title {
-    overflow: hidden;
-    white-space: nowrap; 
-    text-overflow: ellipsis;
-    margin: 1px;
-    font-weight: bolder;
-    }
-
-    .book-sell-new {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      align-items: baseline;
-      align-content: stretch;
-    }
-
-    .card {
-      flex-basis:19%;
-      margin-bottom: 20px;
-      height: 330px;
-      cursor: pointer;
-      margin: 5px;
-    }
-
-    .card:hover {
-      color: rgb(40, 153, 206);
-      box-shadow: 3px 3px #666;
-    }
-
-    .custom-btn-seemore {
-      color: rgb(40, 153, 206);
-      height: 29px;
-      width: 72px;
-      padding: 1px;
-      font-style: italic;
-    }
-
-    .card-price {
-      color: rgb(40, 153, 206);
-    }
-    .card-description { 
-      font-style: italic;
-      opacity: 90%;
-    }
-
-    .custom-flashsale {
-      border: 1px solid;
-      background-color: red;
-      padding: 0px 7px;
-      border-radius: 10px;
-      font-size: 11px;
-      margin-left: 10px;
-    }
-
-    /* ======================== */
-    /* FOOTER */
-    footer {
-      background-color: rgb(105, 192, 233);
-      padding: 10%;
-      /* height: 500px; */
-      margin-top: 50px;
-    }
-
-  </style>
+  <link rel="stylesheet" href="/css/productDetail.css">
 </head>
 
 <body>
@@ -300,13 +115,14 @@ body{
           </div>
           <div class="col-md-6 custom-text"> 
             <div class="infor-detail">
-              <h3><%= data.name%></h3>              
+              <h3><%= data.name%></h3>   
               <span>Danh mục: </span><span id="category"><%= data.Category.name%></span>
+              <p><p>Tác giả: <%= data.author %></p></p>           
               <%if(data.FlashSaleProducts.length > 0){%>
                 <% if(data.FlashSaleProducts[0]?.discountAmount){ %>
-                  <p>Khuyến mãi: <%= data?.FlashSaleProducts[0]?.FlashSale?.name%></p>
-                  <p>Thời gian khuyến mãi: <%= data?.FlashSaleProducts[0]?.FlashSale?.startDate%> - <%= data?.FlashSaleProducts[0]?.FlashSale?.endDate%></p>
-                  <span class="card-price text-decoration-line-through text-black font-monospace">
+                  <p class="text-flashsale">Khuyến mãi: <%= data?.FlashSaleProducts[0]?.FlashSale?.name%></p>
+                  <p class="text-flashsale">Thời gian khuyến mãi: <%= data?.FlashSaleProducts[0]?.FlashSale?.startDate%> đến <%= data?.FlashSaleProducts[0]?.FlashSale?.endDate%></p>
+                  <span class="text-decoration-line-through text-black font-monospace">
                     <%= data.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
                   </span><span class="text-light custom-flashsale">  -<%= data.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
                   <p class="card-price ">Giá: <%= (data.priceSelling - data.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
@@ -317,46 +133,69 @@ body{
                   <%}%>
               <p>Số trang: <%= data.weight %> trang</p>
               <p>Số lượng: <%= data.quantityDisplay %></p>
+              <p>Mã code: <%= data.barCode %></p>              
               <span>Mô tả: <%= data.description %>.</span>     
             </div>    
             <div class="infor-delivery">
-              <p>a</p>
-              <p>a</p>
-              <p>a</p>
-              <p>a</p>
+              <h5>Thông tin & khuyến mãi</h5>
+              <h6><i class="fa-regular fa-square-check"></i> Được kiểm tra hàng và Thanh toán khi nhận hàng.</h6>
+              <h6><i class="fa-regular fa-square-check"></i> Giao hàng trên Toàn Quốc.</h6>
+              <h6><i class="fa-regular fa-square-check"></i> Đặt online hoặc gọi ngay 0339118095.</h6>
+              <h6><i class="fa-regular fa-square-check"></i> Chiết khấu cao cho các đại lý và khách đặt sỉ.</h6>
             </div>   
             <div class="input-buy">
               <form class="row g-3">
-                <div class="col-2">
+                <div class="col-3">
                   <label for="staticEmail2" class="visually-hidden">Email</label>
-                  <input type="text" readonly class="form-control-plaintext" id="staticEmail2" value="Số lượng">
+                  <input type="text" readonly class="form-control-plaintext " id="staticEmail2" value="Số lượng">
                 </div>
                 <div class="col-auto">
-                  <label for="inputPassword2" class="visually-hidden">Password</label>
-                  <input type="text" width="100%" class="form-control" id="inputPassword2" placeholder="..." value="1">
+                  <label for="inputQuantity" class="visually-hidden">Quantity</label>
+                  <input type="text" width="100%" class="custom-btn-order form-control" id="inputQuantity" placeholder="..." value="1">
                 </div>
                 <div class="col-auto">
-                  <button type="submit" class="btn btn-primary mb-3">add order</button>
+                  <button type="submit" class="btn btn-light mb-3">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>
                 </div>
               </form>
             </div>
 
           </div>
-          <div class="col-md-3 custom-sale">description sale</div>
+          <div class="col-md-3 custom-sale">
+            <h6 class="title-custom-sale">Sale Bạt Ngàn, Đón Hè Sang Với Nhiều Ưu Đãi Hấp Dẫn Cùng KhacHuy SHOP.</h6>
+            <hr>
+            <h6 class="text-custom-sale"><i class="fa-solid fa-location-dot"></i> Giao hàng bởi Công Ty TNHH Trực Tuyến KhacHuy SHOP</h6>
+            <h6 class="text-custom-sale"><i class="fa-solid fa-truck"></i> Giao hàng trên toàn Quốc</h6>
+            <h6 class="text-custom-sale"><i class="fa-regular fa-credit-card"></i> Nhận hàng rồi mới thanh toán tiền ( COD )</h6>
+          </div>
         </div>
         <div class=" comment-book">
+          <h5>Khách hàng nhận xét</h5>
+          <hr>
+          <% if(data.Comments.length ===0){%>
+            <i class="fa-solid fa-minus"></i>
+            <%}else{%>
           <% data.Comments.forEach(element => {%>
           <div class="custom-comment-book">
             <div class="img-avatar-comment ">
-              <img width="70px" height="70px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
+              <img width="60px" height="60px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
             </div>
             <div class="comment-text ">
-              <span><%= element.User.username%></span>
-              <p><%= element.text%></p>
+              <p class="custom-comment-username"><%= element.User.username%>( <%= element.User.email%> )</p>
+              <span><%= element.text%></span>
             </div>
           </div>
             <% }); %>
+            <%}%>
+        </div>
+        <div class="your-comment">
           <p></p>
+          <form action="">
+            <div class="mb-3">
+              <!-- <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label> -->
+              <textarea name="comment" placeholder="Viết nhận xét và đánh giá của bạn về cuốn sách này..." class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+              <button type="submit" class="custom-btn-comment btn btn-primary mb-3">Gửi nhận xét <i class="fa-regular fa-comment"></i></button>
+            </div>
+          </form>
         </div>
         <div id="relation-book">
         </div>

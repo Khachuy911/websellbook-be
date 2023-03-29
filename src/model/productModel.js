@@ -2,6 +2,7 @@ const { DataTypes, Model } = require('sequelize');
 
 const sequelize = require('../config/connectDB');
 const Category = require('./categoryModel');
+
 const { DEFAULT_VALUE } = require('../helper/constant');
 
 class Product extends Model { }
@@ -18,6 +19,9 @@ Product.init({
     allowNull: false
   },
   barCode: {
+    type: DataTypes.STRING
+  },
+  author: {
     type: DataTypes.STRING
   },
   priceImport: {
@@ -92,5 +96,6 @@ Product.belongsTo(Category, {
     allowNull: false
   }
 })
+
 
 module.exports = Product;
