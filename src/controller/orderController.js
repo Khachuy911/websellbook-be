@@ -545,7 +545,8 @@ module.exports = {
   getMyOrder: async (req, res, next) => {
     const condition = {
       where: {
-        userId: req.user,
+        userId: "e8f44822-f5fc-4b2b-a92b-d115167bfe17",
+        // req.user,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         // ...search(req.query.search)
       },
@@ -567,11 +568,16 @@ module.exports = {
       rows: order.rows,
     };
 
-    res.status(HTTP_CODE.SUCCESS).json({
-      isSuccess: true,
-      message: MESSAGE.SUCCESS,
-      data,
-    });
+    // res.status(HTTP_CODE.SUCCESS).json({
+    //   isSuccess: true,
+    //   message: MESSAGE.SUCCESS,
+    //   data,
+    // });
+
+
+    console.log("========> Order: "+ JSON.stringify(data));
+
+    res.render('../view/order.ejs', {data});
   },
 
   getDetail: async (req, res, next) => {

@@ -11,7 +11,9 @@ Route.patch('/shipping/:id', Auth.checkToken, Auth.permission('/api/order/shippi
 Route.patch('/delivere/:id', Auth.checkToken, Auth.permission('/api/order/delivere/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ), AsyncHandle(OrderController.delivereStauts));
 Route.patch('/done/:id', Auth.checkToken, Auth.permission('/api/order/done/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ), AsyncHandle(OrderController.doneStauts));
 Route.delete('/cancel/:id', Auth.checkToken, AsyncHandle(OrderController.cancelOrder));
-Route.get('/myorder', Auth.checkToken, AsyncHandle(OrderController.getMyOrder));
+Route.get('/myorder', 
+// Auth.checkToken, 
+AsyncHandle(OrderController.getMyOrder));
 Route.get('/:id', Auth.checkToken, AsyncHandle(OrderController.getDetail));
 Route.get('/', Auth.checkToken, Auth.permission('/api/order/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(OrderController.getOrder));
 Route.post('/', Auth.checkToken, AsyncHandle(OrderController.create));
