@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <style>
+        .nav {
+            display: flex;
+            flex-direction: column;
+            background-color: #F4F5FA;
+            color: rgba(58, 53, 65, 0.87);
+            width: 250px;
+            padding-top: 60px;
+            margin-right: 10px;
+            /* box-shadow: 2px 2px 10px rgba(0,0,0,0.3); */
+        }
+
+        .nav h1 {
+            font-size: 24px;
+            margin-left: 10px;
+            letter-spacing: 0.15px;
+            font-weight: 600;
+            line-height: normal;
+            color: rgba(58, 53, 65, 0.87);
+            text-align: center;
+        }
+
+        .nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav li {
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+            margin: 2px 8px;
+            position: relative;
+        }
+
+        .nav li::after {
+            content: "";
+            width: 100%;
+            position: absolute;
+            height: 1px;
+            width: 100%;
+            background-color: #ccc;
+        }
+
+        .nav a {
+            color: rgba(58, 53, 65, 0.87);
+            text-decoration: none;
+            font-size: 18px;
+            padding: 12px 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease-in-out;
+            display: block;
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: 0.15px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .nav a:hover {
+            box-shadow: 0px 4px 8px -4px rgba(58, 53, 65, 0.42);
+            background-image: linear-gradient(98deg, #C6A7FE, #9155FD 94%);
+            border-top-right-radius: 100px;
+            border-bottom-right-radius: 100px;
+            color: #F4F5FA;
+        }
+
+        .active>a {
+            box-shadow: 0px 4px 8px -4px rgba(58, 53, 65, 0.42);
+            background-image: linear-gradient(98deg, #C6A7FE, #9155FD 94%);
+            border-top-right-radius: 100px !important;
+            border-bottom-right-radius: 100px !important;
+            color: #F4F5FA !important;
+            cursor: inherit;
+        }
+    </style>
+</head>
+
+<body style="position: relative;">
+    <div class="nav" style="position: fixed;height: 100%; ">
+        <h1>Dashboard</h1>
+        <ul id="route">
+        </ul>
+    </div>
+    <div class="container-fluid" style="display: flex;background-color: #F4F5FA;">
+        <div class="nav">
+
+        </div>
+        <div>
+            <h1 class="mb-4" style="font-size: 36px;margin-top: 30px;margin-bottom: 30px;text-align: center;">Dashboard
+            </h1>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Data Table</div>
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>John Doe</td>
+                                        <td>john@example.com</td>
+                                        <td>555-1234</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Jane Doe</td>
+                                        <td>jane@example.com</td>
+                                        <td>555-5678</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Bob Smith</td>
+                                        <td>bob@example.com</td>
+                                        <td>555-9012</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Sales</div>
+                        <div class="card-body">
+                            <canvas id="sales-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-header">Total Revenue</div>
+                        <div class="card-body">
+                            <h3>$25,000</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-header">Total Orders</div>
+                        <div class="card-body">
+                            <h3>200</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-center">
+                        <div class="card-header">New Customers</div>
+                        <div class="card-body">
+                            <h3>50</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-4 ml-1">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">Users by Country</div>
+                            <div class="card-body">
+                                <canvas id="users-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">Recent Orders</div>
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Customer</th>
+                                            <th>Product</th>
+                                            <th>Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>John Doe</td>
+                                            <td>Product A</td>
+                                            <td>$100</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Jane Doe</td>
+                                            <td>Product B</td>
+                                            <td>$50</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Bob Smith</td>
+                                            <td>Product C</td>
+                                            <td>$75</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-2zhpiF6UW+6rpJHpdUoWEwvnmB6Yl8D9XbxIMrG7V+TPlTegTT7MDJVhAZ/B/44s"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/route.js"></script>
+    <script>
+        let html = route.map((e, index) => {
+            const pathname = window.location.pathname
+            if (e.href == pathname) {
+                return `<li class="active"><a href="${e.href}">${e.text}</a></li>`
+            }
+            else {
+                return `<li><a href="${e.href}">${e.text}</a></li>`
+            }
+
+        })
+        $("#route")[0].innerHTML = html.join("");
+
+    </script>
+    <script>
+        // Sales Chart
+        var ctx = document.getElementById('sales-chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                datasets: [{
+                    label: 'Sales',
+                    backgroundColor: 'rgb(54, 162, 235)',
+                    borderColor: 'rgb(54, 162, 235)',
+                    data: [20000, 25000, 30000, 28000, 32000, 27000, 35000]
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+        // Users Chart
+        var ctx = document.getElementById('users-chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['USA', 'Canada', 'Mexico'],
+                datasets: [{
+                    label: 'Users by Country', backgroundColor: [
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 99, 132)',
+                        'rgb(255, 205, 86)'
+                    ],
+                    borderColor: 'white',
+                    data: [55, 30, 15]
+                }]
+            },
+            options: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
