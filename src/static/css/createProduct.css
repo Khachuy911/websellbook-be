@@ -2,17 +2,23 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background-color: var(--prymary-color);
 }
-
-form {
-    margin: 50px auto;
-    width: 100%;
-    max-width: 800px;
+.dashboard{
+    width: 20%;
     background-color: #fff;
-    /* padding: 30px; */
     border-radius: 10px;
+    border: 2px solid #ccc;
+    margin-left: 2px;
+    margin-right: 2px;    
     box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+.formContainer {
+    width: 100%;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 2px solid #ccc;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+
 }
 
 h2 {
@@ -61,16 +67,17 @@ input[type="number"] {
         border-radius: 5px;
         cursor: pointer;
         transition: all 0.3s ease;
+        font-size: 18px;
     }
     
     button[type="submit"]:hover {
         background-color: var(--prymary-color);
+        opacity: 0.8;
     }
 
     select {
         display: block;
         width: 100%;
-        max-width: 300px;
         padding: 10px;
         font-size: 16px;
         color: #444;
@@ -81,4 +88,8 @@ input[type="number"] {
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
+    }
+    .form-group label{
+        margin: 36px 0;
+        text-align: end;
     }
