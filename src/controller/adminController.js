@@ -8,6 +8,9 @@ class AdminController{
     DashBoard(req,res,next){
         res.render("../view/admin/dashboard")
     }
+    User(req,res,next){
+        res.render("../view/admin/user")
+    }
 }
 
 module.exports = new AdminController();

@@ -5,7 +5,7 @@ const route = [
     },
     {
         text:"Tài khoản của tôi",
-        href:"#"
+        href:"/admin/user"
     },
     {
         text:"Danh sách User",
