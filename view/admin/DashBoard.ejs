@@ -6,9 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Dashboard</title>
     <!-- Bootstrap CSS -->
+    <!-- datatable -->
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Chart.js -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+
     <style>
         .nav {
             display: flex;
@@ -106,18 +113,18 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="card">
-                        <div class="card-header">Data Table</div>
-                        <div class="card-body">
-                            <table class="table">
+                        <div class="card-header">User</div>
+                        <div class="">
+                            <table id="table-id" class="table">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>STT</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="table-body">
                                     <tr>
                                         <td>1</td>
                                         <td>John Doe</td>
@@ -229,11 +236,16 @@
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
-        integrity="sha384-2zhpiF6UW+6rpJHpdUoWEwvnmB6Yl8D9XbxIMrG7V+TPlTegTT7MDJVhAZ/B/44s"
-        crossorigin="anonymous"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="/js/route.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"></script>
+
     <script>
         let html = route.map((e, index) => {
             const pathname = window.location.pathname
@@ -247,6 +259,78 @@
         })
         $("#route")[0].innerHTML = html.join("");
 
+    </script>
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: `/user`,
+                type: "GET",
+                success: (response) => {
+                    console.log(response)
+                    let listSelect = response?.data?.rows.map((item, index) => (`
+                                     <tr>
+                                        <td style="max-width:100px">${index+1}</td>
+                                        <td style="max-width:100px">${item.username}</td>
+                                        <td style="max-width:150px">${item.email}</td>
+                                        <td style="max-width:100px">${item.phone}</td>
+                                    </tr>`
+                    ))
+                    $("#table-body")[0].innerHTML = listSelect.join("")
+                    let table = $('#table-id').DataTable({
+                        select: true,
+                        pageLength: 5,
+                        stateSave: true,
+                        lengthMenu: [5, 10, 15, 20],
+                        "language": {
+                            "sEmptyTable": "Không có dữ liệu trong bảng",
+                            "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                            "sInfoEmpty": "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
+                            "sInfoFiltered": "(được lọc từ tổng số _MAX_ kết quả)",
+                            "sInfoPostFix": "",
+                            "sInfoThousands": ",",
+                            "sLengthMenu": "Hiển thị _MENU_ kết quả",
+                            "sLoadingRecords": "Đang tải...",
+                            "sProcessing": "Đang xử lý...",
+                            "sSearch": "Tìm kiếm:",
+                            "sZeroRecords": "Không tìm thấy kết quả phù hợp",
+                            "oPaginate": {
+                                "sFirst": "Đầu",
+                                "sLast": "Cuối",
+                                "sNext": "Tiếp",
+                                "sPrevious": "Trước"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": sắp xếp cột tăng dần",
+                                "sSortDescending": ": sắp xếp cột giảm dần"
+                            },
+                        }
+                    });
+                    $('#table-id_info')[0].style.display="none"
+                    $('#table-id_filter')[0].style.display="none"
+                    $('#table-id_length')[0].style.display="none"
+                },
+                error: (data) => {
+                    Toastify({
+                        text: data.responseJSON.errorCode,
+                        duration: 2000,
+                        newWindow: true,
+                        //close: true,
+                        offset: {
+                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                        },
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, red, red)",
+                            width: "250px",
+                            fontSize: "16px"
+                        },
+                    }).showToast();
+                }
+            })
+        })
     </script>
     <script>
         // Sales Chart

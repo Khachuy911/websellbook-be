@@ -8,8 +8,12 @@ const route = [
         href:"#"
     },
     {
+        text:"Danh sách User",
+        href:"/admin/list-users"
+    },
+    {
         text:"Danh sách Products",
-        href:"#"
+        href:"/admin/list-products"
     },
     {
         text:"Thêm Product",

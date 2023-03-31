@@ -3,7 +3,7 @@
 			padding: 0;
 		}
 
-		.container {
+		.containerBox {
 			display: flex;
 			flex-direction: row;
 			background-color: #F4F5FA;

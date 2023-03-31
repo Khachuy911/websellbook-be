@@ -65,7 +65,15 @@
     cursor: pointer;
     border-radius: 4px;
 }
-  .btn-follow:hover{
+.btn-delete{
+  background-color: red;
+  border: none;
+  color: aliceblue;
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+  .btn-follow:hover,.btn-delete:hover{
     opacity: 0.8;
   }
   .dataTables_info {
