@@ -9,12 +9,12 @@ const { DEFAULT_VALUE } = require('../helper/constant');
 Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/voucher/deletesoft/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE, DEFAULT_VALUE.EDIT), AsyncHandle(VoucherController.deleteSoft))
 
 Route.route('/:id')
-  .patch( AsyncHandle(VoucherController.update))
+  .patch(Auth.checkToken, Auth.permission('/voucher/:id/', DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(VoucherController.update))
   .get(Auth.checkToken, Auth.permission('/voucher/:id/', DEFAULT_VALUE.READ), AsyncHandle(VoucherController.getDetail))
   .delete(Auth.checkToken, Auth.permission('/voucher/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(VoucherController.deleteHard))
 
 Route.route('/')
-  .post(AsyncHandle(VoucherController.create))
+  .post(Auth.checkToken, Auth.permission('/voucher/', DEFAULT_VALUE.READ, DEFAULT_VALUE.ADD), AsyncHandle(VoucherController.create))
   .get(Auth.checkToken, AsyncHandle(VoucherController.getVoucher))
 
 /**
