@@ -1,4 +1,3 @@
-
 const ErrorHandle = require("../middleware/errorHandle");
 const AuthRouter = require("./authRouter");
 const UserRouter = require("./userRouter");
@@ -9,6 +8,7 @@ const FlashSaleRouter = require("./flashSaleRouter");
 const OrderRouter = require("./orderRouter");
 const CommentRouter = require("./commentRouter");
 const AdminRouter = require("./adminRouter");
+const CartRouter = require("./cartRouter");
 
 function route(app) {
   app.use("/admin", AdminRouter);
@@ -19,6 +19,7 @@ function route(app) {
   app.use("/category", CategoryRouter);
   app.use("/product", ProductRouter);
   app.use("/flashsale", FlashSaleRouter);
+  app.use("/cart", CartRouter);
   app.use("/order", OrderRouter);
 
   app.use(ErrorHandle);

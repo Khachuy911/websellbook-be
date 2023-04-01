@@ -106,53 +106,85 @@
     <!-- BODY -->
     <div class="container">
       <h3>Xin chào, <%= data?.currentUser?.username%></h3>
-      <div class="custom-table">
-        <table class=" table text-center">
+      <div class="infor-order">
+        <div class="infor-voucher">
+          
+          <h5>Thông tin <a class="custom-change" href="">(Thay đổi)</a></h5>   
+          <p></p>
+          <p style="margin-left: 20px">Số điện thoại: <%= data.currentUser.phone%></p>
+          <p style="margin-left: 20px">Địa chỉ: <%= data.currentUser.address%></p>     
+        </div>
+        <div class="infor-user">
+          <label for="">Voucher</label>
+          <select class="custom-select-voucher form-select" aria-label="Default select example">
+            <option selected>Chọn voucher giảm giá</option>
+            <option value="1">One</option>
+            <option value="2">Two</option>
+            <option value="3">Three</option>
+          </select>
+          <p></p>
+          <p>Phương thức thanh toán: </p>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" checked>
+            <label class="form-check-label" for="flexRadioDefault2">
+              Thanh toán khi nhận hàng
+            </label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+            <label class="form-check-label" for="inlineRadio1">Thanh toán online</label>
+          </div>  
+        </div>
+      </div>
+
+      <p></p>
+      <h3>Chọn sản phẩm trong giỏ hàng: </h3>
+      <div class="custom-table" >
+        <table class="table table-primary text-left">
           <thead>
             <tr>
               <th scope="col"></th>
-              <th scope="col">Mã đơn</th>
-              <th scope="col">Thuế</th>
-              <th scope="col">Thanh toán</th>
-              <th scope="col">Thời gian đặt</th>
-              <th scope="col"
-              data-bs-toggle="tooltip" data-bs-placement="top"
-              class="custom-tooltip"
-              data-bs-title="This top tooltip is themed via CSS variables.">Trạng thái đơn</th>
-              <th scope="col"></th>
+              <th scope="col">Tên sách</th>
+              <th scope="col">Tác giả</th>
+              <th scope="col">Giá sách</th>
+              <th scope="col">Số lượng</th>
+              <th scope="col">Flash sale</th>
+              <th scope="col">Tổng chi phí</th>
             </tr>
           </thead>
           <tbody>
             <% data?.rows.forEach(element => { %>
-              <tr class="custom-table-order">
-              <th scope="row"><i class="fa-solid fa-cart-shopping"></i></th>
-              <td><%= element.orderCode %></td>
-              <td><%= element.tax %>%</td>
-              <td><%= element.totalPrice.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>            
-              <td><%= element.createdAt %></td>
-              <%if(element.orderStatus === 0){%>
-                <td class="table-danger">Chưa đặt hàng</td>
-                <td><a href="/order/<%= element.id%>" class="text-danger">Tiến hàng đặt hàng</a></td>
-                <% } else if(element.orderStatus === 1) {%>
-                  <td class="table-success">Đã đặt hàng</td>
-                  <td><a href="/order/<%= element.id%>" class="text-success" >Xem trạng thái đơn</a></td>
-                  <%}else if(element.orderStatus === 2) {%>
-                    <td class="table-success" >Shop xác nhận đơn</td>
-                    <td><a href="/order/<%= element.id%>" class="text-success">Xem trạng thái đơn</a></td>
-                    <%}else if(element.orderStatus === 3) {%>
-                      <td class="table-success">Đang giao hàng</td>
-                      <td><a href="/order/<%= element.id%>" class="text-success">Xem trạng thái đơn</a></td>
-                      <%}else if(element.orderStatus === 4) {%>
-                        <td class="table-success">Đã giao</td>
-                        <td><a href="/order/<%= element.id%>" class="text-success">Xem trạng thái đơn</a></td>
-                        <%}else if(element.orderStatus === 5) {%>
-                          <td class="table-danger">Đã huỷ đơn</td>
-                          <td><a href="/order/<%= element.id%>" class="text-success">Xem trạng thái đơn</a></td>
-                          <%}%>
-            </tr>
+              <% element.CartProducts.forEach(cart => { %>
+                <tr class="custom-table-order">
+                <th scope="row"><input class="custom-checkbox form-check-input" type="checkbox" value="" id="flexCheckDefault"></button></th>
+                <td><%= cart.Product.name %></td>
+                <td><%= cart.Product.author %></td>      
+                <td><%= cart.Product.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>                       
+                <td><%= cart.quantity %></td> 
+                <%if(cart?.Product?.FlashSaleProducts[0]){%>
+                  <td>
+                    -<%= cart?.Product?.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%>/cuốn
+                  </td> 
+                  <td><%= (cart.Product.priceSelling * cart.quantity - cart?.Product?.FlashSaleProducts[0].discountAmount * cart.quantity).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })  %></td>   
+                  <%}else{%>
+                    <td>0</td>          
+                  <td><%= (cart.Product.priceSelling * cart.quantity).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>   
+                  
+                  <%}%>
+                
+              </tr>
+              <% }); %>
             <% }); %>
           </tbody>
         </table>
+    </div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+      <button type="button" class="btn btn-warning justify-content-md-end">Làm mới</button>
+      <a href="">
+        <button type="button" class="btn btn-primary justify-content-md-end">Đặt hàng ngay</button>
+      </a>
+      <p></p>
+      <p></p>
     </div>
     </div>
     
