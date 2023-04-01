@@ -11,6 +11,9 @@ class AdminController{
     User(req,res,next){
         res.render("../view/admin/user")
     }
+    ListOrders(req,res,next){
+        res.render("../view/admin/ListOrders")
+    }
 }
 
 module.exports = new AdminController();

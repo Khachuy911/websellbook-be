@@ -269,7 +269,7 @@
                     console.log(response)
                     let listSelect = response?.data?.rows.map((item, index) => (`
                                      <tr>
-                                        <td style="max-width:100px">${index+1}</td>
+                                        <td style="max-width:100px">${index + 1}</td>
                                         <td style="max-width:100px">${item.username}</td>
                                         <td style="max-width:150px">${item.email}</td>
                                         <td style="max-width:100px">${item.phone}</td>
@@ -305,9 +305,9 @@
                             },
                         }
                     });
-                    $('#table-id_info')[0].style.display="none"
-                    $('#table-id_filter')[0].style.display="none"
-                    $('#table-id_length')[0].style.display="none"
+                    $('#table-id_info')[0].style.display = "none"
+                    $('#table-id_filter')[0].style.display = "none"
+                    $('#table-id_length')[0].style.display = "none"
                 },
                 error: (data) => {
                     Toastify({

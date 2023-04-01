@@ -20,8 +20,8 @@ const route = [
         href:"/product/create"
     },
     {
-        text:"Products",
-        href:"#"
+        text:"Danh sách Orders",
+        href:"/admin/list-orders"
     },
     {
         text:"Reports",

@@ -270,6 +270,13 @@
                                 fontSize: "16px"
                             },
                         }).showToast();
+                        $("#fullname")[0].disabled = true
+                        $("#phone")[0].disabled = true
+                        $("#address")[0].disabled = true
+                        $(".Update")[0].disabled = false
+                        $(".Save")[0].disabled = true
+                        $(".Save")[0].style.display = "none"
+                        $(".Update")[0].style.display = "block"
                     },
                     error: (error) => {
                         Toastify({
