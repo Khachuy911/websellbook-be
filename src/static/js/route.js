@@ -24,6 +24,10 @@ const route = [
         href:"/admin/list-orders"
     },
     {
+        text:"Danh sách Voucher",
+        href:"/admin/list-Voucher"
+    },
+    {
         text:"Reports",
         href:"#"
     }
