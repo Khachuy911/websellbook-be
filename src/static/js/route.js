@@ -24,6 +24,10 @@ const route = [
         href:"/admin/list-orders"
     },
     {
+        text:"Danh sách Catogery",
+        href:"/admin/list-catogery"
+    },
+    {
         text:"Danh sách Voucher",
         href:"/admin/list-Voucher"
     },
@@ -32,7 +36,11 @@ const route = [
         href:"/admin/list-comment"
     },
     {
+        text:"Danh sách FlashSale",
+        href:"/admin/list-flashsale"
+    },
+    {
         text:"Reports",
-        href:"#"
+        href:"/product"
     }
 ]

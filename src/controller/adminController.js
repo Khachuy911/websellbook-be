@@ -20,6 +20,12 @@ class AdminController{
     ListComment(req,res,next){
         res.render("../view/admin/ListComment")
     }
+    ListFlashSale(req,res,next){
+        res.render("../view/admin/ListFlashSale")
+    }
+    ListCatogery(req,res,next){
+        res.render("../view/admin/ListCatogery")
+    }
 }
 
 module.exports = new AdminController();
