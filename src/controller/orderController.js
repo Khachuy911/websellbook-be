@@ -93,7 +93,7 @@ module.exports = {
 
         if (pro[i].FlashSaleProducts.length > 0) {
           sum +=
-            (pro[i].priceSelling - pro[i].FlashSaleProducts[0].discountAmount) *
+            (pro[i].priceSelling - (pro[i].FlashSaleProducts[0].discountAmount * product[i].quantity)) *
             product[i].quantity;
         } else {
           sum += pro[i].priceSelling * product[i].quantity;
@@ -157,14 +157,28 @@ module.exports = {
         totalPrice = sum + sum * DEFAULT_VALUE.DEFAULT_TAX;
       }
 
-      const orderData = {
-        totalPrice,
-        orderCode: "OD-" + randomNum(),
-        userId: req.user,
-        voucherId: voucher ? voucher.id : null,
-        createdBy: req.user,
-        updateBy: req.user,
-      };
+      let orderData;
+
+      if (req?.query?.orderNow === 1) {
+        orderData = {
+          totalPrice,
+          orderCode: "OD-" + randomNum(),
+          userId: req.user,
+          voucherId: voucher ? voucher.id : null,
+          createdBy: req.user,
+          updateBy: req.user,
+          orderStatus: DEFAULT_VALUE.VALUE_CONFIRM,
+        };
+      } else {
+        orderData = {
+          totalPrice,
+          orderCode: "OD-" + randomNum(),
+          userId: req.user,
+          voucherId: voucher ? voucher.id : null,
+          createdBy: req.user,
+          updateBy: req.user,
+        };
+      }
 
       const order = new Order(orderData);
 
@@ -550,12 +564,19 @@ module.exports = {
   getMyOrder: async (req, res, next) => {
     const condition = {
       where: {
-        userId: req.user.id,
+        userId: req.user,
+        orderStatus: 0,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         // ...search(req.query.search)
       },
       include: {
         model: OrderDetail,
+        include: {
+          model: Product,
+          include: {
+            model: FlashSaleProduct,
+          },
+        },
       },
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
@@ -602,6 +623,9 @@ module.exports = {
         model: OrderDetail,
         include: {
           model: Product,
+          include: {
+            model: FlashSaleProduct,
+          },
         },
       },
     };
@@ -614,8 +638,13 @@ module.exports = {
     //   data: order,
     // });
 
-    console.log("========> Order: " + JSON.stringify(order));
+    const data = {
+      order,
+      currentUser: req.currentUser,
+    };
 
-    res.render("../view/orderDetail.ejs", { data: order });
+    console.log("========> Order: " + JSON.stringify(data));
+
+    res.render("../view/orderDetail.ejs", { data });
   },
 };
