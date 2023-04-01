@@ -9,6 +9,7 @@ Route.get('/dashboard', Auth.checkToken, AdminController.DashBoard);
 Route.get('/user', Auth.checkToken, AdminController.User);
 Route.get('/list-orders', Auth.checkToken, AdminController.ListOrders);
 Route.get('/list-voucher', Auth.checkToken, AdminController.ListVoucher);
+Route.get('/list-comment', Auth.checkToken, AdminController.ListComment);
 
 
 

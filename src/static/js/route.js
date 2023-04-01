@@ -28,6 +28,10 @@ const route = [
         href:"/admin/list-Voucher"
     },
     {
+        text:"Danh sách Comment",
+        href:"/admin/list-comment"
+    },
+    {
         text:"Reports",
         href:"#"
     }

@@ -17,6 +17,9 @@ class AdminController{
     ListVoucher(req,res,next){
         res.render("../view/admin/ListVoucher")
     }
+    ListComment(req,res,next){
+        res.render("../view/admin/ListComment")
+    }
 }
 
 module.exports = new AdminController();
