@@ -13,20 +13,21 @@
 <body style="position: relative;">
     <div class="nav" style="position: fixed;height: 100%; z-index: 1;">
         <h1>Dashboard</h1>
-        <ul>
+        <ul id="route">
+            <li><a href="/admin/dashboard">Dashboard</a></li>
             <li><a href="#">Tài khoản của tôi</a></li>
             <li><a href="#">Danh sách Products</a></li>
-            <li class="active"><a href="/product/create">Thêm Product</a></li>
+            <li><a href="/product/create">Thêm Product</a></li>
             <li><a href="#">Products</a></li>
             <li><a href="#">Reports</a></li>
             
         </ul>
     </div>
-    <div class="container" style="position: relative;">
+    <div class="containerBox" style="position: relative;">
         <div class="nav">
             
         </div>
-        <div class="main" style="width: 80%;">
+        <div class="main" style="width: 80%;padding-bottom: 60px;">
             <h1 style="margin-left: 30px;">Add a New Product</h1>
             <form id="HandleSubmitForm" enctype="multipart/form-data">
                 <div class="card" style="width: 95%;margin: auto;">
@@ -109,6 +110,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/js/route.js"></script>
+<script>
+    let html = route.map((e,index) =>{
+        const pathname = window.location.pathname
+        if(e.href==pathname){
+            return `<li class="active"><a href="${e.href}">${e.text}</a></li>`
+        }
+        else{
+            return `<li><a href="${e.href}">${e.text}</a></li>`
+        }
+        
+    })
+    $("#route")[0].innerHTML = html.join("");
+    
+</script>
 
 <script>
     $(document).ready(function () {
@@ -116,12 +132,10 @@
             url: `/category`,
             type: "GET",
             success: (response) => {
-                console.log(response)
                 let listSelect = response?.data?.rows.map((item, index) => (`<option value=${item.id}>${item.name}</option>`))
                 $('#categoryId')[0].innerHTML = listSelect
             },
             error: (data) => {
-                console.log(data.responseJSON.errorCode)
                 Toastify({
                     text: data.responseJSON.errorCode,
                     duration: 2000,
@@ -206,7 +220,6 @@
 
     });
 </script>
-<script>$("#clickProduct").click(e => { window.location.href = "/product" })</script>
 
 <script>
 </script>

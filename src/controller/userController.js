@@ -142,7 +142,7 @@ module.exports = {
 
   deleteHard: async (req, res, next) => {
     const { id } = req.params;
-
+    console.log(id)
     if (!id)
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
 

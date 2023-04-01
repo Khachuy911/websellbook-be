@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách tài khoản</title>
+    <title>Danh sách Product</title>
     <link rel="stylesheet" href="/css/root.css">
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/createProduct.css">
@@ -48,7 +48,7 @@
 
         </div>
         <div class="main" style="width: 80%;height: 100%;padding-bottom: 60px;">
-            <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách user</h1>
+            <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách Products</h1>
             <div class="card" style="width: 95%;margin: auto;">
                 <table id="myTable">
                     <thead>
@@ -104,7 +104,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="/js/route.js"></script>
 <script>
-    let height = window.innerHeight;
+    let height = window.innerHeight +120;
     $(".main")[0].style.minHeight = height+"px";
     let html = route.map((e, index) => {
         const pathname = window.location.pathname
@@ -141,63 +141,64 @@
 
 <script>
     $.ajax({
-        url: `/user`,
+        url: `/product`,
         type: "GET",
         success: (response) => {
-            let listSelect = response?.data?.rows.map((item, index) => (`
-                                 <tr>
-                                    <td style="text-align:center">${index + 1}</td>
-                                    <td>${item.username}</td>
-                                    <td>${item.email}</td>
-                                    <td>${item.phone}</td>
-                                    <td style="max-width:120px;text-align:center">
-                                        <button type="button" data-id="${item.id}" class="btn btn-primary">Theo dõi</button>
-                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
-                                    </td>
-                                </tr>`
-            ))
-            $("#table-body")[0].innerHTML = listSelect.join("")
-            let table = $('#myTable').DataTable({
-                select: false,
-                pageLength: 5,
-                stateSave: true,
-                lengthMenu: [5, 10, 15, 20],
-                columnDefs: [
-                    {
-                        searchPanes: {
-                            show: true
-                        },
-                        targets: [1, 2, 3]
-                    }
-                ],
-                "order": [[3, "desc"]],
-                "language": {
-                    "sEmptyTable": "Không có dữ liệu trong bảng",
-                    "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                    "sInfoEmpty": "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
-                    "sInfoFiltered": "(được lọc từ tổng số _MAX_ kết quả)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ",",
-                    "sLengthMenu": "Hiển thị _MENU_ kết quả",
-                    "sLoadingRecords": "Đang tải...",
-                    "sProcessing": "Đang xử lý...",
-                    "sSearch": "Tìm kiếm:",
-                    "sZeroRecords": "Không tìm thấy kết quả phù hợp",
-                    "oPaginate": {
-                        "sFirst": "Đầu",
-                        "sLast": "Cuối",
-                        "sNext": "Tiếp",
-                        "sPrevious": "Trước"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": sắp xếp cột tăng dần",
-                        "sSortDescending": ": sắp xếp cột giảm dần"
-                    },
-                }
-            });
-            new $.fn.dataTable.SearchPanes(table, {});
-            table.searchPanes.container().prependTo(table.table().container());
-            table.searchPanes.resizePanes();
+            console.log(response)
+            // let listSelect = response?.data?.rows.map((item, index) => (`
+            //                      <tr>
+            //                         <td style="text-align:center">${index + 1}</td>
+            //                         <td>${item.username}</td>
+            //                         <td>${item.email}</td>
+            //                         <td>${item.phone}</td>
+            //                         <td style="max-width:120px;text-align:center">
+            //                             <button type="button" data-id="${item.id}" class="btn btn-primary">Theo dõi</button>
+            //                             <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
+            //                         </td>
+            //                     </tr>`
+            // ))
+            // $("#table-body")[0].innerHTML = listSelect.join("")
+            // let table = $('#myTable').DataTable({
+            //     select: false,
+            //     pageLength: 5,
+            //     stateSave: true,
+            //     lengthMenu: [5, 10, 15, 20],
+            //     columnDefs: [
+            //         {
+            //             searchPanes: {
+            //                 show: true
+            //             },
+            //             targets: [1, 2, 3]
+            //         }
+            //     ],
+            //     "order": [[3, "desc"]],
+            //     "language": {
+            //         "sEmptyTable": "Không có dữ liệu trong bảng",
+            //         "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+            //         "sInfoEmpty": "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
+            //         "sInfoFiltered": "(được lọc từ tổng số _MAX_ kết quả)",
+            //         "sInfoPostFix": "",
+            //         "sInfoThousands": ",",
+            //         "sLengthMenu": "Hiển thị _MENU_ kết quả",
+            //         "sLoadingRecords": "Đang tải...",
+            //         "sProcessing": "Đang xử lý...",
+            //         "sSearch": "Tìm kiếm:",
+            //         "sZeroRecords": "Không tìm thấy kết quả phù hợp",
+            //         "oPaginate": {
+            //             "sFirst": "Đầu",
+            //             "sLast": "Cuối",
+            //             "sNext": "Tiếp",
+            //             "sPrevious": "Trước"
+            //         },
+            //         "oAria": {
+            //             "sSortAscending": ": sắp xếp cột tăng dần",
+            //             "sSortDescending": ": sắp xếp cột giảm dần"
+            //         },
+            //     }
+            // });
+            // new $.fn.dataTable.SearchPanes(table, {});
+            // table.searchPanes.container().prependTo(table.table().container());
+            // table.searchPanes.resizePanes();
 
         },
         error: (data) => {
