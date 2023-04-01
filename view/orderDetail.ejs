@@ -107,32 +107,69 @@
 
     <div class="container">
       <div class="section">
-        <p>Mã đơn hàng: <%= data.orderCode%></p>
-        <p>Tổng tiền đơn: <%= data.totalPrice%></p>
-        <p>Trạng thái đơn: <%= data.orderStatus%></p>
-        <p>Thời gian đặt: <%= data.createdAt%></p>
-        <p><%= data.userId%></p>
-        <p>Voucher: <%= data.voucherId%></p>
-        <%if(data.orderStatus === 0){%>
-          <p>Trạng thái đơn: Chưa đặt hàng</p>      
-        <% } else if(data.orderStatus === 1) {%>
-          <p>Trạng thái đơn: Đã đặt hàng</p>        
-        <%}else if(data.orderStatus === 2) {%>
-          <p>Trạng thái đơn: Shop xác nhận đơn</p>          
-        <%}else if(data.orderStatus === 3) {%>
-          <p>Trạng thái đơn: Đang giao hàng</p>            
-        <%}else if(data.orderStatus === 4) {%>
-          <p>Trạng thái đơn: Đã giao</p>              
-        <%}else if(data.orderStatus === 5) {%>
-          <p>Trạng thái đơn: Đã huỷ đơn</p>                
-        <%}%>
-        <% data.OrderDetails.forEach(element => { %>
-          <hr>
-          <p>Giá sách: <%= element.Product.name%></p>
-          <p>Giá sách: <%= element.Product.author%></p>
-          <p>Số lượng: <%= element.quantity%></p>
-          <p>Giá bán: <%= element.Product.priceSelling%>/1cuốn</p>
-        <% }); %>
+        <hr>
+        <h3>HOÁ ĐƠN MUA SÁCH</h3>
+        <hr>
+        <div class="order-infor">
+          <div class="order-user">
+            <h4>THÔNG TIN CÁ NHÂN</h4>
+            <p>Họ tên: <%= data.currentUser.username%></p>
+            <p>Email: <%= data.currentUser.email%></p>
+            <p>Số điện thoại: <%= data.currentUser.phone%></p>
+            <p>Địa chỉ: <%= data.currentUser.address%></p>
+          </div>
+          <div class="order-text">
+            <h4>THÔNG TIN ĐƠN HÀNG</h4>
+            <p>Thời gian đặt: <%= data.order.createdAt%></p>
+            <p>Mã đơn hàng: <%= data.order.orderCode%></p>
+            <p>Trạng thái đơn: <%= data.order.orderStatus%></p>
+            <p>Voucher: <%= data.order.voucherId%></p>
+            <p>Thuế: <%= data.order.tax%> %</p>
+            <p>Tổng tiền đơn: <%= data.order.totalPrice%></p>
+          </div>
+        </div>
+        <h4>THÔNG TIN SÁCH</h4>
+        <div class="order-book">      
+          <div class="custom-table">
+            <table class="table table-dark text-left">
+              <thead>
+                <tr>
+                  <th scope="col">Tên sách</th>
+                  <th scope="col">Tác giả</th>
+                  <th scope="col">Giá sách</th>
+                  <th scope="col">Số lượng</th>
+                  <th scope="col">Flash sale</th>
+                  <th scope="col">Tổng chi phí</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <% data.order.OrderDetails.forEach(orderDetail => { %>
+                    <tr class="custom-table-order">            
+                    <td><%= orderDetail.Product.name %></td>
+                    <td><%= orderDetail.Product.author %></td>      
+                    <td><%= orderDetail.Product.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>                       
+                    <td><%= orderDetail.quantity %></td> 
+                    <%if(orderDetail?.Product?.FlashSaleProducts[0]){%>
+                      <td>
+                        -<%= orderDetail?.Product?.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%>
+                      </td> 
+                      <td><%= (orderDetail.Product.priceSelling * orderDetail.quantity - orderDetail?.Product?.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>   
+                      <%}else{%>
+                        <td>0</td>          
+                      <td><%= (orderDetail.Product.priceSelling * orderDetail.quantity).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>                         
+                      <%}%>
+                  </tr>
+                  <% }); %>
+              </tbody>
+            </table>
+        </div>
+        </div>   
+        <h3>Thanh toán: </h3>
+        <p>Chi tiết vận chuyển: A -> B</p>
+        <p>Giá sách</p>     
+        <p>Voucher</p>
+        <p>flashsale</p>
+        <p>Tổng chi phí</p>
       </div>
     </div>
     
