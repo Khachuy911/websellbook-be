@@ -38,7 +38,6 @@ module.exports = {
   update: async (req, res, next) => {
     const { id } = req.params;
     const { name, quantity, discountAmount, expireDate } = req.body;
-
     const condition = {
       where: {
         id: id,

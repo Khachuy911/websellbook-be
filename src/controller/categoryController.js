@@ -8,6 +8,7 @@ const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require('../helper/constant');
 module.exports = {
   create: async (req, res, next) => {
     const { name } = req.body;
+    console.log(req.body)
     if (!name)
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_LACK))
 
