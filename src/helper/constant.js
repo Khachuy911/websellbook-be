@@ -89,6 +89,7 @@ module.exports = {
     NOT_SHIPPING: 'This order is not at confirm status',
     NOT_DELIVERE: 'This order is not at shipping status',
     NOT_DONE: 'This order is not at delivere status',
-    NOT_CANCEL: 'Order can not cancel'
+    NOT_CANCEL: 'Order can not cancel',
+    KHONG_XOA_COMMENT: 'Không thể xoá nhận xét của người khác'
   }
 }
