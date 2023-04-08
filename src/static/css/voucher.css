@@ -1,20 +1,20 @@
-body{
-  /* background-color: ; */
-  font-family: 'Roboto Slab', serif;
+body {
+  font-family: "Roboto Slab", serif;
   /* font-family: 'Roboto Mono', monospace; */
   /* font-family: 'Noto Serif', serif; */
 }
 
 /* HEAD */
-.custom-menu-header{
+
+.custom-menu-header {
   color: black;
 }
 
-.custom-menu-header .active{ 
+.custom-menu-header .active {
   color: red;
 }
 
-.custom-menu-header:hover{
+.custom-menu-header:hover {
   background-color: rgb(255, 255, 255);
   border-radius: 10px;
   opacity: 70%;
@@ -30,7 +30,6 @@ header {
   /* background-color: rgb(235, 231, 231); */
   padding: 10px;
   background-color: rgb(105, 192, 233);
-  
 }
 
 img:hover {
@@ -41,29 +40,39 @@ img:hover {
 /* ======================== */
 /* SECTION */
 
-.section{
-  background-color: rgb(231, 237, 240);
-  text-align: center;
-  padding: 50px;
+.card {
+  background-color: rgb(236, 236, 236);
+  box-shadow: 1px 1px 3px black;
+  border: 1px solid rgb(236, 236, 236);
 }
 
-.order-infor{
-  display: flex;
-  text-align: left;
-  justify-content: space-around;
+.card:hover {
+  background-color: rgb(105, 192, 233);
+  cursor: default;
+  box-shadow: 2px 2px 5px black;
+  border: 1px solid rgb(105, 192, 233);
+  color: white;
 }
 
-.order-user{
-  flex-basis: 50%;
-  
+p {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 1px;
 }
 
-.order-book {
-  text-align: left;
+
+.direction {
+  flex-direction: row-reverse;
 }
 
-
-
+a {
+  text-decoration: none;
+  color: black;
+}
+a:hover {
+  color: rgb(105, 192, 233);
+}
 
 /* ======================== */
 /* FOOTER */

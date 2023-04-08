@@ -96,12 +96,15 @@ img:hover {
   background-color: rgb(247, 246, 246);
   /* height: 500px; */
   padding: 10px;
+  /* width: 500px; */
 
 }
 
 .custom-comment-book {
   display: flex;
-  text-overflow: ellipsis;
+  margin: 10px 0px;
+  /* text-overflow: auto; */
+  /* word-wrap: break-word; */
 }
 
 .custom-comment-username {
@@ -123,9 +126,10 @@ img:hover {
   margin: 0px 20px;
 }
 
-a{
+a {
   text-decoration: none;
-  color:black;
+  color: white;
+
 }
 a:hover {
   color: rgb(105, 192, 233);
@@ -153,14 +157,6 @@ text-overflow: ellipsis;
 margin: 1px;
 }
 
-.card-title {
-overflow: hidden;
-white-space: nowrap; 
-text-overflow: ellipsis;
-margin: 1px;
-font-weight: bolder;
-}
-
 .book-sell-new {
   display: flex;
   flex-direction: row;
@@ -171,16 +167,20 @@ font-weight: bolder;
 }
 
 .card {
-  flex-basis:19%;
+  flex-basis: 19%;
   margin-bottom: 20px;
   height: 330px;
   cursor: pointer;
-  margin: 5px;
+  margin: 6px;
+  box-shadow: 1px 1px 3px ;
+  background-color: rgb(105, 192, 233);
+  border: 1px solid rgb(105, 192, 233);
 }
 
 .card:hover {
-  color: rgb(40, 153, 206);
-  box-shadow: 3px 3px #666;
+  /* color: white; */
+  box-shadow: 3px 3px 5px #666;
+  background-color: white;
 }
 
 .custom-btn-seemore {
@@ -191,31 +191,49 @@ font-weight: bolder;
   font-style: italic;
 }
 
-.text-flashsale{
-  color: red;
-}
-
-.card-price {
-  color: rgb(40, 153, 206);
-  font-size: 20px;
-  margin-bottom: 20px;
-}
-.card-description { 
+/* .card-price {
+  color: white;
+} */
+.card-description {
   font-style: italic;
   opacity: 90%;
 }
 
+.card-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 5px 1px;
+  font-weight: bolder;
+  color: black; 
+}
+
 .custom-flashsale {
-  border: 1px solid;
+  border: 1px solid red;
   background-color: red;
-  padding: 0px 7px;
-  border-radius: 10px;
-  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 0px 10px 10px 0px;
+  box-shadow: 3px 3px 5px;
+  font-size: 14px;
   margin-left: 10px;
 }
  
 i {
   color:rgb(105, 192, 233)
+}
+
+.custom-breadcrumb {
+  background-color: rgb(247, 246, 246);
+  
+}
+
+.breadcrumb{
+  padding: 10px;
+  font-size: 18px
+}
+
+.breadcrumb-home {
+  color: black;
 }
 
 /* ======================== */

@@ -81,11 +81,17 @@ module.exports = {
       rows: voucher.rows
     }
 
-    res.status(HTTP_CODE.SUCCESS).json({
-      isSuccess: true,
-      message: MESSAGE.SUCCESS,
-      data
-    })
+    if(req.query.api == 1){
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data
+      })
+    }
+
+    console.log("======" + JSON.stringify(data));
+
+    res.render('../view/voucher.ejs', {data});
   },
 
   getDetail: async (req, res, next) => {

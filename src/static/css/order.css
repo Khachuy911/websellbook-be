@@ -87,6 +87,19 @@ a:hover {
   font-size: 14px;
 }
 
+.total-balance {
+  display:flex;
+  justify-content: space-between;
+}
+
+.modal-dialog {
+  /* text-align: center; */
+}
+
+.modal-content{
+  
+}
+
 /* ======================== */
 /* FOOTER */
 footer {

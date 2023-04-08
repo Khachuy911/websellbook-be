@@ -19,8 +19,7 @@ module.exports = {
         );
       }
 
-      const userId = "c906f20b-17a7-47d0-a275-717a96aa268e";
-      // req.user;
+      const userId = req.user;
 
       const condition = {
         where: {
@@ -78,10 +77,10 @@ module.exports = {
       },
       include: {
         model: CartProduct,
-        attributes: ["quantity"],
+        attributes: ["id", "quantity"],
         include: {
           model: Product,
-          attributes: ["name", "author", "priceSelling"],
+          attributes: ["id","name", "author", "priceSelling"],
           include: {
             model: FlashSaleProduct,
             where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },

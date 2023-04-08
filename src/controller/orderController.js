@@ -21,12 +21,18 @@ module.exports = {
   create: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
-      const { product, voucherCode } = req.body;
+      const test1 = Object.assign({}, req.body);
+      console.log(test1);
+      const data = req.body;
+      console.log(data);
+      let { product, voucherCode } = test1;
 
       if (!product) {
         await t.rollback();
         return next(ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_LACK));
       }
+
+      product = JSON.parse(product);
 
       product.sort((a, b) => {
         if (a.id < b.id) {
@@ -93,7 +99,9 @@ module.exports = {
 
         if (pro[i].FlashSaleProducts.length > 0) {
           sum +=
-            (pro[i].priceSelling - (pro[i].FlashSaleProducts[0].discountAmount * product[i].quantity)) *
+            (pro[i].priceSelling -
+              pro[i].FlashSaleProducts[0].discountAmount *
+                product[i].quantity) *
             product[i].quantity;
         } else {
           sum += pro[i].priceSelling * product[i].quantity;
@@ -203,6 +211,7 @@ module.exports = {
       });
     } catch (error) {
       await t.rollback();
+      console.log(error.message);
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message));
     }
   },
@@ -600,7 +609,7 @@ module.exports = {
     //   data,
     // });
 
-    console.log("========> Order: " + JSON.stringify(data));
+    // console.log("========> Order: " + JSON.stringify(data));
 
     res.render("../view/order.ejs", { data });
   },
