@@ -34,19 +34,19 @@
         
     </div> -->
 
+    <div class="nav" >
+        <h1>Dashboard</h1>
+        <ul id="route">
+            <li><a href="/admin/dashboard">Dashboard</a></li>
+            <li><a href="#">Tài khoản của tôi</a></li>
+            <li><a href="#">Danh sách Products</a></li>
+            <li><a href="/product/create">Thêm Product</a></li>
+            <li><a href="#">Products</a></li>
+            <li><a href="#">Reports</a></li>
+
+        </ul>
+    </div>
     <div class="containerBox" style="position: relative;">
-        <div class="nav" >
-            <h1>Dashboard</h1>
-            <ul id="route">
-                <li><a href="/admin/dashboard">Dashboard</a></li>
-                <li><a href="#">Tài khoản của tôi</a></li>
-                <li><a href="#">Danh sách Products</a></li>
-                <li><a href="/product/create">Thêm Product</a></li>
-                <li><a href="#">Products</a></li>
-                <li><a href="#">Reports</a></li>
-    
-            </ul>
-        </div>
         <div class="main" style="width: 80%;height: 100%;padding-bottom: 60px;">
             <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách Products</h1>
             <div class="card" style="width: 95%;margin: auto;">
@@ -282,7 +282,7 @@
 
 </script>
 <script>
-
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth +"px"
 </script>
 
 </html>

@@ -9,13 +9,14 @@
     <!-- datatable -->
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
-
+    
+    <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Chart.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-
+<!-- 
     <style>
         .nav {
             display: flex;
@@ -93,20 +94,18 @@
             color: #F4F5FA !important;
             cursor: inherit;
         }
-    </style>
+    </style> -->
 </head>
 
 <body style="position: relative;">
-    <div class="nav" style="position: fixed;height: 100%; ">
+    <div class="nav" style="position: fixed;height: 100%; margin-left: 8px;">
         <h1>Dashboard</h1>
         <ul id="route">
         </ul>
     </div>
-    <div class="container-fluid" style="display: flex;background-color: #F4F5FA;">
-        <div class="nav">
-
-        </div>
-        <div>
+    <div class="containerBox">
+      
+        <div class="main" style="width: 80%;height: 100%;padding-bottom: 60px;">
             <h1 class="mb-4" style="font-size: 36px;margin-top: 30px;margin-bottom: 30px;text-align: center;">Dashboard
             </h1>
 
@@ -118,7 +117,7 @@
                             <table id="table-id" class="table">
                                 <thead>
                                     <tr>
-                                        <th>STT</th>
+                                        <th style="max-width: 50px;">STT</th>
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
@@ -269,9 +268,9 @@
                     console.log(response)
                     let listSelect = response?.data?.rows.map((item, index) => (`
                                      <tr>
-                                        <td style="max-width:100px">${index + 1}</td>
+                                        <td style="max-width:50px;text-align:center">${index + 1}</td>
                                         <td style="max-width:100px">${item.username}</td>
-                                        <td style="max-width:150px">${item.email}</td>
+                                        <td style="max-width:120px">${item.email}</td>
                                         <td style="max-width:100px">${item.phone}</td>
                                     </tr>`
                     ))
@@ -381,5 +380,7 @@
         });
     </script>
 </body>
-
+<script>
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth +"px"
+</script>
 </html>
