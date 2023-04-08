@@ -127,7 +127,7 @@ module.exports = {
 
     console.log("=====>Product:" + JSON.stringify(product));
 
-    res.render("../view/home.ejs", { data: data });
+    res.render("../view/home.ejs", { data: data});
   },
 
   getProductByCategory: async (req, res, next) => {
@@ -138,6 +138,7 @@ module.exports = {
         // ...filter("categoryId", req.query.category),
       },
       include: [
+        { model: ProductImage },
         {
           model: Category,
           where: {
@@ -175,7 +176,7 @@ module.exports = {
 
     }
 
-    console.log("=====>Product:" + JSON.stringify(product));
+    // console.log("=====>Product:" + JSON.stringify(product));
 
     res.render("../view/productByCategory.ejs", { data: data });
   },
@@ -217,7 +218,7 @@ module.exports = {
     //   data,
     // });
 
-    console.log("=====>Product:" + JSON.stringify(product));
+    // console.log("=====>Product:" + JSON.stringify(product));
 
     res.render("../view/productByCategory.ejs", { data: data });
   },
@@ -262,8 +263,13 @@ module.exports = {
     //   message: MESSAGE.SUCCESS,
     //   data: product,
     // });
-    console.log("==============> product detail: " + JSON.stringify(product));
-    res.render("../view/productDetail.ejs", { data: product });
+
+
+    
+
+    const data = { product}
+    console.log("==============> product detail: " + JSON.stringify(data));
+    res.render("../view/productDetail.ejs", { data});
   },
 
   update: async (req, res, next) => {

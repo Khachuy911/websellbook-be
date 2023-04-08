@@ -21,7 +21,7 @@ module.exports.checkToken = async (req, res, next) => {
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.NOT_LOGIN));
     }
 
-    const decode = await jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
     const condition = {
       where: {
@@ -41,7 +41,7 @@ module.exports.checkToken = async (req, res, next) => {
 
     next();
   } catch (error) {
-    return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message));
+    return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error?.message));
   }
 };
 

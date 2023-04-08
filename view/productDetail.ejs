@@ -8,6 +8,11 @@
   <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/3068/3068327.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="/fonts/css/all.min.css">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <title>HuyKhac Shop</title>
   <link rel="stylesheet" href="/css/productDetail.css">
 </head>
@@ -76,14 +81,14 @@
               </ul>
             </div>
             </li>    
-          <li><a href="#" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
+          <li><a href="/cart" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
           <li><a href="#" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
           <li><a href="/admin/dashboard" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#speedometer2"/></svg>Quản Lý</a></li>
       </ul>
 
       <!-- Search -->
       <form action="/product/search" class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3">
-        <input type="search" name="search" class="form-control" placeholder="Bạn cần tìm gì ?" aria-label="Search">
+        <input type="search" name="search" class="form-control" placeholder="Nhập tên sách bạn  muốn tìm ?" aria-label="Search">
       </form>
 
       <!-- Profile -->
@@ -105,36 +110,43 @@
 
     <!-- BODY -->
     <div class="container-xl">
+      <nav class="custom-breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="breadcrumb-home" href="/product">Trang chủ</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Chi tiết sách</li>
+        </ol>
+      </nav>
       <%if(!data){%>
         <h1>Rỗng</h1>
         <%}else {%>
       <div class="section">
         <div class="row custom-section">
           <div class="col-md-3 custom-image">
-            <img width="100%" height="400px" class="custom-image-child" src="https://picsum.photos/200" alt="image product">
+
+            <img src="<%= data.product.ProductImages[0].url.replace("public", "") %>" width="100%" height="400px" class="custom-image-child" alt="anh sach">
           </div>
           <div class="col-md-6 custom-text"> 
             <div class="infor-detail">
-              <h3><%= data.name%></h3>   
-              <span>Danh mục: </span><span id="category"><%= data.Category.name%></span>
-              <p><p>Tác giả: <%= data.author %></p></p>           
-              <%if(data.FlashSaleProducts.length > 0){%>
-                <% if(data.FlashSaleProducts[0]?.discountAmount){ %>
-                  <p class="text-flashsale">Khuyến mãi: <%= data?.FlashSaleProducts[0]?.FlashSale?.name%></p>
-                  <p class="text-flashsale">Thời gian khuyến mãi: <%= data?.FlashSaleProducts[0]?.FlashSale?.startDate%> đến <%= data?.FlashSaleProducts[0]?.FlashSale?.endDate%></p>
+              <h3><%= data.product.name%></h3>   
+              <span>Danh mục: </span><span id="category"><%= data.product.Category.name%></span>
+              <p><p>Tác giả: <%= data.product.author %></p></p>           
+              <%if(data.product.FlashSaleProducts.length > 0){%>
+                <% if(data.product.FlashSaleProducts[0]?.discountAmount){ %>
+                  <p class="text-flashsale">Khuyến mãi: <%= data.product?.FlashSaleProducts[0]?.FlashSale?.name%></p>
+                  <p class="text-flashsale">Thời gian khuyến mãi: <%= data.product?.FlashSaleProducts[0]?.FlashSale?.startDate%> đến <%= data.product?.FlashSaleProducts[0]?.FlashSale?.endDate%></p>
                   <span class="text-decoration-line-through text-black font-monospace">
-                    <%= data.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
-                  </span><span class="text-light custom-flashsale">  -<%= data.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
-                  <p class="card-price ">Giá: <%= (data.priceSelling - data.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
+                    <%= data.product.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
+                  </span><span class="text-light custom-flashsale">  -<%= data.product.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
+                  <p class="card-price ">Giá: <%= (data.product.priceSelling - data.product.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
   
                   <% } %>                
                 <%}else{ %>
-                  <p class="card-price ">Giá: <%= data.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
+                  <p class="card-price ">Giá: <%= data.product.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                   <%}%>
-              <p>Số trang: <%= data.weight %> trang</p>
-              <p>Số lượng: <%= data.quantityDisplay %></p>
-              <p>Mã code: <%= data.barCode %></p>              
-              <span>Mô tả: <%= data.description %>.</span>     
+              <p>Số trang: <%= data.product.weight %> trang</p>
+              <p>Số lượng: <%= data.product.quantityDisplay %></p>
+              <p>Mã code: <%= data.product.barCode %></p>              
+              <span>Mô tả: <%= data.product.description %>.</span>     
             </div>    
             <div class="infor-delivery">
               <h5>Thông tin & khuyến mãi</h5>
@@ -144,9 +156,8 @@
               <h6><i class="fa-regular fa-square-check"></i> Chiết khấu cao cho các đại lý và khách đặt sỉ.</h6>
             </div>   
             <div class="input-buy">
-              <form class="row g-3">
+              <form class="row g-3" id="btn-cart">
                 <div class="col-3">
-                  <label for="staticEmail2" class="visually-hidden">Email</label>
                   <input type="text" readonly class="form-control-plaintext " id="staticEmail2" value="Số lượng">
                 </div>
                 <div class="col-auto">
@@ -154,7 +165,7 @@
                   <input type="text" width="100%" class="custom-btn-order form-control" id="inputQuantity" placeholder="..." value="1">
                 </div>
                 <div class="col-auto">
-                  <button type="submit" class="btn btn-light mb-3">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>
+                  <button id="btn-submit-cart" type="submit" data-productId="<%= data.product.id%>" class="btn btn-light mb-3">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>
                 </div>
               </form>
             </div>
@@ -171,29 +182,24 @@
         <div class=" comment-book">
           <h5>Khách hàng nhận xét</h5>
           <hr>
-          <% if(data.Comments.length ===0){%>
-            <i class="fa-solid fa-minus"></i>
+          <% if(data.product.Comments.length ===0){%>
+            <div class="empty text-center">
+              <i class="fa-brands fa-dropbox" style="font-size: 50px;"></i> <span style="font-weight:lighter; font-style: italic; opacity: 50%; ">Chưa có nhân xét nào... </span>
+            </div>
             <%}else{%>
-          <% data.Comments.forEach(element => {%>
-          <div class="custom-comment-book">
-            <div class="img-avatar-comment ">
-              <img width="60px" height="60px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
-            </div>
-            <div class="comment-text ">
-              <p class="custom-comment-username"><%= element.User.username%>( <%= element.User.email%> )</p>
-              <span><%= element.text%></span>
-            </div>
-          </div>
-            <% }); %>
+              <div class="list-comment"></div>
             <%}%>
         </div>
         <div class="your-comment">
+          <%if(data.currentUser){%>
+            <p>Xin chào, <%= data.currentUser.username%></p>
+            <%}%>
           <p></p>
-          <form action="">
+          <form action="" id="submit-comment">
             <div class="mb-3">
               <!-- <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label> -->
-              <textarea name="comment" placeholder="Viết nhận xét và đánh giá của bạn về cuốn sách này..." class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-              <button type="submit" class="custom-btn-comment btn btn-primary mb-3">Gửi nhận xét <i class="fa-regular fa-comment"></i></button>
+              <textarea name="comment" data-id="<%=data.id%>" placeholder="Viết nhận xét và đánh giá của bạn về cuốn sách này... (255 ký tự)" class="form-control" id="text-comment" rows="3"></textarea>
+                <button data-id="<%= data.product.id%>" id="btn-comment" type="submit" class="custom-btn-comment btn btn-primary mb-3">Gửi nhận xét <i class="fa-regular fa-comment"></i></button>
             </div>
           </form>
         </div>
@@ -202,7 +208,6 @@
       </div>
       <%}%>
     </div>
-
     <!-- FOOTER -->
     <div class="footer">
       <footer class="py-5">
@@ -254,6 +259,7 @@
     </div>
   <!-- </div> -->
 
+  <!-- show sach lien quan -->
   <script>
     const textCate = document.getElementById('category');
     const categoryProduct = textCate.textContent;
@@ -276,13 +282,16 @@
           </div>
         </div>`
         let genHTML = `<div class="book-sell-new">`;
+        let countS = 0;
         result?.data?.rows.forEach(element => {
+          countS++;
+          if(countS <= 10){
           genHTML +=
           //
           `
               <div class="card" style="width: 18rem;">
                 <a href="/product/${element.id}">
-                <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+                  <img src=${element.ProductImages[0].url.replace("public", "")} height="200px" class="card-img-top" alt="anh sach">
                 <div class="card-body">
                   <h5 class="card-title">${ element.name }</h5>
                   <p class="card-description">${ element.description }</p>
@@ -294,7 +303,7 @@
             </div>`
 
             // 
-            
+          }
           });
           document.getElementById('relation-book').innerHTML += genHTML + "</div> ";
 
@@ -303,6 +312,269 @@
     callApi();
 
   </script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+<!-- get comment -->
+<script>
+  const productId = $("#btn-comment").attr("data-id");
+  $.ajax({
+      url: `/comment/getCommentByProduct/${productId}`,
+      type: "GET",
+      success: (response) => {
+          console.log(response)
+          let listSelect = response?.data?.rows.map((item, element) => {    
+            if(item.userId === response.currentUser){
+             return `<div class="custom-comment-book">
+            <div class="img-avatar-comment ">
+              <img width="60px" height="60px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
+            </div>
+            <div class="comment-text ">
+              <p class="custom-comment-username">${item.User.username}( ${item.User.email} )</p>
+              <p style="font-weight: lighter; font-size: small; font-style: italic;">${item.createdAt}</p>
+              <h5 style="word-wrap: break-word; width: 1000px;">${item.text}</h5>
+              <p class="btn-delete-comment" data-commentId="${item?.id}" >X</p>
+              </div></div>`       
+            } else{
+              return `<div class="custom-comment-book">
+            <div class="img-avatar-comment ">
+              <img width="60px" height="60px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
+            </div>
+            <div class="comment-text ">
+              <p class="custom-comment-username">${item.User.username}( ${item.User.email} )</p>
+              <p style="font-weight: lighter; font-size: small; font-style: italic;">${item.createdAt}</p>
+              <h5 style="word-wrap: break-word; width: 1000px;">${item.text}</h5>
+              </div></div>`
+            }
+            })
+          $('.list-comment')[0].innerHTML = listSelect.join('')       
+      },
+      error: (data) => {
+          Toastify({
+              text: data.responseJSON.errorCode,
+              duration: 2000,
+              newWindow: true,
+              //close: true,
+              offset: {
+                  x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                  y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+              },
+              gravity: "top", // `top` or `bottom`
+              position: "right", // `left`, `center` or `right`
+              stopOnFocus: true, // Prevents dismissing of toast on hover
+              style: {
+                  background: "linear-gradient(to right, red, red)",
+                  width: "250px",
+                  fontSize: "16px"
+              },
+          }).showToast();
+      }
+  })
+  
+
+</script>
+
+<!-- post comment -->
+<script>
+      $("#submit-comment").submit((e) => {
+          e.preventDefault();
+          let productId = $("#btn-comment").attr("data-id");
+          let text = $("#text-comment").val();
+
+          console.log(productId);
+          console.log(text);
+
+
+          // const data = $("#HandleSubmitForm").serialize();
+          // let form = document.getElementById('HandleSubmitForm');
+          // let formData = new FormData(form);
+
+          $.ajax({
+              url: '/comment',
+              type: 'POST',
+              data: {productId: productId, text: text},              
+              success: function (data) {
+                  Toastify({
+                      text: 'Thêm nhân xét thành công',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, green, green)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+                  setTimeout(() => {
+                        // $("#exampleModalDelete").modal("hide");
+                        location.reload();
+                    }, "1000")
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                  Toastify({
+                      text: 'Thêm nhận xét không thành công',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, red, red)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+              }
+          });
+      })
+</script>
+<!-- post cart -->
+<script>
+  $("#btn-cart").submit((e) => {
+      e.preventDefault();
+      let productId = $("#btn-submit-cart").attr("data-productId");
+      let quantity = $("#inputQuantity").val();
+
+      console.log(productId);
+      console.log(quantity);
+
+      $.ajax({
+              url: '/cart',
+              type: 'POST',
+              data: {productId: productId, quantity: quantity},              
+              success: function (data) {
+                  Toastify({
+                      text: 'Thêm sản phẩm thành công',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, green, green)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+                  setTimeout(() => {
+                        window.location.href = "/cart";
+                    }, "2000")
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                  Toastify({
+                      text: 'Thêm sản phẩm không thành công',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, red, red)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+              }
+          });
+
+      
+  })
+</script>
+ <!-- delete comment -->
+ <script>
+  $(".btn-delete-comment").click((e) => {
+      let commentId = $(".btn-delete-comment").attr("data-commentId");
+
+      console.log(commentId);
+
+      $.ajax({
+              url: `/comment/deletesoft/${commentId}`,
+              type: 'delete',        
+              success: function (data) {
+                  Toastify({
+                      text: 'Xoá comment thành công',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, green, green)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+                  setTimeout(() => {
+                        // $("#exampleModalDelete").modal("hide");
+                        location.reload();
+                    }, "1000")
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                  Toastify({
+                      text: 'Không thể xoá nhận xét của người khác',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, red, red)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+              }
+          });
+
+      
+  },false)
+</script>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

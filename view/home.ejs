@@ -63,26 +63,21 @@
                 Danh Mục
               </span>
               <ul class="dropdown-menu">
-                <li><a class="custom-dropdown-item  dropdown-item" href="#">Sách kinh doanh</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách thiếu nhi</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item  dropdown-item" href="/product/productByCategory?category=Sách kinh doanh">Sách kinh doanh</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách thiếu nhi">Sách thiếu nhi</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách tâm lý">Sách tâm lý</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách giáo dục">Sách giáo dục</a></li>
               </ul>
             </div>
             </li>    
           <li><a href="/cart" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
-          <li><a href="#" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
+          <li><a href="/voucher" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
           <li><a href="/admin/dashboard" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#speedometer2"/></svg>Quản Lý</a></li>
       </ul>
 
       <!-- Search -->
       <form action="/product/search" class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3">
-        <input type="search" name="search" class="form-control" placeholder="Bạn cần tìm gì ?" aria-label="Search">
+        <input type="search" name="search" class="form-control" placeholder="Nhập tên sách bạn  muốn tìm ?" aria-label="Search">
       </form>
 
       <!-- Profile -->
@@ -95,8 +90,8 @@
             <li><a class="custom-dropdown-item dropdown-item " href="#">Thông Tin</a></li>
             <li><a class="custom-dropdown-item dropdown-item" href="#">Giỏ Hàng</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="custom-dropdown-item dropdown-item" href="#">Đăng Nhập</a></li>
-            <li><a class="custom-dropdown-item dropdown-item" href="#">Đăng Ký</a></li>
+            <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/login">Đăng Nhập</a></li>
+            <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/regester">Đăng Ký</a></li>
           </ul>
         </div>
       </div>
@@ -164,27 +159,31 @@
             </div>
           </div>
           <div class="book-sell-new">
-              <% data.rows.forEach(element => { %>
-                <%if(element.Category?.name === "Sách kinh doanh"){%>                  
+            <% let countKD =0; %>
+              <% data.rows.forEach((element) => { %>
+                <%if(element.Category?.name === "Sách kinh doanh"){%> 
+                  <%countKD++%>  
+                  <%if(countKD<=10){%>               
               <div class="card" style="width: 18rem;">
                 <a href="/product/<%=element.id%>">
-                <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+                <img src=<%= element.ProductImages[0].url.replace("public", "")%> height="200px" class="card-img-top" alt="anh sach">
                 <div class="card-body">
                     <h5 class="card-title"><%= element.name %></h5>
                   <p class="card-description"><%= element.description %></p>
                   <div class="text-left">
                     <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
                     <span class="card-price text-decoration-line-through text-black font-monospace">
-                      <%= element.priceSelling %>đ
-                    </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
-                    <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
+                      <%= element.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
+                    </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
+                    <p class="card-price ">Giá: <%= (element.priceSelling - element.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                     <% }else{ %>
-                    <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
+                    <p class="card-price ">Giá: <%= element.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                     <%}%>
                   </div>
                 </div>
               </a>
               </div>  
+              <%}%>
               <%}%>
               <% }); %>
             </div>
@@ -192,15 +191,24 @@
   
         <div class="book-outstanding">
           <div class="title-category-name">
-            <h3>Sách hay</h1>
+            <h3>Sách mới</h1>
           </div>
           <div class="book-outstanding-text">
             <div class="book-outstanding-text-image">
-              <img src="https://picsum.photos/200/300" height="350px" width="100%" alt="">
+              <img src=<%= data.rows[0].ProductImages[0].url.replace("public", "")%> height="350px" width="100%" alt="anh sach">
             </div>
             <div class="book-outstanding-text-title">
               <h3 class="book-outstanding-text-title-name"><%= data.rows[0].name %></h3>     
-              <p>Giá: <%= data.rows[0].priceSelling %>đ</p> 
+              <% if(data.rows[0].FlashSaleProducts[0]?.discountAmount){ %>
+                <span class="card-price text-decoration-line-through text-black font-monospace">
+                  <%= data.rows[0].priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
+                </span><span class="text-light custom-flashsale">  -<%= data.rows[0].FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
+                <p class="card-price ">Giá: <%= (data.rows[0].priceSelling - data.rows[0].FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
+                <% }else{ %>
+                <p class="card-price ">Giá: <%= data.rows[0].priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
+                <%}%>
+                <p>Số lượng sách: <%= data.rows[0].quantityDisplay %></p> 
+                <p>Sách gồm <%= data.rows[0].weight %> trang</p> 
               <span class="book-outstanding-text-title-description"><%= data.rows[0].description %>...</span> 
               <div class="text-center">
                 <a class="d-block text-decoration-none text-primary-emphasis text-opacity-50" href="/product/<%= data.rows[0].id%>">xem chi tiết</a>
@@ -223,27 +231,31 @@
           </div>
   
           <div class="book-sell-new">
+            <% let countTN =0; %>
             <% data.rows.forEach(element => { %>
               <%if(element.Category?.name === "Sách thiếu nhi"){%>
+                <%countTN++%>  
+                <%if(countTN<=10){%>               
             <div class="card" style="width: 18rem;">
               <a href="/product/<%=element.id%>">
-              <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+                <img src=<%= element.ProductImages[0].url.replace("public", "")%> height="200px" class="card-img-top" alt="anh sach">
               <div class="card-body">
-                <h5 class="card-title"><%= element.name %></h5>
+                  <h5 class="card-title"><%= element.name %></h5>
                 <p class="card-description"><%= element.description %></p>
                 <div class="text-left">
                   <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
                   <span class="card-price text-decoration-line-through text-black font-monospace">
-                    <%= element.priceSelling %>đ
-                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
-                  <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
+                    <%= element.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
+                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
+                  <p class="card-price ">Giá: <%= (element.priceSelling - element.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                   <% }else{ %>
-                  <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
+                  <p class="card-price ">Giá: <%= element.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                   <%}%>
                 </div>
               </div>
             </a>
             </div>  
+            <%}%>
             <%}%>
             <% }); %>
           </div>
@@ -262,27 +274,31 @@
           </div>
   
           <div class="book-sell-new">
+            <% let countTL =0; %>
             <% data.rows.forEach(element => { %>
               <%if(element.Category?.name === "Sách tâm lý"){%>
+                <%countTL++%>  
+                <%if(countTL<=10){%>               
             <div class="card" style="width: 18rem;">
               <a href="/product/<%=element.id%>">
-              <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+                <img src=<%= element.ProductImages[0].url.replace("public", "")%> height="200px" class="card-img-top" alt="anh sach">
               <div class="card-body">
-                <h5 class="card-title"><%= element.name %></h5>
+                  <h5 class="card-title"><%= element.name %></h5>
                 <p class="card-description"><%= element.description %></p>
                 <div class="text-left">
                   <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
                   <span class="card-price text-decoration-line-through text-black font-monospace">
-                    <%= element.priceSelling %>đ
-                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
-                  <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
+                    <%= element.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
+                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
+                  <p class="card-price ">Giá: <%= (element.priceSelling - element.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                   <% }else{ %>
-                  <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
+                  <p class="card-price ">Giá: <%= element.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                   <%}%>
                 </div>
               </div>
-              </a>
+            </a>
             </div>  
+            <%}%> 
             <%}%>
             <% }); %>
           </div>
@@ -294,14 +310,23 @@
           </div>
           <div class="book-outstanding-text direction">
             <div class="book-outstanding-text-image ">
-              <img src="https://picsum.photos/200/300" height="350px" width="100%" alt="">
+              <img src=<%= data.rows[1].ProductImages[0].url.replace("public", "")%> height="350px" width="100%" alt="anh sach">
             </div>
             <div class="book-outstanding-text-title ">
               <h3 class="book-outstanding-text-title-name"><%= data.rows[1].name %></h3>     
-              <p>Giá: <%= data.rows[1].priceSelling %>đ</p> 
+              <% if(data.rows[1].FlashSaleProducts[1]?.discountAmount){ %>
+                <span class="card-price text-decoration-line-through text-black font-monospace">
+                  <%= data.rows[1].priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
+                </span><span class="text-light custom-flashsale">  -<%= data.rows[1].FlashSaleProducts[1].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
+                <p class="card-price ">Giá: <%= (data.rows[1].priceSelling - data.rows[1].FlashSaleProducts[1].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
+                <% }else{ %>
+                <p class="card-price ">Giá: <%= data.rows[1].priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
+                <%}%>
+                <p>Số lượng sách: <%= data.rows[1].quantityDisplay %></p> 
+                <p>Sách gồm <%= data.rows[1].weight %> trang</p> 
               <span class="book-outstanding-text-title-description"><%= data.rows[1].description %>...</span> 
               <div class="text-center">
-                <a class="d-block text-decoration-none text-primary-emphasis text-opacity-50" href="#">xem chi tiết</a>
+                <a class="d-block text-decoration-none text-primary-emphasis text-opacity-50" href="/product/<%= data.rows[1].id%>">xem chi tiết</a>
               </div>
             </div>
           </div>
@@ -320,27 +345,31 @@
           </div>
   
           <div class="book-sell-new">
+            <% let countGD =0; %>
             <% data.rows.forEach(element => { %>
               <%if(element.Category?.name === "Sách giáo dục"){%>
+                <%countGD++%>  
+                <%if(countGD<=10){%>               
             <div class="card" style="width: 18rem;">
               <a href="/product/<%=element.id%>">
-              <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+                <img src=<%= element.ProductImages[0].url.replace("public", "")%> height="200px" class="card-img-top" alt="anh sach">
               <div class="card-body">
-                <h5 class="card-title"><%= element.name %></h5>
+                  <h5 class="card-title"><%= element.name %></h5>
                 <p class="card-description"><%= element.description %></p>
                 <div class="text-left">
                   <% if(element.FlashSaleProducts[0]?.discountAmount){ %>
                   <span class="card-price text-decoration-line-through text-black font-monospace">
-                    <%= element.priceSelling %>đ
-                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount%>đ</span>
-                  <p class="card-price ">Giá: <%= element.priceSelling - element.FlashSaleProducts[0].discountAmount %>đ</p> 
+                    <%= element.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %>
+                  </span><span class="text-light custom-flashsale">  -<%= element.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })%></span>
+                  <p class="card-price ">Giá: <%= (element.priceSelling - element.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                   <% }else{ %>
-                  <p class="card-price ">Giá: <%= element.priceSelling %>đ</p> 
+                  <p class="card-price ">Giá: <%= element.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></p> 
                   <%}%>
                 </div>
               </div>
-              </a>
+            </a>
             </div>  
+            <%}%>
             <%}%>
             <% }); %>
           </div>
