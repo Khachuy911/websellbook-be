@@ -52,10 +52,11 @@
                 <table id="myTable">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Họ và tên</th>
-                            <th>Email</th>
+                            <th>Mã đơn</th>
+                            <th>Thành tiền</th>
+                            <th>Địa chỉ</th>
                             <th>Số điện thoại</th>
+                            <th>Chi tiết đơn</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -70,7 +71,7 @@
                                 <button type="button" data-id="${item.id}"
                                     class="btn btn-delete btn-danger">Xoá</button>
                             </td>
-                        </tr>`
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -146,8 +147,8 @@
             console.log(response)
             let listSelect = response?.data?.rows.map((item, index) => (`
                                  <tr>
-                                    <td style="text-align:center">${index + 1}</td>
-                                    <td>${item.username}</td>
+                                    <td style="text-align:center">${item.orderCode}</td>
+                                    <td>${item.totalPrice}</td>
                                     <td>${item.email}</td>
                                     <td>${item.phone}</td>
                                     <td style="max-width:120px;text-align:center">
