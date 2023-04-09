@@ -191,10 +191,15 @@
                         searchPanes: {
                             show: true
                         },
-                        targets: [0, 1, 3]
+                        targets: [0, 1, 5]
+                    },
+                    {
+                        searchPanes: {
+                            show: false
+                        },
+                        targets: [0, 1, 2, 3, 4, 5, 6]
                     }
                 ],
-                "order": [[3, "desc"]],
                 "language": {
                     "sEmptyTable": "Không có dữ liệu trong bảng",
                     "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
@@ -219,7 +224,10 @@
                     },
                 }
             });
-           
+            new $.fn.dataTable.SearchPanes(table, {});
+            table.searchPanes.container().prependTo(table.table().container());
+            table.searchPanes.resizePanes();
+
 
         },
         error: (data) => {
