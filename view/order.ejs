@@ -59,7 +59,7 @@
 
       <!-- Menu -->
       <ul class="nav col-12 col-md-6 mb-2 justify-content-center mb-md-0">
-          <li><a href="/product" class="custom-menu-header active nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#home"/></svg>Trang Chủ</a></li>    
+          <li><a href="/product" class="custom-menu-header active nav-link px-2 link-primary"><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#home"/></svg>Trang Chủ</a></li>    
           <li>
             <div class="dropdown">
               <span class="custom-menu-header dropdown-toggle nav-link px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -69,20 +69,15 @@
                 Danh Mục
               </span>
               <ul class="dropdown-menu">
-                <li><a class="custom-dropdown-item  dropdown-item" href="#">Sách kinh doanh</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách thiếu nhi</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item  dropdown-item" href="/product/productByCategory?category=Sách kinh doanh">Sách kinh doanh</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách thiếu nhi">Sách thiếu nhi</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách tâm lý">Sách tâm lý</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách giáo dục">Sách giáo dục</a></li>
               </ul>
             </div>
             </li>    
-          <li><a href="#" class="custom-menu-header nav-link px-2 link-primary"><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
-          <li><a href="#" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
+          <li><a href="/cart" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
+          <li><a href="/voucher" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
           <li><a href="/admin/dashboard" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#speedometer2"/></svg>Quản Lý</a></li>
       </ul>
 
@@ -101,8 +96,8 @@
             <li><a class="custom-dropdown-item dropdown-item " href="#">Thông Tin</a></li>
             <li><a class="custom-dropdown-item dropdown-item" href="#">Giỏ Hàng</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="custom-dropdown-item dropdown-item" href="#">Đăng Nhập</a></li>
-            <li><a class="custom-dropdown-item dropdown-item" href="#">Đăng Ký</a></li>
+            <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/login">Đăng Nhập</a></li>
+            <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/regester">Đăng Ký</a></li>
           </ul>
         </div>
       </div>
@@ -110,15 +105,23 @@
 
     <!-- BODY -->
     <div class="container">
-      <h3>Xin chào, <%= data?.currentUser?.username%></h3>
+      <nav class="custom-breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="breadcrumb-home" href="/product">Trang chủ</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+        </ol>
+      </nav>
+      <hr>
+      <h4 style="text-align:right">Xin chào, <%= data?.currentUser?.username%></h4>
       <div class="infor-order">
         <div class="infor-voucher">
           
           <h5>Thông tin <a class="custom-change" href="">(Thay đổi)</a></h5>   
           <p></p>
-          <p style="margin-left: 20px">Email: <%= data.currentUser.email%></p>
-          <p style="margin-left: 20px">Số điện thoại: <%= data.currentUser.phone%></p>
-          <p style="margin-left: 20px">Địa chỉ: <%= data.currentUser.address%></p>     
+          <p style="margin-left: 20px">- Email: <%= data.currentUser.email%></p>
+          <p style="margin-left: 20px">- Số điện thoại: <%= data.currentUser.phone%></p>
+          <p style="margin-left: 20px">- Địa chỉ: <%= data.currentUser.address%></p>   
+          <p style="margin-left: 20px">- Free ship toàn quốc</p>     
         </div>
         <div class="infor-user">
           <label for="">Voucher</label>
@@ -145,8 +148,8 @@
         <div class="select-product">
           <h3>Chọn sản phẩm trong giỏ hàng: </h3>
         </div>
-        <div class="total-amount">
-          <span style="font-weight: bolder; font-size: 20px;">Tổng tiền: </span><span id="total-money">0</span>
+        <div class="total-amount" style="margin-right:50px;">
+          <span style="font-weight: bolder; font-size: 25px;">Tổng tiền: </span><span style="font-size: 20px;" id="total-money">0đ</span>
         </div>
       </div>
       
@@ -210,9 +213,10 @@
                 </div>
                 <form id="submit-order">
                     <div class="modal-body">
-                        <p style="margin-left: 20px">Email: <%= data.currentUser.email%></p>
-                        <p style="margin-left: 20px">Số điện thoại: <%= data.currentUser.phone%></p>
-                        <p style="margin-left: 20px">Địa chỉ: <%= data.currentUser.address%></p>  
+                        <p style="margin-left: 20px"><i class="fa-solid fa-envelope"></i> Email: <%= data.currentUser.email%>.</p>
+                        <p style="margin-left: 20px"><i class="fa-sharp fa-solid fa-phone-volume"></i> Số điện thoại: <%= data.currentUser.phone%>.</p>                        
+                        <p style="margin-left: 20px"><i class="fa-sharp fa-solid fa-location-dot"></i> Địa chỉ: <%= data.currentUser.address%>.</p> 
+                        <p style="margin-left: 20px"><i class="fa-solid fa-truck-fast"></i> Free ship toàn quốc.</p> 
                         <div id="confirm-order"></div>
                     </div>
                     <div class="modal-footer">
@@ -296,8 +300,8 @@
       const totalAmount = document.getElementById('total-money').innerHTML;
 
       $('#confirm-order')[0].innerHTML = `
-        <p style="margin-left: 20px">Phương thức thanh toán: ${radio}</p>
-        <p style="margin-left: 20px">Voucher: ${voucher}</p>
+        <p style="margin-left: 20px"><i class="fa-solid fa-credit-card"></i> Phương thức thanh toán: ${radio}</p>
+        <p style="margin-left: 20px"><i class="fa-solid fa-ticket"></i> Voucher: ${voucher}</p>
         <p style="margin-left: 20px">Thông tin sách:</p>        
         `+ listPro.join('') +
         `

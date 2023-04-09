@@ -6,7 +6,7 @@ const Auth = require('../middleware/authMiddleware');
 const AsyncHandle = require('../middleware/asyncHandle');
 
 Route.delete('/deletesoft/:id', Auth.checkToken, AsyncHandle(CommentController.deleteSoft));
-Route.get('/getCommentByProduct/:id', Auth.checkToken, AsyncHandle(CommentController.getCommentByProduct))
+Route.get('/getCommentByProduct/:id', AsyncHandle(CommentController.getCommentByProduct))
 
 Route.route('/:id')
   .patch(Auth.checkToken, AsyncHandle(CommentController.update))

@@ -69,20 +69,15 @@
                 Danh Mục
               </span>
               <ul class="dropdown-menu">
-                <li><a class="custom-dropdown-item  dropdown-item" href="#">Sách kinh doanh</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách thiếu nhi</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Sách else here</a></li>
+                <li><a class="custom-dropdown-item  dropdown-item" href="/product/productByCategory?category=Sách kinh doanh">Sách kinh doanh</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách thiếu nhi">Sách thiếu nhi</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách tâm lý">Sách tâm lý</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách giáo dục">Sách giáo dục</a></li>
               </ul>
             </div>
             </li>    
           <li><a href="/cart" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
-          <li><a href="#" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
+          <li><a href="/voucher" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
           <li><a href="/admin/dashboard" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#speedometer2"/></svg>Quản Lý</a></li>
       </ul>
 
@@ -101,8 +96,8 @@
             <li><a class="custom-dropdown-item dropdown-item " href="#">Thông Tin</a></li>
             <li><a class="custom-dropdown-item dropdown-item" href="#">Giỏ Hàng</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="custom-dropdown-item dropdown-item" href="#">Đăng Nhập</a></li>
-            <li><a class="custom-dropdown-item dropdown-item" href="#">Đăng Ký</a></li>
+            <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/login">Đăng Nhập</a></li>
+            <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/regester">Đăng Ký</a></li>
           </ul>
         </div>
       </div>
@@ -162,7 +157,7 @@
                 </div>
                 <div class="col-auto">
                   <label for="inputQuantity" class="visually-hidden">Quantity</label>
-                  <input type="text" width="100%" class="custom-btn-order form-control" id="inputQuantity" placeholder="..." value="1">
+                  <input type="number" onkeypress="return ( event.charCode !=8 && event.charCode ==0 && event.charCode !=45 || (event.charCode >= 48 && event.charCode <= 57))" width="100%" class="custom-btn-order form-control" id="inputQuantity" placeholder="1" value="1" >
                 </div>
                 <div class="col-auto">
                   <button id="btn-submit-cart" type="submit" data-productId="<%= data.product.id%>" class="btn btn-light mb-3">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>
@@ -269,7 +264,6 @@
         return data.json();
       })
       .then(result =>{
-        console.log(result);
         document.getElementById('relation-book').innerHTML = 
         `
         <div class="title-category">
@@ -312,6 +306,8 @@
     callApi();
 
   </script>
+
+  
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -324,20 +320,44 @@
       url: `/comment/getCommentByProduct/${productId}`,
       type: "GET",
       success: (response) => {
-          console.log(response)
           let listSelect = response?.data?.rows.map((item, element) => {    
-            if(item.userId === response.currentUser){
-             return `<div class="custom-comment-book">
-            <div class="img-avatar-comment ">
-              <img width="60px" height="60px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
-            </div>
-            <div class="comment-text ">
-              <p class="custom-comment-username">${item.User.username}( ${item.User.email} )</p>
-              <p style="font-weight: lighter; font-size: small; font-style: italic;">${item.createdAt}</p>
-              <h5 style="word-wrap: break-word; width: 1000px;">${item.text}</h5>
-              <p class="btn-delete-comment" data-commentId="${item?.id}" >X</p>
-              </div></div>`       
-            } else{
+            if(item?.userId === response?.currentUser.id){
+             return `
+            <div class="custom-comment-book">
+              <div class="img-avatar-comment">
+                <img width="60px" height="60px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
+              </div>
+              <div class="comment-text">
+                <p class="custom-comment-username">${item.User.username}( ${item.User.email} )</p>
+                <p style="font-weight: lighter; font-size: small; font-style: italic;">${item.createdAt}</p>
+                <h5 style="word-wrap: break-word; width: 1000px;">${item.text}</h5>  
+                </div>
+              <div class="btn-comment-custom"> 
+                <button type="button" data-commentId="${item?.id}" class="btn-data-commentId btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xoá nhận xét của bạn !</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Bạn có muốn xoá bỏ phần nhận xét này không ?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                        <button type="button" class="btn-delete-comment btn btn-danger">Xoá ngay</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>`       
+            } else {
               return `<div class="custom-comment-book">
             <div class="img-avatar-comment ">
               <img width="60px" height="60px" class="image-avatar" src="https://picsum.photos/200/" alt="avatar">
@@ -374,6 +394,69 @@
   })
   
 
+</script>
+
+ <!-- delete comment -->
+ <script>
+  $(document).ready(function(){
+    $(".btn-delete-comment").click(function() {
+        let commentId = $(".btn-data-commentId").attr("data-commentId");
+      
+        console.log(commentId);
+        $.ajax({
+                url: `/comment/deletesoft/${commentId}`,
+                type: 'delete',        
+                success: function (data) {
+                    Toastify({
+                        text: 'Xoá comment thành công',
+                        duration: 2000,
+                        destination: "http://localhost:3000/",
+                        newWindow: true,
+                        //close: true,
+                        offset: {
+                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                        },
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, green, green)",
+                            width: "250px",
+                            fontSize: "16px"
+                        },
+                        onClick: function () { } // Callback after click
+                    }).showToast();
+                    // setTimeout(() => {
+                    //       // $("#exampleModalDelete").modal("hide");
+                    //       location.reload();
+                    //   }, "1000")
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    Toastify({
+                        text: 'Không thể xoá nhận xét của người khác',
+                        duration: 2000,
+                        destination: "http://localhost:3000/",
+                        newWindow: true,
+                        //close: true,
+                        offset: {
+                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                        },
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, red, red)",
+                            width: "250px",
+                            fontSize: "16px"
+                        },
+                        onClick: function () { } // Callback after click
+                    }).showToast();
+                }
+            });
+    })
+})
 </script>
 
 <!-- post comment -->
@@ -451,9 +534,8 @@
   $("#btn-cart").submit((e) => {
       e.preventDefault();
       let productId = $("#btn-submit-cart").attr("data-productId");
-      let quantity = $("#inputQuantity").val();
+      let quantity = $("#inputQuantity").val() != 0 ? $("#inputQuantity").val() : 1;
 
-      console.log(productId);
       console.log(quantity);
 
       $.ajax({
@@ -512,69 +594,7 @@
       
   })
 </script>
- <!-- delete comment -->
- <script>
-  $(".btn-delete-comment").click((e) => {
-      let commentId = $(".btn-delete-comment").attr("data-commentId");
 
-      console.log(commentId);
-
-      $.ajax({
-              url: `/comment/deletesoft/${commentId}`,
-              type: 'delete',        
-              success: function (data) {
-                  Toastify({
-                      text: 'Xoá comment thành công',
-                      duration: 2000,
-                      destination: "http://localhost:3000/",
-                      newWindow: true,
-                      //close: true,
-                      offset: {
-                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                      },
-                      gravity: "top", // `top` or `bottom`
-                      position: "right", // `left`, `center` or `right`
-                      stopOnFocus: true, // Prevents dismissing of toast on hover
-                      style: {
-                          background: "linear-gradient(to right, green, green)",
-                          width: "250px",
-                          fontSize: "16px"
-                      },
-                      onClick: function () { } // Callback after click
-                  }).showToast();
-                  setTimeout(() => {
-                        // $("#exampleModalDelete").modal("hide");
-                        location.reload();
-                    }, "1000")
-              },
-              error: function (xhr, textStatus, errorThrown) {
-                  Toastify({
-                      text: 'Không thể xoá nhận xét của người khác',
-                      duration: 2000,
-                      destination: "http://localhost:3000/",
-                      newWindow: true,
-                      //close: true,
-                      offset: {
-                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                      },
-                      gravity: "top", // `top` or `bottom`
-                      position: "right", // `left`, `center` or `right`
-                      stopOnFocus: true, // Prevents dismissing of toast on hover
-                      style: {
-                          background: "linear-gradient(to right, red, red)",
-                          width: "250px",
-                          fontSize: "16px"
-                      },
-                      onClick: function () { } // Callback after click
-                  }).showToast();
-              }
-          });
-
-      
-  },false)
-</script>
 
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>

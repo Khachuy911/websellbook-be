@@ -198,6 +198,10 @@ a:hover {
   color: black;
 }
 
+.a-custom-sort:hover{
+  color: rgb(105, 192, 233);
+}
+
 /* ======================== */
 /* FOOTER */
 footer {

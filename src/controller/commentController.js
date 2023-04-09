@@ -3,6 +3,7 @@ const { getPagination, getSort, filter, search } = require("../helper/helper");
 const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require("../helper/constant");
 const ErrorResponse = require("../helper/errorResponse");
 const User = require("../model/userModel");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -84,6 +85,42 @@ module.exports = {
       totalSize: comment.rows.length || 0,
       rows: comment.rows,
     };
+
+    // 
+    let token;
+    if (req.cookies.token) {
+      token = req.cookies.token;
+    }
+
+    if (!token) {
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data,
+        currentUser: 0
+      });
+    }
+
+    const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+
+    const conditionAuth = {
+      where: {
+        id: decode.id,
+        status: 1,
+      },
+    };
+    const user = await User.findOne(conditionAuth);
+
+    if (!user){
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data,
+        currentUser: 0
+      });
+    }
+    req.user = user;
+    // 
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,

@@ -92,12 +92,22 @@ a:hover {
   justify-content: space-between;
 }
 
-.modal-dialog {
-  /* text-align: center; */
+.custom-breadcrumb {
+  background-color: rgb(247, 246, 246);
+  
 }
 
-.modal-content{
-  
+.breadcrumb{
+  padding: 10px;
+  font-size: 18px
+}
+
+.breadcrumb-home {
+  color: black;
+}
+
+i{
+  color:rgb(105, 192, 233);
 }
 
 /* ======================== */
