@@ -72,12 +72,13 @@ module.exports = {
   getCart: async (req, res, next) => {
     const condition = {
       where: {
-        userId: "c906f20b-17a7-47d0-a275-717a96aa268e",
+        userId: req.user,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
       },
       include: {
         model: CartProduct,
         attributes: ["id", "quantity"],
+        order: [['createdAt', 'ASC']],
         include: {
           model: Product,
           attributes: ["id","name", "author", "priceSelling"],
@@ -126,7 +127,7 @@ module.exports = {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
       },
     };
-    const comment = await Comment.findOne(condition);
+    const comment = await Cart.findOne(condition);
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,

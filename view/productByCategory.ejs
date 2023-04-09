@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="/fonts/css/all.min.css">
   <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/3068/3068327.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <title>HuyKhac Shop</title>
@@ -53,7 +54,7 @@
 
       <!-- Menu -->
       <ul class="nav col-12 col-md-6 mb-2 justify-content-center mb-md-0">
-          <li><a href="/product" class="custom-menu-header active nav-link px-2"><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#home"/></svg>Trang Chủ</a></li>    
+          <li><a href="/product" class="custom-menu-header active nav-link px-2 link-primary"><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#home"/></svg>Trang Chủ</a></li>    
           <li>
             <div class="dropdown">
               <span class="custom-menu-header dropdown-toggle nav-link px-2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,26 +64,21 @@
                 Danh Mục
               </span>
               <ul class="dropdown-menu">
-                <li><a class="custom-dropdown-item  dropdown-item" href="#">Action</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Another action</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
-                <li><a class="custom-dropdown-item dropdown-item" href="#">Something else here</a></li>
+                <li><a class="custom-dropdown-item  dropdown-item" href="/product/productByCategory?category=Sách kinh doanh">Sách kinh doanh</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách thiếu nhi">Sách thiếu nhi</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách tâm lý">Sách tâm lý</a></li>
+                <li><a class="custom-dropdown-item dropdown-item" href="/product/productByCategory?category=Sách giáo dục">Sách giáo dục</a></li>
               </ul>
             </div>
             </li>    
-          <li><a href="#" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
-          <li><a href="#" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
-          <li><a href="#" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#speedometer2"/></svg>Quản Lý</a></li>
+          <li><a href="/cart" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
+          <li><a href="/voucher" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
+          <li><a href="/admin/dashboard" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#speedometer2"/></svg>Quản Lý</a></li>
       </ul>
 
       <!-- Search -->
-      <form class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3">
-        <input type="search" class="form-control" placeholder="Nhập tên sách bạn  muốn tìm ?" aria-label="Search">
+      <form action="/product/search" class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3">
+        <input type="search" name="search" class="form-control" placeholder="Nhập tên sách bạn  muốn tìm ?" aria-label="Search">
       </form>
 
       <!-- Profile -->
@@ -95,8 +91,8 @@
             <li><a class="custom-dropdown-item dropdown-item " href="#">Thông Tin</a></li>
             <li><a class="custom-dropdown-item dropdown-item" href="#">Giỏ Hàng</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="custom-dropdown-item dropdown-item" href="#">Đăng Nhập</a></li>
-            <li><a class="custom-dropdown-item dropdown-item" href="#">Đăng Ký</a></li>
+            <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/login">Đăng Nhập</a></li>
+            <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/regester">Đăng Ký</a></li>
           </ul>
         </div>
       </div>
@@ -104,6 +100,12 @@
 
     <!-- BODY -->
     <div class="container-xl">
+      <nav class="custom-breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a class="breadcrumb-home" href="/product">Trang chủ</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><%= data.rows[0]?.Category?.name %></li>
+        </ol>
+      </nav>
       <% if(data?.rows.length === 0){ %>
         RỖNG
         <%}else{%>
@@ -113,12 +115,15 @@
             <div class="title-category-name">
               <h3><%= data.rows[0]?.Category?.name %></h1>
             </div>
+            <div class="title-category-option">
+              <span style="font-weight:bolder">Giá: </span><a style="margin:0px 10px" class="a-custom-sort" href="/product/productByCategory?category=<%= data.rows[0]?.Category?.name %>&title=priceSelling&type=1" >Tăng dần <i class="fa-solid fa-arrow-down-1-9"></i></a> | <a style="margin:0px 10px;"  class="a-custom-sort"  href="/product/productByCategory?category=<%= data.rows[0]?.Category?.name %>&title=priceSelling&type=0" >Giảm dần <i class="fa-solid fa-arrow-down-9-1"></i></a>
+            </div>
           </div>
           <div class="book-sell-new">
             <% data.rows.forEach(element => { %>
             <div class="card" style="width: 18rem;">
               <a href="/product/<%=element.id%>">
-                <img src="https://picsum.photos/200/300" height="200px" class="card-img-top" alt="...">
+                <img src=<%= element.ProductImages[0].url.replace("public", "")%> height="200px" class="card-img-top" alt="anh sach">
                 <div class="card-body">
                     <h5 class="card-title"><%= element.name %></h5>
                   <p class="card-description"><%= element.description %></p>

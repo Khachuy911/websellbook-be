@@ -218,10 +218,10 @@ module.exports = {
       );
     }
 
-    const token = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-    const refreshToken = await jwt.sign(
+    const refreshToken = jwt.sign(
       { id: user.id },
       process.env.JWT_SECRET_KEY,
       {
@@ -243,7 +243,7 @@ module.exports = {
       await user.save();
 
       const text = `Click here to Verify your Account, you can verify in 5 minutes`;
-      const link = `${req.protocol}://${req.get("host")}/auth/views/check-verify?token=${token2}&id=${user.id}`;
+      const link = `${req.protocol}://${req.get("host")}/auth/views/check-verify?token=${token1}&id=${user.id}`;
       const html = `<button style="background-color: red; width: 100px; height: 50px; border: 1px solid red">
     <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`;
       sendMail(user.email, text, html);
@@ -274,7 +274,7 @@ module.exports = {
 
   refreshAccessToken: async (req, res, next) => {
     const { refreshToken } = req.body;
-    const decode = await jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
+    const decode = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY);
 
     if (!decode) {
       return next(
@@ -296,7 +296,7 @@ module.exports = {
       );
     }
 
-    const token = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
 

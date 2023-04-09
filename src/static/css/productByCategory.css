@@ -92,7 +92,8 @@ p {
   text-overflow: ellipsis;
   margin: 5px 1px;
   font-weight: bolder;
-  color: black; 
+  color: white; 
+  font-size:22px;
 }
 
 .book-sell-new {
@@ -105,19 +106,19 @@ p {
 }
 
 .card {
-  flex-basis: 19%;
-  margin-bottom: 20px;
+  flex-basis: 18%;
   height: 330px;
   cursor: pointer;
-  margin: 6px;
-  box-shadow: 1px 1px 3px ;
+  margin: 15px 12px;
+  box-shadow: 3px 3px 3px ;
   background-color: rgb(105, 192, 233);
+  border: 1px solid rgb(105, 192, 233);
 }
 
 .card:hover {
-  /* color: white; */
-  box-shadow: 3px 3px 3px #666;
-  background-color: white;
+  color: black;
+  box-shadow: 10px 10px 7px #666;
+  background-color: rgb(89, 147, 185);
 }
 
 .custom-btn-seemore {
@@ -133,7 +134,7 @@ p {
 } */
 .card-description {
   font-style: italic;
-  opacity: 90%;
+  /* opacity: 90%; */
 }
 
 .custom-flashsale {
@@ -182,10 +183,28 @@ p {
 
 a {
   text-decoration: none;
-  color: white;
+  color: black;
 
 }
 a:hover {
+  color: black;
+}
+
+.custom-breadcrumb {
+  background-color: rgb(247, 246, 246);
+  
+}
+
+.breadcrumb{
+  padding: 10px;
+  font-size: 18px
+}
+
+.breadcrumb-home {
+  color: black;
+}
+
+.a-custom-sort:hover{
   color: rgb(105, 192, 233);
 }
 
