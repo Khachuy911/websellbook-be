@@ -28,9 +28,8 @@
     <!-- css -->
     <link rel="stylesheet" href="/css/dataTables.css">
 </head>
-
 <body style="position: relative;">
-    <div class="nav" style="position: fixed;height: 100%; z-index: 1;">
+    <div class="nav" >
         <h1>Dashboard</h1>
         <ul id="route">
             <li><a href="/admin/dashboard">Dashboard</a></li>
@@ -42,21 +41,21 @@
 
         </ul>
     </div>
-
-    <div class="containerBox" style="position: relative;">
-        <div class="nav">
-
-        </div>
-        <div class="main" style="width: 80%;height: 100%;padding-bottom: 60px;">
+    <div class="containerBox" style="position: relative; justify-content: center; ">
+        
+        <div class="main" style="width: 80%;height: 100%;">
+            <div class=""></div>
             <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách Orders</h1>
             <div class="card" style="width: 95%;margin: auto;">
                 <table id="myTable">
                     <thead>
                         <tr>
-                            <th>STT</th>
-                            <th>Họ và tên</th>
-                            <th>Email</th>
+                            <th>Mã đơn</th>
+                            <th>Thành tiền</th>
+                            <th>Địa chỉ</th>
                             <th>Số điện thoại</th>
+                            <th>Chi tiết đơn</th>
+                            <th>Trạng thái</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -71,7 +70,7 @@
                                 <button type="button" data-id="${item.id}"
                                     class="btn btn-delete btn-danger">Xoá</button>
                             </td>
-                        </tr>`
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -89,7 +88,7 @@
                     Bạn có muốn xoá tài khoản này không?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btn-delete-success" class="btn btn-danger">Delete</button>
+                    <button type="button" id="btn-delete-success"  class="btn btn-danger">Delete</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -145,18 +144,42 @@
         type: "GET",
         success: (response) => {
             console.log(response)
-            let listSelect = response?.data?.rows.map((item, index) => (`
+            let listSelect = response?.data?.rows.map((item, index) => {
+
+                const statusCode = item.orderStatus
+                let status = "Chờ xác nhận"
+                let td = `<button type="button" data-id="${item.id}" class="btn btn-primary">Xác nhận</button>
+                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>`
+                if(statusCode === 1){
+                    status = "Chờ ship"
+                    td =  `<button type="button" data-id="${item.id}" disabled class="btn btn-warning">Chờ giao hàng</button>`
+                }
+                else if(statusCode === 2){
+                    status = "Chờ giao"
+                    td =  `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
+                }
+                else if(statusCode === 3){
+                    status = "Đã giao"
+                    td =  `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
+                }
+                else if(statusCode === 4){
+                    status = "Huỷ đơn"
+                    td =  `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
+                }
+            return `
                                  <tr>
-                                    <td style="text-align:center">${index + 1}</td>
-                                    <td>${item.username}</td>
+                                    <td style="text-align:center">${item.orderCode}</td>
+                                    <td>${item.totalPrice}</td>
                                     <td>${item.email}</td>
                                     <td>${item.phone}</td>
+                                    <td>${item.phone}</td>
+                                    <td>${status}</td>
                                     <td style="max-width:120px;text-align:center">
-                                        <button type="button" data-id="${item.id}" class="btn btn-primary">Theo dõi</button>
-                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
+                                        ${td}
                                     </td>
                                 </tr>`
-            ))
+                            }
+            )
             $("#table-body")[0].innerHTML = listSelect.join("")
             let table = $('#myTable').DataTable({
                 select: false,
@@ -168,10 +191,15 @@
                         searchPanes: {
                             show: true
                         },
-                        targets: [1, 2, 3]
+                        targets: [0, 1, 5]
+                    },
+                    {
+                        searchPanes: {
+                            show: false
+                        },
+                        targets: [0, 1, 2, 3, 4, 5, 6]
                     }
                 ],
-                "order": [[3, "desc"]],
                 "language": {
                     "sEmptyTable": "Không có dữ liệu trong bảng",
                     "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
@@ -199,6 +227,7 @@
             new $.fn.dataTable.SearchPanes(table, {});
             table.searchPanes.container().prependTo(table.table().container());
             table.searchPanes.resizePanes();
+
 
         },
         error: (data) => {
@@ -282,7 +311,7 @@
 
 </script>
 <script>
-
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth +"px"
 </script>
 
 </html>
