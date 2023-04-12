@@ -29,6 +29,8 @@
     <link rel="stylesheet" href="/css/dataTables.css">
 
     <style>
+        
+
         .category {
             width: 30%;
             margin-bottom: 20px;
@@ -69,7 +71,7 @@
         
     </div> -->
 
-    <div class="nav" >
+    <div class="nav">
         <h1>Dashboard</h1>
         <ul id="route">
             <li><a href="/admin/dashboard">Dashboard</a></li>
@@ -152,7 +154,7 @@
                                 Image<strong style="color: red;">*</strong></label>
                             <br>
                             <input style="padding:10px 0" type="file" id="image" name="image" accept="image/*" single>
-                           
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -237,7 +239,21 @@
 
 <!-- toastify -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script>
+    $(document).on("click", ".category", (e) => {
+        console.log($(e.currentTarget).data("id"))
+        $("#selectCategory").val($(e.currentTarget).data("id"))
+        if ($("#selectCategory").val()) {
+            $(".btn-delete")[0].disabled = false
+            $(".btn-update")[0].disabled = false
+        }
+        else {
+            $(".btn-delete")[0].disabled = true
+            $(".btn-update")[0].disabled = true
 
+        }
+    })
+</script>
 
 <script>
     $.ajax({
@@ -246,7 +262,7 @@
         success: (response) => {
             console.log(response)
             let listSelect = response?.data?.rows.map((item, index) => (`
-                        <div class="category" data-id=${item.id} style="margin: 10px;">
+                        <div class="category" data-id=${item.id} style="margin: 10px;cursor: pointer;">
                             <img src="${item.image.replace("public", "")}" alt="catogery">
                             <h3>${item.name}</h3>
                         </div>
@@ -485,6 +501,7 @@
     })
 </script>
 <script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth +"px"
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
 </script>
+
 </html>
