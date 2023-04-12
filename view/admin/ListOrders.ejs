@@ -28,8 +28,9 @@
     <!-- css -->
     <link rel="stylesheet" href="/css/dataTables.css">
 </head>
+
 <body style="position: relative;">
-    <div class="nav" >
+    <div class="nav">
         <h1>Dashboard</h1>
         <ul id="route">
             <li><a href="/admin/dashboard">Dashboard</a></li>
@@ -41,9 +42,9 @@
 
         </ul>
     </div>
-    <div class="containerBox" style="position: relative; justify-content: center; ">
-        
-        <div class="main" style="width: 80%;height: 100%;">
+    <div class="containerBox" style="position: relative;">
+
+        <div class="main">
             <div class=""></div>
             <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách Orders</h1>
             <div class="card" style="width: 95%;margin: auto;">
@@ -88,7 +89,7 @@
                     Bạn có muốn xoá tài khoản này không?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btn-delete-success"  class="btn btn-danger">Delete</button>
+                    <button type="button" id="btn-delete-success" class="btn btn-danger">Delete</button>
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -103,8 +104,8 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="/js/route.js"></script>
 <script>
-    let height = window.innerHeight +120;
-    $(".main")[0].style.minHeight = height+"px";
+    let height = window.innerHeight + 120;
+    $(".main")[0].style.minHeight = height + "px";
     let html = route.map((e, index) => {
         const pathname = window.location.pathname
         if (e.href == pathname) {
@@ -150,23 +151,23 @@
                 let status = "Chờ xác nhận"
                 let td = `<button type="button" data-id="${item.id}" class="btn btn-primary">Xác nhận</button>
                         <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>`
-                if(statusCode === 1){
+                if (statusCode === 1) {
                     status = "Chờ ship"
-                    td =  `<button type="button" data-id="${item.id}" disabled class="btn btn-warning">Chờ giao hàng</button>`
+                    td = `<button type="button" data-id="${item.id}" disabled class="btn btn-warning">Chờ giao hàng</button>`
                 }
-                else if(statusCode === 2){
+                else if (statusCode === 2) {
                     status = "Chờ giao"
-                    td =  `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
+                    td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
                 }
-                else if(statusCode === 3){
+                else if (statusCode === 3) {
                     status = "Đã giao"
-                    td =  `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
+                    td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
                 }
-                else if(statusCode === 4){
+                else if (statusCode === 4) {
                     status = "Huỷ đơn"
-                    td =  `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
+                    td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
                 }
-            return `
+                return `
                                  <tr>
                                     <td style="text-align:center">${item.orderCode}</td>
                                     <td>${item.totalPrice}</td>
@@ -178,7 +179,7 @@
                                         ${td}
                                     </td>
                                 </tr>`
-                            }
+            }
             )
             $("#table-body")[0].innerHTML = listSelect.join("")
             let table = $('#myTable').DataTable({
@@ -189,13 +190,13 @@
                 columnDefs: [
                     {
                         searchPanes: {
-                            show: true
+                            show: true,
                         },
                         targets: [0, 1, 5]
                     },
                     {
                         searchPanes: {
-                            show: false
+                            show: false,
                         },
                         targets: [2, 3, 4, 6]
                     }
@@ -224,12 +225,11 @@
                     },
                 }
             });
+
             new $.fn.dataTable.SearchPanes(table, {});
             table.searchPanes.container().prependTo(table.table().container());
             table.searchPanes.resizePanes();
-            searchPanes.collapse();
-
-
+            try {$(".dtsp-collapseAll")[0].click()} catch (error) {}
         },
         error: (data) => {
             Toastify({
@@ -312,7 +312,7 @@
 
 </script>
 <script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth +"px"
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
 </script>
 
 </html>

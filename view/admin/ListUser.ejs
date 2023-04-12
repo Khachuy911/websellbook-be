@@ -198,6 +198,7 @@
             new $.fn.dataTable.SearchPanes(table, {});
             table.searchPanes.container().prependTo(table.table().container());
             table.searchPanes.resizePanes();
+            try {$(".dtsp-collapseAll")[0].click()} catch (error) {}
 
         },
         error: (data) => {
