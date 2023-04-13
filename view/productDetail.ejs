@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="home.css">
   <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/128/3068/3068327.png">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <link rel="stylesheet" href="/fonts/css/all.min.css">
@@ -333,8 +332,8 @@
                 <h5 style="word-wrap: break-word; width: 1000px;">${item.text}</h5>  
                 </div>
               <div class="btn-comment-custom"> 
-                <button type="button" data-commentId="${item?.id}" class="btn-data-commentId btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  <i class="fa-solid fa-trash"></i>
+                <button type="button" data-id="${item.id}" class="btn-data-commentId btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                  Xoá
                 </button>
 
                 <!-- Modal -->
@@ -347,6 +346,7 @@
                       </div>
                       <div class="modal-body">
                         Bạn có muốn xoá bỏ phần nhận xét này không ?
+                        <p class="text-fake" hidden></p>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
@@ -396,13 +396,22 @@
 
 </script>
 
+<script>
+    $(document).on("click", ".btn-data-commentId", (e)=>{
+      let commentId = $(e.target).attr("data-id");
+
+      $(".text-fake")[0].innerText = commentId;
+    })
+</script>
+
  <!-- delete comment -->
  <script>
-  $(document).ready(function(){
-    $(".btn-delete-comment").click(function() {
-        let commentId = $(".btn-data-commentId").attr("data-commentId");
-      
-        console.log(commentId);
+    $(document).on("click", ".btn-delete-comment", (e)=>{
+      // console.log($(e.target));
+        let commentId = $(".text-fake").text();
+
+      console.log(commentId);
+
         $.ajax({
                 url: `/comment/deletesoft/${commentId}`,
                 type: 'delete',        
@@ -427,14 +436,14 @@
                         },
                         onClick: function () { } // Callback after click
                     }).showToast();
-                    // setTimeout(() => {
-                    //       // $("#exampleModalDelete").modal("hide");
-                    //       location.reload();
-                    //   }, "1000")
+                    setTimeout(() => {
+                          // $("#exampleModalDelete").modal("hide");
+                          location.reload();
+                      }, "500")
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     Toastify({
-                        text: 'Không thể xoá nhận xét của người khác',
+                        text: 'Xoá nhận xét không thành công',
                         duration: 2000,
                         destination: "http://localhost:3000/",
                         newWindow: true,
@@ -456,7 +465,6 @@
                 }
             });
     })
-})
 </script>
 
 <!-- post comment -->
@@ -466,8 +474,8 @@
           let productId = $("#btn-comment").attr("data-id");
           let text = $("#text-comment").val();
 
-          console.log(productId);
-          console.log(text);
+          // console.log(productId);
+          // console.log(text);
 
 
           // const data = $("#HandleSubmitForm").serialize();
@@ -479,6 +487,33 @@
               type: 'POST',
               data: {productId: productId, text: text},              
               success: function (data) {
+                if(data.length >= 1000){
+                  Toastify({
+                      text: 'Bạn cần đăng nhập trước khi nhận xét !',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, red, red)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+                  setTimeout(() => {
+                        // $("#exampleModalDelete").modal("hide");
+                        // location.reload();
+                        location.href="/auth/views/login"
+                    }, "500")
+                }else{
                   Toastify({
                       text: 'Thêm nhân xét thành công',
                       duration: 2000,
@@ -503,7 +538,7 @@
                         // $("#exampleModalDelete").modal("hide");
                         location.reload();
                     }, "1000")
-              },
+              }},
               error: function (xhr, textStatus, errorThrown) {
                   Toastify({
                       text: 'Thêm nhận xét không thành công',
@@ -565,7 +600,7 @@
                   }).showToast();
                   setTimeout(() => {
                         window.location.href = "/cart";
-                    }, "2000")
+                    }, "1000")
               },
               error: function (xhr, textStatus, errorThrown) {
                   Toastify({

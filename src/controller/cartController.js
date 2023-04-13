@@ -70,18 +70,19 @@ module.exports = {
   },
 
   getCart: async (req, res, next) => {
+    const {id} = await Cart.findOne({where: {
+      userId: req.user,
+      isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+    }})
     const condition = {
       where: {
-        userId: req.user,
+        cartId: id,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
       },
-      include: {
-        model: CartProduct,
-        attributes: ["id", "quantity"],
-        order: [['createdAt', 'ASC']],
-        include: {
+      include: [
+        {
           model: Product,
-          attributes: ["id","name", "author", "priceSelling"],
+          // attributes: ["id","name", "author", "priceSelling"],
           include: {
             model: FlashSaleProduct,
             where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
@@ -89,13 +90,18 @@ module.exports = {
             attributes: ["discountAmount"],
           },
         },
-      },
+        {
+          model: Cart,
+          // attributes: ["id", "quantity"],
+          order: [['createdAt', 'ASC']],
+        }
+      ],
 
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
 
-    const cart = await Cart.findAndCountAll(condition);
+    const cart = await CartProduct.findAndCountAll(condition);
 
     const pageSize = req.query.pageSize || process.env.DEFAULT_LIMIT_PAGE;
     const data = {
@@ -113,7 +119,7 @@ module.exports = {
     //   data,
     // });
 
-    console.log("========> Order: " + JSON.stringify(data));
+    // console.log("========> Order: " + JSON.stringify(data));
 
     res.render("../view/order.ejs", { data });
   },

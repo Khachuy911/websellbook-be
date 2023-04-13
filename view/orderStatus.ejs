@@ -14,7 +14,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <title>HuyKhac Shop</title>
-  <link rel="stylesheet" href="/css/order.css">
+  <link rel="stylesheet" href="/css/orderStatus.css">
 </head>
 
 <body>
@@ -108,120 +108,108 @@
       <nav class="custom-breadcrumb" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a class="breadcrumb-home" href="/product">Trang chủ</a></li>
-          <li class="breadcrumb-item active" aria-current="page">Giỏ hàng</li>
+          <li class="breadcrumb-item active" aria-current="page">Đơn hàng</li>
         </ol>
       </nav>
       <hr>
-      <h4 style="text-align:right">Xin chào, <%= data?.currentUser?.username%></h4>
-      <div class="infor-order">
-        <div class="infor-voucher">
-          
-          <h5>Thông tin <a class="custom-change" href="">(Thay đổi)</a></h5>   
-          <p></p>
-          <p style="margin-left: 20px">- Email: <%= data.currentUser.email%></p>
-          <p style="margin-left: 20px">- Số điện thoại: <%= data.currentUser.phone%></p>
-          <p style="margin-left: 20px">- Địa chỉ: <%= data.currentUser.address%></p>   
-          <p style="margin-left: 20px">- Free ship toàn quốc</p>     
-        </div>
-        <div class="infor-user">
-          <label for="">Voucher</label>
-          <select id="select-voucher" class="custom-select-voucher form-select" aria-label="Default select example">
-            
-          </select>
-          <p></p>
-          <p>Phương thức thanh toán: </p>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" checked value="Thanh toán khi nhận hàng">
-            <label class="form-check-label" for="flexRadioDefault2">
-              Thanh toán khi nhận hàng
-            </label>
-            
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Thanh toán online">
-            <label class="form-check-label" for="inlineRadio1">Thanh toán online</label>
-          </div>  
-        </div>
-      </div>      
-      <p></p>
-      <div class="total-balance">
-        <div class="select-product">
-          <h3>Chọn sản phẩm trong giỏ hàng: </h3>
-        </div>
-        <div class="total-amount" style="margin-right:50px;">
-          <span style="font-weight: bolder; font-size: 25px;">Tổng tiền: </span><span style="font-size: 20px;" id="total-money">0đ</span>
-        </div>
-      </div>
-      
-      <div class="custom-table" >
-        <table class="table table-primary text-left">
-          <thead>
-            <tr>
-              <th scope="col"></th>
-              <th scope="col">Tên sách</th>
-              <th scope="col">Tác giả</th>
-              <th scope="col">Giá sách</th>
-              <th scope="col">Số lượng</th>
-              <th scope="col">Flash sale</th>
-              <th scope="col">Tổng chi phí</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% data?.rows.forEach(cart => { %>
-                <tr class="custom-table-order" data-id="<%=cart.id%>">
-                <th scope="row"><input class="custom-checkbox form-check-input" data-id="<%=cart.id%>" data-product-name="<%=cart.Product.name%>" data-quantity="<%=cart.quantity%>" data-productId="<%= cart.Product.id %>" type="checkbox" value="" id="flexCheckDefault"></button></th>
-                <td><%= cart.Product.name %></td>
-                <td><%= cart.Product.author %></td>      
-                <td><%= cart.Product.priceSelling %></td>                       
-                <td><%= cart.quantity %></td> 
-                <%if(cart?.Product?.FlashSaleProducts[0]){%>
-                  <td>
-                    -<%= cart?.Product?.FlashSaleProducts[0].discountAmount%> đ/cuốn
-                  </td> 
-                  <td style="display: none;"><%= (cart.Product.priceSelling * cart.quantity - cart?.Product?.FlashSaleProducts[0].discountAmount * cart.quantity)  %></td>   
-                  <td><%= (cart.Product.priceSelling * cart.quantity - cart?.Product?.FlashSaleProducts[0].discountAmount * cart.quantity).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })  %> </td>   
-                  <%}else{%>
-                    <td>0</td>          
-                  <td style="display: none;"><%= (cart.Product.priceSelling * cart.quantity) %></td>   
-                  <td><%= (cart.Product.priceSelling * cart.quantity).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>                     
-                  <%}%>                            
-              </tr>
-            <% }); %>
-          </tbody>
-        </table>
+      <h4>Xin chào, <%= data.currentUser.username%></h4>
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th scope="col"></th>
+            <th scope="col">Mã đơn hàng</th>
+            <th scope="col">Thời gian đặt hàng</th>
+            <th scope="col">Voucher (giảm)</th>
+            <th scope="col">Tổng đơn giá</th>
+            <th scope="col">Trạng thái đơn</th>
+            <th scope="col" class="text-end">Hành động</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.rows.forEach(order => { %>
+            <tr data-order="<%= order.id%>" class="text-center">
+              <th scope="row"><i class="fa-solid fa-dolly"></i></th>
+              <td><%= order.orderCode %></td>
+              <td><%= order.createdAt %></td>
+              <td> <%= order?.Voucher?.discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) || "_" %></td>
+              <td><%= order.totalPrice.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>
+              <% if(order.orderStatus == 0){ %>
+                <td>Chờ xác nhận</td>
+                <td class="text-end"> 
+                  <button data-order="<%= order.id%>" class="btn-cancel-order btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalCancel" >Huỷ đơn</button> 
+                  <button data-order="<%= order.id%>" class="btn-detail-order btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Chi tiết</button>
+                </td>
+              <%} else if(order.orderStatus == 1) {%>
+                <td style="color: blue;">Xác nhận</td>
+                <td class="text-end"><button data-order="<%= order.id%>" class="btn-detail-order btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Chi tiết</button></td>
+              <%} else if(order.orderStatus == 2) {%>
+                <td style="color: blue;">Chờ giao hàng</td>
+                <td class="text-end"><button data-order="<%= order.id%>" class="btn-detail-order btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Chi tiết</button></td>
+              <%} else if(order.orderStatus == 3) {%>
+                <td style="color: blue">Đang giao</td>
+                <td class="text-end"><button data-order="<%= order.id%>" class="btn-detail-order btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Chi tiết</button></td>
+              <%} else if(order.orderStatus == 4) {%>
+                <td style="color: green;">Hoàn thành</td>
+                <td class="text-end"><button data-order="<%= order.id%>" class="btn-detail-order btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Chi tiết</button></td>
+              <%} else if(order.orderStatus == 5) {%>
+                <td style="color: red;">Đã huỷ</td>
+                <td class="text-end"><button data-order="<%= order.id%>" class="btn-detail-order btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Chi tiết</button></td>
+              <%}%>
+              
+            </tr>            
+          <% }); %>
+        </tbody>
+      </table>
     </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button type="button" class="btn btn-warning justify-content-md-end">Làm mới</button>
-        <button id="btn-order" type="button" class="btn btn-primary justify-content-md-end" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Đặt hàng ngay</button>
-      <p></p>
-      <p></p>
-    </div>
-    </div>
-    
 
     <div class="modal fade" id="exampleModalOrder" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận đặt hàng</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Chi tiết đơn hàng <i class="fa-solid fa-bags-shopping"></i></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="submit-order">
                     <div class="modal-body">
-                        <p style="margin-left: 20px"><i class="fa-solid fa-envelope"></i> Email: <%= data.currentUser.email%>.</p>
-                        <p style="margin-left: 20px"><i class="fa-sharp fa-solid fa-phone-volume"></i> Số điện thoại: <%= data.currentUser.phone%>.</p>                        
-                        <p style="margin-left: 20px"><i class="fa-sharp fa-solid fa-location-dot"></i> Địa chỉ: <%= data.currentUser.address%>.</p> 
-                        <p style="margin-left: 20px"><i class="fa-solid fa-truck-fast"></i> Free ship toàn quốc.</p> 
-                        <div id="confirm-order"></div>
+                      <div class="order-id-status">
+                        <div class="order-display-title">
+                          <p id="orderId" style="margin-left: 20px"></p>
+                          <p id="orderAmount" style="margin-left: 20px"></p> 
+                        </div>
+                        <div class="order-display-status">
+                          <p id="orderStatus" style="text-align: center; margin-right: 20px; border-radius: 10px; width: 130px; padding: 10px; color: white; background-color: rgb(105, 192, 233); "></p> 
+                        </div>
+                      </div>
+                        <p id="orderTime" style="margin-left: 20px"></p>                        
+                        <p id="orderVoucher" style="margin-left: 20px"></p> 
+                        <div id="listProduct" style="margin-left: 20px"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btn-order-success" class="btn btn-primary">Đặt hàng</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </form>
             </div>
         </div>
+    </div>
+
+    <div class="modal fade" id="exampleModalCancel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xoá nhận xét của bạn !</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            Bạn có muốn huỷ bỏ đơn hàng này không ?
+          </div>
+          <p class="id-fake" hidden></p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không</button>
+            <button type="button" class="btn-cancel-order-cf btn btn-danger">Huỷ ngay</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- FOOTER -->
@@ -273,97 +261,109 @@
         </div>
       </footer>
     </div>
-  <!-- </div> -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
-  <script>
-    $('#btn-order').click(e =>{
-      const radio = document.querySelector("input[name='inlineRadioOptions']:checked").value;
 
-      const checkbox = document.querySelectorAll(".custom-checkbox:checked");
-
-      const voucher = $('#select-voucher').val();
-
-      let listProductId = [];
-      checkbox.forEach(ele=>{
-        listProductId.push({id: ele.getAttribute('data-productId'), quantity: +ele.getAttribute('data-quantity'), name: ele.getAttribute('data-product-name')})        
-      })
-
-      const listPro = listProductId.map(ele => 
-        `<p style="margin-left: 50px"><i style="margin-right: 50px">x${ele.quantity}</i>${ele.name} </p>`
-      )
- 
-      const totalAmount = document.getElementById('total-money').innerHTML;
-
-      $('#confirm-order')[0].innerHTML = `
-        <p style="margin-left: 20px"><i class="fa-solid fa-credit-card"></i> Phương thức thanh toán: ${radio}</p>
-        <p style="margin-left: 20px"><i class="fa-solid fa-ticket"></i> Voucher: ${voucher}</p>
-        <p style="margin-left: 20px">Thông tin sách:</p>        
-        `+ listPro.join('') +
-        `
-        <p style="margin-left: 20px">Tổng tiền: ${totalAmount}</p>       
-        `
-
-      
-      }
-    )
-      
-  </script>
-  <script>
-    $('#submit-order').submit(e =>{
-      e.preventDefault();
-      const radio = document.querySelector("input[name='inlineRadioOptions']:checked").value;
-
-      const checkbox = document.querySelectorAll(".custom-checkbox:checked");
-
-      const voucher = $('#select-voucher').val();
-
-      let listProductId = [];
-      checkbox.forEach(ele=>{
-        listProductId.push({id: ele.getAttribute('data-productId'), quantity: +ele.getAttribute('data-quantity')})        
-      })
-
-      console.log(listProductId);
-
-      let dataSend;
-      if(voucher === 'Không'){
-        dataSend = {product: JSON.stringify(listProductId)}
-      }else{
-        dataSend = {product: JSON.stringify(listProductId), voucherCode: voucher}
-      }
-
-      // console.log(JSON.stringify(dataSend));
-
-      $.ajax({
-                url: '/order',
-                type: 'POST',
-                dataType: 'json',
-                data: dataSend,
-                success: function (data) {
-                    Toastify({
-                        text: 'Thêm product thành công',
-                        duration: 2000,
-                        destination: "http://localhost:3000/",
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, green, green)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                        onClick: function () { } // Callback after click
-                    }).showToast();
-                    setTimeout(() => {
+    <script>
+      $(".btn-cancel-order-cf").click(e=>{
+        const orderId = $(".id-fake").text();
+        
+        $.ajax({
+              url: `/order/cancel/${orderId}`,
+              type: 'DELETE',            
+              success: function (data) {                
+                  Toastify({
+                      text: 'Huỷ đơn hàng thành công',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, green, green)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+                  setTimeout(() => {
                         // $("#exampleModalDelete").modal("hide");
                         location.reload();
                     }, "1000")
+              },
+              error: function (xhr, textStatus, errorThrown) {
+                  Toastify({
+                      text: 'Huỷ đơn hàng không thành công',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, red, red)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+              }
+          });
+      })
+    </script>
+
+    <script>
+      $(".btn-cancel-order").click(e=>{
+        const orderId = $(e.target).data("order");
+
+        $(".id-fake")[0].innerText = orderId;
+      })
+    </script>
+
+    <script>
+      $(document).on("click", ".btn-detail-order", (e)=>{
+        const orderId = $(e.target).data("order");
+        $.ajax({
+                url: `/order/${orderId}`,
+                type: 'GET',
+                success: function (data) {
+                  $("#orderId")[0].innerHTML = "Mã đơn hàng: " + "<b>" + data?.data?.orderCode + "</b>"
+                  $("#orderTime")[0].innerHTML = "Thời gian đặt hàng: " + "<b>" + data?.data?.createdAt + "</b>"
+                  if(data?.data?.Voucher){
+                    $("#orderVoucher")[0].innerHTML = "Voucher: " + "<b>" + data?.data?.Voucher?.voucherCode + " (Giảm " + data?.data?.Voucher?.discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) + ")" + "</b>"
+                  }
+                  $("#orderAmount")[0].innerHTML = "Tổng đơn giá: " + "<b style='font-size: 20px;'>" + data?.data?.totalPrice.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) + "</b>"
+                  $("#orderStatus")[0].innerHTML = "<b>" + (data?.data?.orderStatus == 0 ? "Chờ xác nhận" : data.data.orderStatus == 1 ? "Xác nhận" : data.data.orderStatus == 2 ? "Chờ giao hàng" : data.data.orderStatus == 3 ? "Đã giao" : data.data.orderStatus == 4 ? "Hoàn thành" : "Đã huỷ") + "</b>";
+                  let listOrderDetail = data.data.OrderDetails.map((item, index)=>{
+                    return `
+                    <hr/>
+                    <div class="order-detail-display">                      
+                      <div class="order-detail-name">
+                        <b><i class="fa-solid fa-book"></i> ${item.Product.name}</b>                        
+                      </div>
+                      
+                      <div class="order-detail-quantity">
+                        <b> x${item.quantity}</b>                      
+                      </div>
+
+                      <div class="order-detail-amount">
+                        <b>${item?.Product?.FlashSaleProducts[0]?.discountAmount ? (item?.Product?.priceSelling - item?.Product?.FlashSaleProducts[0]?.discountAmount).toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) : item?.Product?.priceSelling.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}/sách</b>                      
+                      </div>
+
+                    </div>
+                    `
+                  })
+
+                  $("#listProduct")[0].innerHTML = "<h5>Chi tiết: </h5>"+ listOrderDetail.join('')
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     Toastify({
@@ -388,62 +388,9 @@
                     }).showToast();
                 }
             });
-      
-      }
-    )
-  </script>
-  <script>
-    $.ajax({
-        url: `/voucher?api=1`,
-        type: "GET",
-        success: (response) => {
-            console.log(response)
-            let listSelect = response?.data?.rows.map((item, index) => (      
-              `<option value="${item.voucherCode}">${item.name} giảm ${item.discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</option>`
-            ))
-            $('#select-voucher')[0].innerHTML = '<option selected value="Không">Chọn voucher giảm giá</option>' + listSelect.join('')       
-        },
-        error: (data) => {
-            Toastify({
-                text: data.responseJSON.errorCode,
-                duration: 2000,
-                newWindow: true,
-                //close: true,
-                offset: {
-                    x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                    background: "linear-gradient(to right, red, red)",
-                    width: "250px",
-                    fontSize: "16px"
-                },
-            }).showToast();
-        }
-    })
-    
-
-  </script>
-  <script>
-    $('.custom-checkbox').change(e=>{
-      const totalMoney = $('#total-money');
-
-      const checkbox = document.querySelectorAll(".custom-checkbox");
-
-      
-      let listProductId = [];
-      let sum = 0;
-      checkbox.forEach(ele=>{
-        if(ele.checked === true){
-          const element = $(`tr[data-id="${ele.getAttribute('data-id')}"]`)[0].children;
-          sum += +element[6].innerText.split(' ')[0];
-        }
       })
-      totalMoney[0].innerText = sum.toLocaleString() + " đ";
-    })
-  </script>
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 </html>

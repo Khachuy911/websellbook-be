@@ -98,11 +98,7 @@ module.exports = {
         }
 
         if (pro[i].FlashSaleProducts.length > 0) {
-          sum +=
-            (pro[i].priceSelling -
-              pro[i].FlashSaleProducts[0].discountAmount *
-                product[i].quantity) *
-            product[i].quantity;
+          sum +=(pro[i].priceSelling - pro[i].FlashSaleProducts[0].discountAmount) * product[i].quantity;
         } else {
           sum += pro[i].priceSelling * product[i].quantity;
         }
@@ -154,7 +150,7 @@ module.exports = {
         }
 
         totalPrice =
-          sum + sum * DEFAULT_VALUE.DEFAULT_TAX - voucher.discountAmount;
+          sum + (sum * DEFAULT_VALUE.DEFAULT_TAX) - voucher.discountAmount;
 
         const data = {
           quantity: voucher.quantity - 1,
@@ -162,7 +158,7 @@ module.exports = {
 
         await Voucher.update(data, conditionVoucher);
       } else {
-        totalPrice = sum + sum * DEFAULT_VALUE.DEFAULT_TAX;
+        totalPrice = sum + (sum * DEFAULT_VALUE.DEFAULT_TAX);
       }
 
       let orderData;
@@ -216,7 +212,7 @@ module.exports = {
     }
   },
 
-  // 1 dat hang
+  // 1 xac nhan
   confirmStauts: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -286,7 +282,7 @@ module.exports = {
     }
   },
 
-  // 2 xac nhan
+  // 2 cho giao
   shippingStauts: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
@@ -436,11 +432,12 @@ module.exports = {
 
       const data = {
         isDeleted: DEFAULT_VALUE.IS_DELETED,
+        orderStatus: DEFAULT_VALUE.VALUE_CANCEL,
       };
 
       const order = await Order.findOne(condition);
 
-      if (order.orderStatus >= 3) {
+      if (order.orderStatus >= 2) {
         await t.rollback();
         return next(
           new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.NOT_CANCEL)
@@ -541,7 +538,7 @@ module.exports = {
   getOrder: async (req, res, next) => {
     const condition = {
       where: {
-        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         // ...search(req.query.search)
         ...filter("orderStatus", req.query.status),
       },
@@ -574,11 +571,14 @@ module.exports = {
     const condition = {
       where: {
         userId: req.user,
-        orderStatus: 0,
-        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        // orderStatus: 0,
+        // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         // ...search(req.query.search)
       },
-      include: {
+      include: [
+      {
+        model: Voucher
+      },{
         model: OrderDetail,
         include: {
           model: Product,
@@ -586,7 +586,7 @@ module.exports = {
             model: FlashSaleProduct,
           },
         },
-      },
+      }],
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
@@ -611,7 +611,7 @@ module.exports = {
 
     // console.log("========> Order: " + JSON.stringify(data));
 
-    res.render("../view/order.ejs", { data });
+    res.render("../view/orderStatus.ejs", { data });
   },
 
   getDetail: async (req, res, next) => {
@@ -626,9 +626,13 @@ module.exports = {
     const condition = {
       where: {
         id,
-        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
       },
-      include: {
+      include: [
+        {
+        model: Voucher
+        },
+        {
         model: OrderDetail,
         include: {
           model: Product,
@@ -636,24 +640,24 @@ module.exports = {
             model: FlashSaleProduct,
           },
         },
-      },
+      }],
     };
 
     const order = await Order.findOne(condition);
 
-    // res.status(HTTP_CODE.SUCCESS).json({
-    //   isSuccess: true,
-    //   message: MESSAGE.SUCCESS,
-    //   data: order,
-    // });
-
-    const data = {
-      order,
+    res.status(HTTP_CODE.SUCCESS).json({
+      isSuccess: true,
+      message: MESSAGE.SUCCESS,
+      data: order,
       currentUser: req.currentUser,
-    };
+    });
 
-    console.log("========> Order: " + JSON.stringify(data));
+    // const data = {
+    //   order,
+    // };
 
-    res.render("../view/orderDetail.ejs", { data });
+    // console.log("========> Order: " + JSON.stringify(data));
+
+    // res.render("../view/orderDetail.ejs", { data });
   },
 };

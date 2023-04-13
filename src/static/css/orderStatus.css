@@ -1,0 +1,137 @@
+body{
+  font-family: 'Roboto Slab', serif;
+  /* font-family: 'Roboto Mono', monospace; */
+  /* font-family: 'Noto Serif', serif; */
+}
+
+/* HEAD */
+.custom-menu-header{
+  color: black;
+}
+
+.custom-menu-header .active{ 
+  color: red;
+}
+
+.custom-menu-header:hover{
+  background-color: rgb(255, 255, 255);
+  border-radius: 10px;
+  opacity: 70%;
+  color: rgb(105, 192, 233);
+  cursor: pointer;
+}
+
+.custom-dropdown-item:hover {
+  background-color: rgb(105, 192, 233);
+}
+
+header {
+  /* background-color: rgb(235, 231, 231); */
+  padding: 10px;
+  background-color: rgb(105, 192, 233);
+  
+}
+
+img:hover {
+  opacity: 90%;
+  transform: scale(1.01);
+}
+
+/* ======================== */
+/* SECTION */
+
+
+.container{
+  background-color: rgb(247, 247, 247);
+  box-shadow: 0px 0px 5px rgb(107, 107, 107);
+  padding: 20px;
+  /* border-radius:10px */
+}
+.custom-table {
+  overflow: auto;
+  height: 300px;
+  margin-bottom: 15px;
+}
+
+a{
+  text-decoration: none;
+}
+
+a:hover {
+  color: black;
+}
+
+.custom-checkbox {
+  background-color: rgb(105, 192, 233);
+  color: rgb(105, 192, 233);
+}
+
+.infor-order{
+  display: flex;
+  border: 1px solid rgb(105, 192, 233);
+  background-color: rgb(105, 192, 233);
+  box-shadow: 2px 2px 3px rgb(107, 107, 107);
+  padding: 20px;
+  border-radius:10px
+}
+
+.infor-voucher{
+  flex-basis: 50%;
+}
+
+.custom-select-voucher {
+  width: 350px;
+}
+
+.custom-change{
+  font-size: 14px;
+}
+
+.total-balance {
+  display:flex;
+  justify-content: space-between;
+}
+
+.custom-breadcrumb {
+  background-color: rgb(247, 246, 246);
+  
+}
+
+.breadcrumb{
+  padding: 10px;
+  font-size: 18px
+}
+
+.breadcrumb-home {
+  color: black;
+}
+
+i{
+  color:rgb(105, 192, 233);
+}
+
+.order-detail-display {
+  display:flex;
+  justify-content: lèt;
+}
+
+.order-detail-name {
+  flex-basis: 45%;
+}
+
+.order-detail-quantity {
+  flex-basis: 20%;
+}
+
+.order-id-status{
+  display: flex;
+  justify-content:space-between;
+}
+/* ======================== */
+/* FOOTER */
+footer {
+  background-color: rgb(105, 192, 233);
+  padding: 10%;
+  /* height: 500px; */
+  margin-top: 50px;
+}

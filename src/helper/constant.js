@@ -14,7 +14,7 @@ module.exports = {
     DEFAULT_QUANTITY: 1,
     DEFAULT_PERCENT: 0,
     DEFAULT_PRICE: 0,
-    DEFAULT_TAX: 1 / 10,
+    DEFAULT_TAX: 0,
 
     // STATUS ORDER
     DEFAULT_ORDER_STATUS: 1,
@@ -42,6 +42,7 @@ module.exports = {
     VALUE_SHIPPING: 2,
     VALUE_DELIVERE: 3,
     VALUE_DONE: 4,
+    VALUE_CANCEL: 5,
 
     // PERMISSIONS
     READ: 'isCanRead',

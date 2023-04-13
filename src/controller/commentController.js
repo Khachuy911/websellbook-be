@@ -12,6 +12,9 @@ module.exports = {
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_LACK));
     }
 
+    if(!req.user){
+      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, "sai r nay"));
+    }
     const userId = req.user;
 
     const data = {
