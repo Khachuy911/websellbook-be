@@ -1,14 +1,17 @@
 		body {
 			margin: 0;
 			padding: 0;
+			-webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
 		}
-
 		.containerBox {
 			display: flex;
 			flex-direction: row;
 			background-color: rgb(105, 192, 233);
 			position: relative;
-			justify-content: center;
+			justify-content: end;
 		}
 
 		.nav {
@@ -131,4 +134,6 @@
 			color: #fff!important;
 			cursor: inherit;
 		}
-		
+		.dataTables_scrollBody .dtsp-pane {
+			display: none !important;
+		  }
