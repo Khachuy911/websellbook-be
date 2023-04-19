@@ -119,15 +119,17 @@ module.exports = {
       rows: product.rows,
     };
 
-    // res.status(HTTP_CODE.SUCCESS).json({
-    //   isSuccess: true,
-    //   message: MESSAGE.SUCCESS,
-    //   data,
-    // });
+    if (req.query.api == 1) {
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data,
+      });
+    }
 
-    console.log("=====>Product:" + JSON.stringify(product));
+    // console.log("=====>Product:" + JSON.stringify(product));
 
-    res.render("../view/home.ejs", { data: data});
+    res.render("../view/home.ejs", { data: data });
   },
 
   getProductByCategory: async (req, res, next) => {
@@ -167,13 +169,12 @@ module.exports = {
       rows: product.rows,
     };
 
-    if(req.query.response === 'api'){
+    if (req.query.response === "api") {
       res.status(HTTP_CODE.SUCCESS).json({
         isSuccess: true,
         message: MESSAGE.SUCCESS,
         data,
       });
-
     }
 
     // console.log("=====>Product:" + JSON.stringify(product));
@@ -264,12 +265,9 @@ module.exports = {
     //   data: product,
     // });
 
-
-    
-
-    const data = { product}
+    const data = { product };
     console.log("==============> product detail: " + JSON.stringify(data));
-    res.render("../view/productDetail.ejs", { data});
+    res.render("../view/productDetail.ejs", { data });
   },
 
   update: async (req, res, next) => {
