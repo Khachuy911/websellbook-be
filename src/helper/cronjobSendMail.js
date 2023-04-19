@@ -8,6 +8,8 @@ const { sendMail } = require('../helper/helper');
 
 var task = cron.schedule(`*/1 * * * *`, async () => {
 
+  console.log(`=====[CRON JOB] Start run cron job send mail before 15' flash sale`);
+
   const condition = {
     where: {
       startDate: moment().add(15, 'm'),

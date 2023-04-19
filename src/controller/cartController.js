@@ -70,18 +70,36 @@ module.exports = {
   },
 
   getCart: async (req, res, next) => {
+
+    const userId = req.user;
+      const conditionCart = {
+        where: {
+          userId,
+          isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        },
+      };
+      let cartDetail = await Cart.findOne(conditionCart);
+
+      if (!cartDetail?.dataValues) {
+        const dataCart = {
+          userId,
+        };
+
+        const cart = new Cart(dataCart);
+        await cart.save();
+
+        cartDetail = cart;
+    }
+
     const condition = {
       where: {
-        userId: req.user,
+        cartId: cartDetail.id,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
       },
-      include: {
-        model: CartProduct,
-        attributes: ["id", "quantity"],
-        order: [['createdAt', 'ASC']],
-        include: {
+      include: [
+        {
           model: Product,
-          attributes: ["id","name", "author", "priceSelling"],
+          // attributes: ["id","name", "author", "priceSelling"],
           include: {
             model: FlashSaleProduct,
             where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
@@ -89,13 +107,18 @@ module.exports = {
             attributes: ["discountAmount"],
           },
         },
-      },
+        {
+          model: Cart,
+          // attributes: ["id", "quantity"],
+          order: [['createdAt', 'ASC']],
+        }
+      ],
 
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
 
-    const cart = await Cart.findAndCountAll(condition);
+    const cart = await CartProduct.findAndCountAll(condition);
 
     const pageSize = req.query.pageSize || process.env.DEFAULT_LIMIT_PAGE;
     const data = {
@@ -113,7 +136,7 @@ module.exports = {
     //   data,
     // });
 
-    console.log("========> Order: " + JSON.stringify(data));
+    // console.log("========> Order: " + JSON.stringify(data));
 
     res.render("../view/order.ejs", { data });
   },
