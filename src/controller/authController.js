@@ -195,7 +195,10 @@ module.exports = {
     // });
     res.render('../view/authPage/verifySuccess.ejs');
   },
-
+  logout:(req, res, next) => {
+      res.clearCookie("token")
+      res.redirect("/product")
+  },
   login: async (req, res, next) => {
     const { email, password } = req.body;
 

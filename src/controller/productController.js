@@ -166,6 +166,7 @@ module.exports = {
       totalPage: Math.ceil(product.count / +pageSize),
       totalSize: product.rows.length || 0,
       rows: product.rows,
+      login:req.login
     };
 
     if(req.query.response === 'api'){
@@ -268,7 +269,7 @@ module.exports = {
 
     
 
-    const data = { product}
+    const data = { product:product,login:req.login}
     console.log("==============> product detail: " + JSON.stringify(data));
     res.render("../view/productDetail.ejs", { data});
   },

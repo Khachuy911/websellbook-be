@@ -44,7 +44,7 @@ Route.route("/:id")
   .get(AsyncHandle(ProductController.getDetail));
 
 Route.route("/")
-  .get(Auth.checkLogin,AsyncHandle(ProductController.getProduct))
+  .get(AsyncHandle(ProductController.getProduct))
   .post(
     Auth.checkToken,
     Auth.permission("/product/", DEFAULT_VALUE.ADD, DEFAULT_VALUE.READ),

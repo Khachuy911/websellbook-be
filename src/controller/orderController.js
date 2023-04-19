@@ -601,6 +601,7 @@ module.exports = {
       totalSize: order.rows.length || 0,
       rows: order.rows,
       currentUser: req.currentUser,
+      login:req.login
     };
 
     // res.status(HTTP_CODE.SUCCESS).json({
