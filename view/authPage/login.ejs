@@ -23,7 +23,7 @@
             <div class="auth-form">
                 <div class="auth-form__container">
                     <div class="container d-flex" style="align-items: center;text-align: center;margin-bottom:16px">
-                        <a href="/" class="auth-link-home" style="text-decoration: none;">
+                        <a href="/product" class="auth-link-home" style="text-decoration: none;">
                             <!-- <i class="fa-solid fa-bag-shopping" style="color: #fe6433; font-size:48px"></i> -->
                             <h1 class="auth-header" style="color: blue;">Khắc Huy Shop</h1>
                         </a>
@@ -158,9 +158,10 @@
                     if (error.status == 403) {
                         let data = error?.responseJSON
                         let token = data.data.token
-
+                        let text=data.message
+                        
                         Toastify({
-                            text: data.message,
+                            text: text,
                             duration: 2000,
                             destination: "http://localhost:3000/",
                             newWindow: true,
@@ -186,10 +187,12 @@
                     }
                     else {
                         message = error?.message || error.responseJSON.errorCode
+                        if(error.status==400){
+                            message = "Tên tài khoản hoặc mật khẩu không chính xác"
+                        }
                         Toastify({
                             text: message,
                             duration: 2000,
-                            destination: "http://localhost:3000/",
                             newWindow: true,
                             //close: true,
                             offset: {
