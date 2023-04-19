@@ -70,13 +70,30 @@ module.exports = {
   },
 
   getCart: async (req, res, next) => {
-    const {id} = await Cart.findOne({where: {
-      userId: req.user,
-      isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-    }})
+
+    const userId = req.user;
+      const conditionCart = {
+        where: {
+          userId,
+          isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        },
+      };
+      let cartDetail = await Cart.findOne(conditionCart);
+
+      if (!cartDetail?.dataValues) {
+        const dataCart = {
+          userId,
+        };
+
+        const cart = new Cart(dataCart);
+        await cart.save();
+
+        cartDetail = cart;
+    }
+
     const condition = {
       where: {
-        cartId: id,
+        cartId: cartDetail.id,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
       },
       include: [

@@ -153,6 +153,11 @@
         </div>
       </div>
       
+      <%if(data?.rows.length <=0 ){%>
+        <div class="empty text-center">
+          <i class="fa-brands fa-dropbox" style="font-size: 50px;"></i> <span style="font-weight:lighter; font-style: italic; opacity: 50%; ">Chưa có sản phẩm nào... </span>
+        </div>
+      <%}else{%>
       <div class="custom-table" >
         <table class="table table-primary text-left">
           <thead>
@@ -166,7 +171,7 @@
               <th scope="col">Tổng chi phí</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody>      
             <% data?.rows.forEach(cart => { %>
                 <tr class="custom-table-order" data-id="<%=cart.id%>">
                 <th scope="row"><input class="custom-checkbox form-check-input" data-id="<%=cart.id%>" data-product-name="<%=cart.Product.name%>" data-quantity="<%=cart.quantity%>" data-productId="<%= cart.Product.id %>" type="checkbox" value="" id="flexCheckDefault"></button></th>
@@ -189,15 +194,15 @@
             <% }); %>
           </tbody>
         </table>
-    </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-      <button type="button" class="btn btn-warning justify-content-md-end">Làm mới</button>
-        <button id="btn-order" type="button" class="btn btn-primary justify-content-md-end" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Đặt hàng ngay</button>
-      <p></p>
-      <p></p>
-    </div>
-    </div>
-    
+      </div>
+      <%}%>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+          <a href="/cart"><button type="button" class="btn btn-warning justify-content-md-end">Làm mới</button></a>
+          <button id="btn-order" type="button" class="btn btn-primary justify-content-md-end" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Đặt hàng ngay</button>
+        <p></p>
+        <p></p>
+      </div>
+    </div>    
 
     <div class="modal fade" id="exampleModalOrder" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -273,9 +278,11 @@
         </div>
       </footer>
     </div>
+
   <!-- </div> -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+  
   <script>
     $('#btn-order').click(e =>{
       const radio = document.querySelector("input[name='inlineRadioOptions']:checked").value;
@@ -362,8 +369,9 @@
                     }).showToast();
                     setTimeout(() => {
                         // $("#exampleModalDelete").modal("hide");
-                        location.reload();
-                    }, "1000")
+                        // location.reload();
+                        window.location.href = "/order/myorder";
+                    }, "500")
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     Toastify({
@@ -392,14 +400,15 @@
       }
     )
   </script>
+  <!-- get voucher -->
   <script>
     $.ajax({
         url: `/voucher?api=1`,
         type: "GET",
         success: (response) => {
             console.log(response)
-            let listSelect = response?.data?.rows.map((item, index) => (      
-              `<option value="${item.voucherCode}">${item.name} giảm ${item.discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })}</option>`
+            let listSelect = response?.data?.rows.map((item, index) => (     
+              `<option value="${item.voucherCode}">${item.voucherCode} (-${item.discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })})</option>`
             ))
             $('#select-voucher')[0].innerHTML = '<option selected value="Không">Chọn voucher giảm giá</option>' + listSelect.join('')       
         },

@@ -7,7 +7,9 @@ const FlashSale = require('../model/flashSaleModel');
 const FlashSaleProduct = require('../model/flashSaleProductModel');
 const Voucher = require('../model/voucherModel');
 
-var task = cron.schedule(`0 0 * * *`, async () => {
+var task = cron.schedule(`*/1 * * * *`, async () => {
+
+  console.log(`=====[CRON JOB] Start run cron job FLASHSALE AND VOUCHER`);
 
   const condition = {
     where: {
