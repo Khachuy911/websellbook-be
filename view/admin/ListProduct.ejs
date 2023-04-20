@@ -34,7 +34,7 @@
         
     </div> -->
 
-    <div class="nav" >
+    <div class="nav">
         <h1>Dashboard</h1>
         <ul id="route">
             <li><a href="/admin/dashboard">Dashboard</a></li>
@@ -49,29 +49,23 @@
     <div class="containerBox" style="position: relative;">
         <div class="main" style="width: 80%;height: 100%;padding-bottom: 60px;">
             <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách Products</h1>
-            <div class="card" style="width: 95%;margin: auto;">
+            <div class="card" style="width: 95%;margin: auto; ">
+
                 <table id="myTable">
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Họ và tên</th>
-                            <th>Email</th>
-                            <th>Số điện thoại</th>
+                            <th>Tên Products</th>
+                            <th>Mô tả</th>
+                            <th>Ảnh</th>
+                            <th>Số lượng</th>
+                            <th>Giá nhập</th>
+                            <th>Tên Category</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
                     <tbody id="table-body">
-                        <tr>
-                            <td style="text-align:center">${index + 1}</td>
-                            <td>${item.username}</td>
-                            <td>${item.email}</td>
-                            <td>${item.phone}</td>
-                            <td style="max-width:120px;text-align:center">
-                                <button type="button" data-id="${item.id}" class="btn btn-primary">Theo dõi</button>
-                                <button type="button" data-id="${item.id}"
-                                    class="btn btn-delete btn-danger">Xoá</button>
-                            </td>
-                        </tr>
+
                     </tbody>
                 </table>
             </div>
@@ -95,6 +89,101 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="HandleSubmitForm" enctype="multipart/form-data" style="margin-left: 10px;">
+                        <div style="display: flex;justify-content: center;">
+                            <div style="width: 200px;text-align: end;">
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="name">Product Name<strong style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="barCode">Barcode<strong style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="priceImport">Import Price<strong style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="priceSelling">Selling Price<strong
+                                            style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="weight">Weight (kg)<strong style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="quantity">Quantity<strong style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="categoryId" style="white-space: break-spaces;">Product Catogery<strong
+                                            style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="image">Product Image<strong style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <label for="description">Product Description<strong
+                                            style="color: red;">*</strong></label>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+
+                                </div>
+                            </div>
+                            <div style="width: 95%;">
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <input type="text" id="name" name="name" required>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <input type="text" id="barCode" name="barCode" required>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <input type="number" id="priceImport" name="priceImport" min="0" step="0.01"
+                                        required>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <input type="number" id="priceSelling" name="priceSelling" min="0" step="0.01"
+                                        required>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <input type="number" id="weight" name="weight" min="0" step="0.01" required>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <input type="number" id="quantity" name="quantity" min="0" required>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <select name="categoryId" style="width: 100%;" id="categoryId" required>
+
+                                    </select>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <input style="padding:10px 0" type="file" id="image" name="image" accept="image/*"
+                                        multiple required>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <textarea id="description" name="description" rows="4"></textarea>
+                                </div>
+                                <div class="" style="min-height: 40px;margin: 12px 0;">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                    <button type="submit" class="addproduct"
+                                        style="background-color: var(--prymary-color);">Update Product</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+              
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -104,8 +193,8 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <script src="/js/route.js"></script>
 <script>
-    let height = window.innerHeight +120;
-    $(".main")[0].style.minHeight = height+"px";
+    let height = window.innerHeight + 120;
+    $(".main")[0].style.minHeight = height + "px";
     let html = route.map((e, index) => {
         const pathname = window.location.pathname
         if (e.href == pathname) {
@@ -141,65 +230,68 @@
 
 <script>
     $.ajax({
-        url: `/product`,
+        url: `/product?api=1`,
         type: "GET",
         success: (response) => {
             console.log(response)
-            // let listSelect = response?.data?.rows.map((item, index) => (`
-            //                      <tr>
-            //                         <td style="text-align:center">${index + 1}</td>
-            //                         <td>${item.username}</td>
-            //                         <td>${item.email}</td>
-            //                         <td>${item.phone}</td>
-            //                         <td style="max-width:120px;text-align:center">
-            //                             <button type="button" data-id="${item.id}" class="btn btn-primary">Theo dõi</button>
-            //                             <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
-            //                         </td>
-            //                     </tr>`
-            // ))
-            // $("#table-body")[0].innerHTML = listSelect.join("")
-            // let table = $('#myTable').DataTable({
-            //     select: false,
-            //     pageLength: 5,
-            //     stateSave: true,
-            //     lengthMenu: [5, 10, 15, 20],
-            //     columnDefs: [
-            //         {
-            //             searchPanes: {
-            //                 show: true
-            //             },
-            //             targets: [1, 2, 3]
-            //         }
-            //     ],
-            //     "order": [[3, "desc"]],
-            //     "language": {
-            //         "sEmptyTable": "Không có dữ liệu trong bảng",
-            //         "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-            //         "sInfoEmpty": "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
-            //         "sInfoFiltered": "(được lọc từ tổng số _MAX_ kết quả)",
-            //         "sInfoPostFix": "",
-            //         "sInfoThousands": ",",
-            //         "sLengthMenu": "Hiển thị _MENU_ kết quả",
-            //         "sLoadingRecords": "Đang tải...",
-            //         "sProcessing": "Đang xử lý...",
-            //         "sSearch": "Tìm kiếm:",
-            //         "sZeroRecords": "Không tìm thấy kết quả phù hợp",
-            //         "oPaginate": {
-            //             "sFirst": "Đầu",
-            //             "sLast": "Cuối",
-            //             "sNext": "Tiếp",
-            //             "sPrevious": "Trước"
-            //         },
-            //         "oAria": {
-            //             "sSortAscending": ": sắp xếp cột tăng dần",
-            //             "sSortDescending": ": sắp xếp cột giảm dần"
-            //         },
-            //     }
-            // });
-            // new $.fn.dataTable.SearchPanes(table, {});
-            // table.searchPanes.container().prependTo(table.table().container());
-            // table.searchPanes.resizePanes();
-            // try {$(".dtsp-collapseAll")[0].click()} catch (error) {}
+            let listSelect = response?.data?.rows.map((item, index) => (`
+                                 <tr>
+                                    <td style="text-align:center">${index + 1}</td>
+                                    <td>${item.name}</td>
+                                    <td>${item.description}</td>
+                                    <td><img src='${item.ProductImages[0]}' style="width:100px" alt="${item.name}"/></td>
+                                    <td>${item.quantity}</td>
+                                    <td>${item.priceImport}</td>
+                                    <td>${item.Category.name}</td>
+                                    <td style="max-width:120px;text-align:center">
+                                        <button type="button" data-id="${item.id}" style="width: 99px;" class="btn btn-primary btn-update" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" >Update</button>
+                                        <button type="button" data-id="${item.id}"class="btn btn-delete btn-danger mt-2" style="width: 99px;" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" >Xoá</button>
+                                    </td>
+                                </tr>`
+            ))
+            $("#table-body")[0].innerHTML = listSelect.join("")
+            let table = $('#myTable').DataTable({
+                select: false,
+                pageLength: 5,
+                stateSave: true,
+                lengthMenu: [5, 10, 15, 20],
+                columnDefs: [
+                    {
+                        searchPanes: {
+                            show: true
+                        },
+                        targets: [1, 4, 5, 6]
+                    }
+                ],
+                "order": [[3, "desc"]],
+                "language": {
+                    "sEmptyTable": "Không có dữ liệu trong bảng",
+                    "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+                    "sInfoEmpty": "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
+                    "sInfoFiltered": "(được lọc từ tổng số _MAX_ kết quả)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ",",
+                    "sLengthMenu": "Hiển thị _MENU_ kết quả",
+                    "sLoadingRecords": "Đang tải...",
+                    "sProcessing": "Đang xử lý...",
+                    "sSearch": "Tìm kiếm:",
+                    "sZeroRecords": "Không tìm thấy kết quả phù hợp",
+                    "oPaginate": {
+                        "sFirst": "Đầu",
+                        "sLast": "Cuối",
+                        "sNext": "Tiếp",
+                        "sPrevious": "Trước"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": sắp xếp cột tăng dần",
+                        "sSortDescending": ": sắp xếp cột giảm dần"
+                    },
+                }
+            });
+            new $.fn.dataTable.SearchPanes(table, {});
+            table.searchPanes.container().prependTo(table.table().container());
+            table.searchPanes.resizePanes();
+            try { $(".dtsp-collapseAll")[0].click() } catch (error) { }
 
 
         },
@@ -282,9 +374,85 @@
         })
     });
 
+
+
+</script>
+
+
+<script>
+    $(document).on("click", ".btn-update", function (e) {
+        const id = $(this).data("id");
+        const element = $(`tr[data-id="${id}"]`)[0].children;
+
+        $("#nameVoucher").val(element[1].innerText)
+
+        $("#discountAmount").val(element[2].innerText)
+
+        $("#quantity").val(element[3].innerText)
+
+        const date = new Date(element[5].innerText);
+        $("#expireDate")[0].value = date.toISOString().substr(0, 10);
+
+        $("#handleSubmitFormUpdate").submit(e => {
+            e.preventDefault();
+            const data = $("#handleSubmitFormUpdate").serialize();
+            $.ajax({
+                url: `/voucher/${id}`,
+                type: "PATCH",
+                data: data,
+                success: (response) => {
+                    Toastify({
+                        text: response.message,
+                        duration: 2000,
+                        newWindow: true,
+                        //close: true,
+                        offset: {
+                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                        },
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, green, green)",
+                            width: "250px",
+                            fontSize: "16px"
+                        },
+                    }).showToast();
+                    setTimeout(() => {
+                        $("#exampleModalUpdate").modal("hide");
+                        location.reload();
+                    }, "2000")
+                },
+                error: (data) => {
+                    Toastify({
+                        text: data.responseJSON.errorCode,
+                        duration: 2000,
+                        destination: "http://localhost:3000/",
+                        newWindow: true,
+                        //close: true,
+                        offset: {
+                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                        },
+                        gravity: "top", // `top` or `bottom`
+                        position: "right", // `left`, `center` or `right`
+                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                        style: {
+                            background: "linear-gradient(to right, red, red)",
+                            width: "250px",
+                            fontSize: "16px"
+                        },
+                        onClick: function () { } // Callback after click
+                    }).showToast();
+                }
+            })
+        })
+    });
+
 </script>
 <script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth +"px"
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
 </script>
 
 </html>
