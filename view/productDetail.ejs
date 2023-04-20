@@ -165,7 +165,8 @@
                 </div>
                 <div class="col-auto">
                   <label for="inputQuantity" class="visually-hidden">Quantity</label>
-                  <input type="number" onkeypress="return ( event.charCode !=8 && event.charCode ==0 && event.charCode !=45 || (event.charCode >= 48 && event.charCode <= 57))" width="100%" class="custom-btn-order form-control" id="inputQuantity" placeholder="1" value="1" >
+                  
+                  <input type="number" min="1" max="<%= data.product.quantityDisplay%>" oninvalid="setCustomValidity('0 < Số lượng sách <= <%= data.product.quantityDisplay%>')" oninput="setCustomValidity('')"  width="100%" class="custom-btn-order form-control" id="inputQuantity" placeholder="1" value="1" >
                 </div>
                 <div class="col-auto">
                   <button id="btn-submit-cart" type="submit" data-productId="<%= data.product.id%>" class="btn btn-light mb-3">Thêm vào giỏ hàng <i class="fa-solid fa-cart-shopping"></i></button>

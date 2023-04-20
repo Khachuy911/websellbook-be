@@ -72,11 +72,12 @@ a:hover {
   background-color: rgb(105, 192, 233);
   box-shadow: 2px 2px 3px rgb(107, 107, 107);
   padding: 20px;
-  border-radius:10px
+  border-radius:10px;
+  justify-content: space-around;
 }
 
 .infor-voucher{
-  flex-basis: 50%;
+  flex-basis: 40%;
 }
 
 .custom-select-voucher {

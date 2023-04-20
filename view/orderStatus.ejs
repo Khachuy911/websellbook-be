@@ -120,11 +120,14 @@
       </nav>
       <hr>
       <h4>Xin chào, <%= data.currentUser.username%></h4>
+      <div class="custom-tbl-order">
       <table class="table">
         <thead>
           <tr class="text-center">
             <th scope="col"></th>
             <th scope="col">Mã đơn hàng</th>
+            <th scope="col">Địa chỉ giao</th>
+            <th scope="col">Số điện thoại</th>
             <th scope="col">Thời gian đặt hàng</th>
             <th scope="col">Voucher (giảm)</th>
             <th scope="col">Tổng đơn giá</th>
@@ -137,6 +140,8 @@
             <tr data-order="<%= order.id%>" class="text-center">
               <th scope="row"><i class="fa-solid fa-dolly"></i></th>
               <td><%= order.orderCode %></td>
+              <td><%= order.address %></td>
+              <td><%= order.phone %></td>
               <td><%= order.createdAt %></td>
               <td> <%= order?.Voucher?.discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) || "_" %></td>
               <td><%= order.totalPrice.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' }) %></td>
@@ -167,6 +172,7 @@
           <% }); %>
         </tbody>
       </table>
+    </div>
     </div>
 
     <div class="modal fade" id="exampleModalOrder" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -204,7 +210,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận xoá nhận xét của bạn !</h1>
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Xác nhận huỷ đơn của bạn !</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
