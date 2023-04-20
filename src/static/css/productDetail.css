@@ -244,6 +244,11 @@ i {
   color: black;
 }
 
+.list-comment{
+  overflow: auto;
+  height: 700px;
+}
+
 /* ======================== */
 /* FOOTER */
 footer {

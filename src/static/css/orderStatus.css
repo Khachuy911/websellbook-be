@@ -66,6 +66,11 @@ a:hover {
   color: rgb(105, 192, 233);
 }
 
+.custom-tbl-order{
+  overflow: auto;
+  height: 500px;
+}
+
 .infor-order{
   display: flex;
   border: 1px solid rgb(105, 192, 233);

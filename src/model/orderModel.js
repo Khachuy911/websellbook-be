@@ -34,6 +34,12 @@ Order.init({
       min: 0
     }
   },
+  address: {
+    type: DataTypes.STRING(250),
+  },
+  phone: {
+    type: DataTypes.INTEGER,
+  },
   orderCode: {
     type: DataTypes.STRING,
   },

@@ -116,19 +116,34 @@
       <div class="infor-order">
         <div class="infor-voucher">
           
-          <h5>Thông tin <a class="custom-change" href="">(Thay đổi)</a></h5>   
+          <h5>Thông tin liên hệ</h5>   
           <p></p>
-          <p style="margin-left: 20px">- Email: <%= data.currentUser.email%></p>
-          <p style="margin-left: 20px">- Số điện thoại: <%= data.currentUser.phone%></p>
-          <p style="margin-left: 20px">- Địa chỉ: <%= data.currentUser.address%></p>   
-          <p style="margin-left: 20px">- Free ship toàn quốc</p>     
+          <div class="mb-3">
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon3">Email</span>
+              <input readonly style="width: 20px" type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="<%= data.currentUser.email%>">
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon3">Đia chỉ</span>
+              <input style="width: 20px" type="text" class="inp-address form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" value="<%= data.currentUser.address%>">
+            </div>
+          </div>
+          <div class="mb-3">
+            <div class="input-group">
+              <span class="input-group-text" id="basic-addon3">Số điện thoại</span>
+              <input style="width: 20px" max="10000000000" type="number" class="inp-phone form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4"  value="<%= data.currentUser.phone%>">
+            </div>
+          </div>
         </div>
         <div class="infor-user">
           <label for="">Voucher</label>
           <select id="select-voucher" class="custom-select-voucher form-select" aria-label="Default select example">
             
           </select>
-          <p></p>
+          <p style="margin-top:10px;">Free ship toàn quốc</p>     
+
           <p>Phương thức thanh toán: </p>
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" checked value="Thanh toán khi nhận hàng">
@@ -198,7 +213,7 @@
       <%}%>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">
           <a href="/cart"><button type="button" class="btn btn-warning justify-content-md-end">Làm mới</button></a>
-          <button id="btn-order" type="button" class="btn btn-primary justify-content-md-end" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Đặt hàng ngay</button>
+          <button id="btn-order" disabled type="button" class="btn btn-primary justify-content-md-end" data-bs-toggle="modal" data-bs-target="#exampleModalOrder">Thanh toán</button>
         <p></p>
         <p></p>
       </div>
@@ -215,8 +230,6 @@
                 <form id="submit-order">
                     <div class="modal-body">
                         <p style="margin-left: 20px"><i class="fa-solid fa-envelope"></i> Email: <%= data.currentUser.email%>.</p>
-                        <p style="margin-left: 20px"><i class="fa-sharp fa-solid fa-phone-volume"></i> Số điện thoại: <%= data.currentUser.phone%>.</p>                        
-                        <p style="margin-left: 20px"><i class="fa-sharp fa-solid fa-location-dot"></i> Địa chỉ: <%= data.currentUser.address%>.</p> 
                         <p style="margin-left: 20px"><i class="fa-solid fa-truck-fast"></i> Free ship toàn quốc.</p> 
                         <div id="confirm-order"></div>
                     </div>
@@ -283,6 +296,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
   
+  <!-- thanh toan -->
   <script>
     $('#btn-order').click(e =>{
       const radio = document.querySelector("input[name='inlineRadioOptions']:checked").value;
@@ -290,25 +304,32 @@
       const checkbox = document.querySelectorAll(".custom-checkbox:checked");
 
       const voucher = $('#select-voucher').val();
+      const getOptionTag = $(`.option-discount[value = ${voucher}]`).attr("data-discount") || 0;
+
+      const address = $('.inp-address').val();
+      const phone = $('.inp-phone').val();
 
       let listProductId = [];
       checkbox.forEach(ele=>{
         listProductId.push({id: ele.getAttribute('data-productId'), quantity: +ele.getAttribute('data-quantity'), name: ele.getAttribute('data-product-name')})        
       })
 
+      let sum = 0;
       const listPro = listProductId.map(ele => 
         `<p style="margin-left: 50px"><i style="margin-right: 50px">x${ele.quantity}</i>${ele.name} </p>`
       )
  
       const totalAmount = document.getElementById('total-money').innerHTML;
-
+      const sumAmount = $("#total-money").attr("data-sum");
       $('#confirm-order')[0].innerHTML = `
+      <p style="margin-left: 20px"><i class="fa-sharp fa-solid fa-phone-volume"></i> Số điện thoại: ${phone}.</p>                        
+      <p style="margin-left: 20px"><i class="fa-sharp fa-solid fa-location-dot"></i> Địa chỉ: ${address}.</p> 
         <p style="margin-left: 20px"><i class="fa-solid fa-credit-card"></i> Phương thức thanh toán: ${radio}</p>
-        <p style="margin-left: 20px"><i class="fa-solid fa-ticket"></i> Voucher: ${voucher}</p>
+        <p style="margin-left: 20px"><i class="fa-solid fa-ticket"></i> Voucher: ${voucher} (giảm ${(+getOptionTag).toLocaleString()} đ) </p>
         <p style="margin-left: 20px">Thông tin sách:</p>        
         `+ listPro.join('') +
         `
-        <p style="margin-left: 20px">Tổng tiền: ${totalAmount}</p>       
+        <p style="margin-left: 20px">Tổng tiền: ${(+sumAmount - +getOptionTag).toLocaleString()} đ</p>       
         `
 
       
@@ -316,6 +337,8 @@
     )
       
   </script>
+
+  <!-- submit order -->
   <script>
     $('#submit-order').submit(e =>{
       e.preventDefault();
@@ -324,6 +347,11 @@
       const checkbox = document.querySelectorAll(".custom-checkbox:checked");
 
       const voucher = $('#select-voucher').val();
+
+      const address = $('.inp-address').val();
+
+      const phone = $('.inp-phone').val();
+
 
       let listProductId = [];
       checkbox.forEach(ele=>{
@@ -336,11 +364,8 @@
       if(voucher === 'Không'){
         dataSend = {product: JSON.stringify(listProductId)}
       }else{
-        dataSend = {product: JSON.stringify(listProductId), voucherCode: voucher}
+        dataSend = {product: JSON.stringify(listProductId), voucherCode: voucher, address: address, phone: phone}
       }
-
-      // console.log(JSON.stringify(dataSend));
-
       $.ajax({
                 url: '/order',
                 type: 'POST',
@@ -400,15 +425,15 @@
       }
     )
   </script>
+
   <!-- get voucher -->
   <script>
     $.ajax({
         url: `/voucher?api=1`,
         type: "GET",
         success: (response) => {
-            console.log(response)
             let listSelect = response?.data?.rows.map((item, index) => (     
-              `<option value="${item.voucherCode}">${item.voucherCode} (-${item.discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })})</option>`
+              `<option class="option-discount" data-discount="${item.discountAmount}" value="${item.voucherCode}">${item.voucherCode} (-${item.discountAmount.toLocaleString('vn-VN', { style: 'currency', currency: 'VND' })})</option>`
             ))
             $('#select-voucher')[0].innerHTML = '<option selected value="Không">Chọn voucher giảm giá</option>' + listSelect.join('')       
         },
@@ -436,21 +461,28 @@
     
 
   </script>
+
+  <!-- tinh tong tien hien thi -->
   <script>
     $('.custom-checkbox').change(e=>{
       const totalMoney = $('#total-money');
 
       const checkbox = document.querySelectorAll(".custom-checkbox");
 
-      
       let listProductId = [];
       let sum = 0;
+      let check = true;
       checkbox.forEach(ele=>{
         if(ele.checked === true){
+          check = false;
           const element = $(`tr[data-id="${ele.getAttribute('data-id')}"]`)[0].children;
           sum += +element[6].innerText.split(' ')[0];
         }
       })
+
+      $("#btn-order")[0].disabled = check;
+      
+      totalMoney[0].setAttribute("data-sum", sum)
       totalMoney[0].innerText = sum.toLocaleString() + " đ";
     })
   </script>
