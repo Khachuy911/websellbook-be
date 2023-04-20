@@ -100,9 +100,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="HandleSubmitForm" enctype="multipart/form-data" style="margin-left: 10px;">
+                    <form id="HandleSubmitForm" enctype="multipart/form-data">
                         <div style="display: flex;justify-content: center;">
-                            <div style="width: 200px;text-align: end;margin-left: 10px;">
+                            <div style="width: 162px;text-align: end;">
                                 <div cla="" style="min-height: 40px;margin: 20px 20px;">
                                     <label for="name">Tên Sách<strong style="color: red;">*</strong></label>
                                 </div>
@@ -113,8 +113,7 @@
                                     <label for="priceImport">Giá nhập<strong style="color: red;">*</strong></label>
                                 </div>
                                 <div class="" style="min-height: 40px;margin: 10px 20px;">
-                                    <label for="priceSelling">Giá bán<strong
-                                            style="color: red;">*</strong></label>
+                                    <label for="priceSelling">Giá bán<strong style="color: red;">*</strong></label>
                                 </div>
                                 <div class="" style="min-height: 40px;margin: 10px 20px;">
                                     <label for="weight">Số trang<strong style="color: red;">*</strong></label>
@@ -130,8 +129,7 @@
                                     <label for="image">Ảnh sách<strong style="color: red;">*</strong></label>
                                 </div>
                                 <div class="" style="min-height: 40px;margin: 20px 20px;">
-                                    <label for="description">Mô tả<strong
-                                            style="color: red;">*</strong></label>
+                                    <label for="description">Mô tả<strong style="color: red;">*</strong></label>
                                 </div>
                                 <div class="" style="min-height: 40px;margin: 12px 0;">
 
@@ -165,20 +163,21 @@
                                 </div>
                                 <div class="" style="min-height: 40px;margin: 12px 0;">
                                     <input style="padding:10px 0" type="file" id="image" name="image" accept="image/*"
-                                        multiple required>
+                                        multiple>
                                 </div>
                                 <div class="" style="min-height: 40px;margin: 12px 0;">
                                     <textarea id="description" name="description" rows="4"></textarea>
                                 </div>
                                 <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <button type="submit" class="btn btn-primary">Update Product</button>
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary btn-PATCH-update">Update Product</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-              
+
             </div>
         </div>
     </div>
@@ -238,7 +237,7 @@
                                     <td style="text-align:center">${index + 1}</td>
                                     <td>${item.name}</td>
                                     <td>${item.description}</td>
-                                    <td><img src='${item.ProductImages[0]}' style="width:100px" alt="${item.name}"/></td>
+                                    <td><img src='${item.ProductImages[0].url.replace("public","")}' style="width:100px" alt="${item.name}"/></td>
                                     <td>${item.quantity}</td>
                                     <td>${item.priceImport}</td>
                                     <td>${item.Category.name}</td>
@@ -372,33 +371,81 @@
 
         })
     });
-
-
-
 </script>
 
+<script>
+    const listCategory = async () => {
 
+    }
+</script>
 <script>
     $(document).on("click", ".btn-update", function (e) {
         const id = $(this).data("id");
-        const element = $(`tr[data-id="${id}"]`)[0].children;
+        $.ajax({
+            url: `/product/${id}?api=1`,
+            type: "GET",
+            success: (response) => {
 
-        $("#nameVoucher").val(element[1].innerText)
+                $.ajax({
+                    url: `/category`,
+                    type: "GET",
+                    success: (category) => {                       
+                        let listSelect = category.data.rows.map((e) => {
+                            return `<option value = '${e.id}'>${e.name}</option>}`
+                        })
+                        $("#categoryId").html(listSelect.join(""))
+                        const data = response.data.product
+                        $("#name").val(data.name)
+                        $("#barCode").val(data.barCode)
+                        $("#priceImport").val(data.priceImport)
+                        $("#priceSelling").val(data.priceSelling)
+                        $("#weight").val(data.weight)
+                        $("#quantity").val(data.quantity)
+                        $("#description").val(data.description)
+                        $(".btn-PATCH-update").attr("data-id",id)
+                    },
+                    error: (data) => {
+                        console.log(data)
+                    }
 
-        $("#discountAmount").val(element[2].innerText)
+                })
+            },
+            error: (data) => {
+                Toastify({
+                    text: data.responseJSON.errorCode,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, red, red)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                    onClick: function () { } // Callback after click
+                }).showToast();
+            }
+        })
 
-        $("#quantity").val(element[3].innerText)
 
-        const date = new Date(element[5].innerText);
-        $("#expireDate")[0].value = date.toISOString().substr(0, 10);
 
-        $("#handleSubmitFormUpdate").submit(e => {
+        $("#HandleSubmitForm").submit(e => {
             e.preventDefault();
-            const data = $("#handleSubmitFormUpdate").serialize();
+            const id = $(".btn-PATCH-update").data("id");
+            let form = document.getElementById('HandleSubmitForm');
+            let formData = new FormData(form);
             $.ajax({
-                url: `/voucher/${id}`,
+                url: `/product/${id}`,
                 type: "PATCH",
-                data: data,
+                data: formData,
+                processData: false,
+                contentType: false,
                 success: (response) => {
                     Toastify({
                         text: response.message,
@@ -427,7 +474,6 @@
                     Toastify({
                         text: data.responseJSON.errorCode,
                         duration: 2000,
-                        destination: "http://localhost:3000/",
                         newWindow: true,
                         //close: true,
                         offset: {
