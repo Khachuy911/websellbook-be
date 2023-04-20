@@ -120,15 +120,17 @@ module.exports = {
       login: req.login
     };
 
-    // res.status(HTTP_CODE.SUCCESS).json({
-    //   isSuccess: true,
-    //   message: MESSAGE.SUCCESS,
-    //   data,
-    // });
+    if (req.query.api == 1) {
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data,
+      });
+    }
 
-    console.log("=====>Product:" + JSON.stringify(product));
+    // console.log("=====>Product:" + JSON.stringify(product));
 
-    res.render("../view/home.ejs", { data: data});
+    res.render("../view/home.ejs", { data: data });
   },
 
   getProductByCategory: async (req, res, next) => {
@@ -169,13 +171,12 @@ module.exports = {
       login:req.login
     };
 
-    if(req.query.response === 'api'){
+    if (req.query.response === "api") {
       res.status(HTTP_CODE.SUCCESS).json({
         isSuccess: true,
         message: MESSAGE.SUCCESS,
         data,
       });
-
     }
 
     // console.log("=====>Product:" + JSON.stringify(product));
@@ -267,11 +268,9 @@ module.exports = {
     // });
 
 
-    
-
     const data = { product:product,login:req.login}
     console.log("==============> product detail: " + JSON.stringify(data));
-    res.render("../view/productDetail.ejs", { data});
+    res.render("../view/productDetail.ejs", { data });
   },
 
   update: async (req, res, next) => {

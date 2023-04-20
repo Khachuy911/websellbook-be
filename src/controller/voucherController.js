@@ -90,7 +90,7 @@ module.exports = {
       })
     }
 
-    console.log("======" + JSON.stringify(data));
+    // console.log("======" + JSON.stringify(data));
 
     res.render('../view/voucher.ejs', {data});
   },
