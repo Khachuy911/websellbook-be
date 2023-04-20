@@ -2,6 +2,11 @@ const route = [
     {
         text:"Dashboard",
         href:"/admin/dashboard"
+    }
+    ,
+    {
+        text:"Trang chủ",
+        href:"/product"
     },
     {
         text:"Tài khoản của tôi",
@@ -38,9 +43,5 @@ const route = [
     {
         text:"Danh sách FlashSale",
         href:"/admin/list-flashsale"
-    },
-    {
-        text:"Reports",
-        href:"/product"
     }
 ]

@@ -78,7 +78,8 @@ module.exports = {
       pageIndex: req.query.page || process.env.DEFAULT_PAGE,
       totalPage: Math.ceil(voucher.count / +pageSize),
       totalSize: voucher.rows.length || 0,
-      rows: voucher.rows
+      rows: voucher.rows,
+      login:req.login
     }
 
     if(req.query.api == 1){

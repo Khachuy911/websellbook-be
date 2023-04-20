@@ -21,6 +21,7 @@ Route.get('/views/check-verify', (req,res,next)=>{res.render("../view/authPage/c
 Route.get('/views/forgot-password',(req,res,next)=>{res.render("../view/authPage/forgotpassword")});
 
 Route.get('/roleModule', AuthController.roleModule);
+Route.get('/logout', AuthController.logout);
 
 /**
  * @swagger
