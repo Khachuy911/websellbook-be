@@ -97,3 +97,22 @@ module.exports.permission = (url, ...role) => {
     }
   };
 };
+
+module.exports.checkLogin = async (req, res, next) => {
+  try {
+    let token;
+    // if (req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
+    //   token = req.headers.authorization.split(' ')[1];\
+    if (req.cookies.token) {
+      token = req.cookies.token;
+    }
+    let login = true;
+    if (!token) {
+      login= false;  
+    }
+    req.login= login;  
+    next();
+  } catch (error) {
+    return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error?.message));
+  }
+};

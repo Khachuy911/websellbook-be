@@ -25,7 +25,7 @@ module.exports = {
       console.log(test1);
       const data = req.body;
       console.log(data);
-      let { product, voucherCode } = test1;
+      let { product, voucherCode, address, phone } = test1;
 
       if (!product) {
         await t.rollback();
@@ -181,6 +181,8 @@ module.exports = {
           voucherId: voucher ? voucher.id : null,
           createdBy: req.user,
           updateBy: req.user,
+          address: address,
+          phone: phone,
         };
       }
 
@@ -601,6 +603,7 @@ module.exports = {
       totalSize: order.rows.length || 0,
       rows: order.rows,
       currentUser: req.currentUser,
+      login:req.login
     };
 
     // res.status(HTTP_CODE.SUCCESS).json({
