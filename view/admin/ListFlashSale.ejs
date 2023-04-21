@@ -73,21 +73,23 @@
     </div>
     <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xoá FlashSale</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Bạn có muốn xoá FlashSale này không?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btn-delete-success" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <form action="" id="handleSubmitDelete">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Xoá FlashSale</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Bạn có muốn xoá FlashSale này không?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" id="btn-delete-success" class="btn btn-danger">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 
     <div class="modal fade" id="exampleModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -281,9 +283,9 @@
         success: (response) => {
             console.log(response)
             let listSelect = response?.data?.rows.map((item, index) => {
-              
 
-                return`
+
+                return `
                     <tr data-id="${item.id}">
                         <td style="text-align:center">${index + 1}</td>
                         <td>${item.name}</td>
@@ -296,7 +298,7 @@
                         </td>
                     </tr>
                 `
-                })
+            })
             $("#table-body")[0].innerHTML = listSelect.join("")
             let table = $('#myTable').DataTable({
                 select: false,
@@ -359,13 +361,89 @@
             }).showToast();
         }
     })
-    $(document).on("click", ".btn-delete", function () {
+    let deleteId
+    $("#exampleModalDelete").on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget) 
+        deleteId = button.data("id")
+    })
+    $("#exampleModalDelete").on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget) 
+        deleteId = button.data("id")
+    })
+    $("#handleSubmitDelete").submit(e => {
+        e.preventDefault();
+        $.ajax({
+            url: `/flashsale/${deleteId}`,
+            type: "DELETE",
+            success: (response) => {
+                Toastify({
+                    text: response.message,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, green, green)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                }).showToast();
+                setTimeout(() => {
+                    $("#exampleModalDelete").modal("hide");
+                    location.reload();
+                }, "2000")
+            },
+            error: (data) => {
+                Toastify({
+                    text: data.responseJSON.errorCode,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, red, red)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                    onClick: function () { } // Callback after click
+                }).showToast();
+            }
+        })
+
+    })
+
+    $(document).on("click", ".btn-update", function (e) {
         const id = $(this).data("id");
-        $("#btn-delete-success").click(e => {
+        const element = $(`tr[data-id="${id}"]`)[0].children;
+
+        $("#nameVoucher").val(element[1].innerText)
+        // $("#discountAmount").val(element[2].innerText)
+        $("#description").val(element[2].innerText)
+
+        const date = new Date(element[3].innerText);
+        const date2 = new Date(element[4].innerText);
+        $("#expireDate")[0].value = date.toISOString().substr(0, 10);
+        $("#expireDate2")[0].value = date2.toISOString().substr(0, 10);
+
+        $("#handleSubmitFormUpdate").submit(e => {
             e.preventDefault();
+            const data = $("#handleSubmitFormUpdate").serialize();
             $.ajax({
                 url: `/flashsale/${id}`,
-                type: "DELETE",
+                type: "PATCH",
+                data: data,
                 success: (response) => {
                     Toastify({
                         text: response.message,
@@ -386,7 +464,7 @@
                         },
                     }).showToast();
                     setTimeout(() => {
-                        $("#exampleModalDelete").modal("hide");
+                        $("#exampleModalUpdate").modal("hide");
                         location.reload();
                     }, "2000")
                 },
@@ -412,24 +490,7 @@
                     }).showToast();
                 }
             })
-
         })
-    });
-
-    $(document).on("click", ".btn-update", function (e) {
-        const id = $(this).data("id");
-        const element = $(`tr[data-id="${id}"]`)[0].children;
-
-        $("#nameVoucher").val(element[1].innerText)
-        // $("#discountAmount").val(element[2].innerText)
-        $("#description").val(element[2].innerText)
-
-        const date = new Date(element[3].innerText);
-        const date2 = new Date(element[4].innerText);
-        $("#expireDate")[0].value = date.toISOString().substr(0, 10);
-        $("#expireDate2")[0].value = date2.toISOString().substr(0, 10);
-
-
 
         //$("#productId").find("option").filter(e => ($(this).text() === element[6].innerText)).prop("selected", true);
 
@@ -500,59 +561,5 @@
 </html>
 
 <script>
-    $("#handleSubmitFormUpdate").submit(e => {
-        e.preventDefault();
-        const data = $("#handleSubmitFormUpdate").serialize();
-        console.log(data);
-        $.ajax({
-            url: `/flashsale/${id}`,
-            type: "PATCH",
-            data: data,
-            success: (response) => {
-                Toastify({
-                    text: response.message,
-                    duration: 2000,
-                    newWindow: true,
-                    //close: true,
-                    offset: {
-                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                    },
-                    gravity: "top", // `top` or `bottom`
-                    position: "right", // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
-                    style: {
-                        background: "linear-gradient(to right, green, green)",
-                        width: "250px",
-                        fontSize: "16px"
-                    },
-                }).showToast();
-                setTimeout(() => {
-                    $("#exampleModalUpdate").modal("hide");
-                    location.reload();
-                }, "2000")
-            },
-            error: (data) => {
-                Toastify({
-                    text: data.responseJSON.errorCode,
-                    duration: 2000,
-                    newWindow: true,
-                    //close: true,
-                    offset: {
-                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                    },
-                    gravity: "top", // `top` or `bottom`
-                    position: "right", // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
-                    style: {
-                        background: "linear-gradient(to right, red, red)",
-                        width: "250px",
-                        fontSize: "16px"
-                    },
-                    onClick: function () { } // Callback after click
-                }).showToast();
-            }
-        })
-    })
+
 </script>
