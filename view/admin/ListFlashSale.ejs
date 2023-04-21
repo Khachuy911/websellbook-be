@@ -423,6 +423,7 @@
         $("#nameVoucher").val(element[1].innerText)
         // $("#discountAmount").val(element[2].innerText)
         $("#description").val(element[2].innerText)
+
         const date = new Date(element[3].innerText);
         const date2 = new Date(element[4].innerText);
         $("#expireDate")[0].value = date.toISOString().substr(0, 10);
