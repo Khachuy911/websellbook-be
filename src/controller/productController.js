@@ -266,9 +266,15 @@ module.exports = {
     //   message: MESSAGE.SUCCESS,
     //   data: product,
     // });
-
-
     const data = { product:product,login:req.login}
+
+    if (req.query.api == 1) {
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data,
+      });
+    }
     console.log("==============> product detail: " + JSON.stringify(data));
     res.render("../view/productDetail.ejs", { data });
   },
@@ -318,7 +324,6 @@ module.exports = {
       };
 
       await Product.update(data, condition);
-
       const image = req.files;
 
       if (image.length > 0) {
