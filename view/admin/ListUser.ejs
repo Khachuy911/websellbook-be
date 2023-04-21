@@ -222,12 +222,16 @@
             }).showToast();
         }
     })
-    $(document).on("click", ".btn-delete", function () {
-        const id = $(this).data("id");
-        $("#btn-delete-success").click(e => {
+
+    let deleteId
+    $("#exampleModalDelete").on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget) 
+        deleteId = button.data("id")
+    })
+    $("#btn-delete-success").click(e => {
             e.preventDefault();
             $.ajax({
-                url: `/user/${id}`,
+                url: `/user/${deleteId}`,
                 type: "DELETE",
                 success: (response) => {
                     Toastify({
@@ -257,7 +261,6 @@
                     Toastify({
                         text: data.responseJSON.errorCode,
                         duration: 2000,
-                        destination: "http://localhost:3000/",
                         newWindow: true,
                         //close: true,
                         offset: {
@@ -278,7 +281,8 @@
             })
 
         })
-    });
+    
+    
 
 </script>
 <script>

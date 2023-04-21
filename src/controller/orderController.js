@@ -538,6 +538,7 @@ module.exports = {
   },
 
   getOrder: async (req, res, next) => {
+
     const condition = {
       where: {
         // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
@@ -551,6 +552,7 @@ module.exports = {
       ...getSort(req.query.title, req.query.type),
     };
 
+
     const order = await Order.findAndCountAll(condition);
 
     const pageSize = req.query.pageSize || process.env.DEFAULT_LIMIT_PAGE;
@@ -561,7 +563,7 @@ module.exports = {
       totalSize: order.rows.length || 0,
       rows: order.rows,
     };
-
+    console.log(data)
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,

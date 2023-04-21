@@ -169,7 +169,8 @@
                                     <textarea id="description" name="description" rows="4"></textarea>
                                 </div>
                                 <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <button type="submit" class="btn btn-primary btn-PATCH-update">Update Product</button>
+                                    <button type="submit" class="btn btn-primary btn-PATCH-update">Update
+                                        Product</button>
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Close</button>
                                 </div>
@@ -237,7 +238,7 @@
                                     <td style="text-align:center">${index + 1}</td>
                                     <td>${item.name}</td>
                                     <td>${item.description}</td>
-                                    <td><img src='${item.ProductImages[0].url.replace("public","")}' style="width:100px" alt="${item.name}"/></td>
+                                    <td><img src='${item.ProductImages[0].url.replace("public", "")}' style="width:100px" alt="${item.name}"/></td>
                                     <td>${item.quantity}</td>
                                     <td>${item.priceImport}</td>
                                     <td>${item.Category.name}</td>
@@ -314,63 +315,66 @@
             }).showToast();
         }
     })
-    $(document).on("click", ".btn-delete", function () {
-        const id = $(this).data("id");
-        $("#btn-delete-success").click(e => {
-            e.preventDefault();
-            $.ajax({
-                url: `/user/${id}`,
-                type: "DELETE",
-                success: (response) => {
-                    Toastify({
-                        text: response.message,
-                        duration: 2000,
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, green, green)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                    }).showToast();
-                    setTimeout(() => {
-                        $("#exampleModalDelete").modal("hide");
-                        location.reload();
-                    }, "2000")
-                },
-                error: (data) => {
-                    Toastify({
-                        text: data.responseJSON.errorCode,
-                        duration: 2000,
-                        destination: "http://localhost:3000/",
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, red, red)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                        onClick: function () { } // Callback after click
-                    }).showToast();
-                }
-            })
 
+    let deleteId
+    $("#exampleModalDelete").on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        deleteId = button.data("id")
+    })
+    $("#btn-delete-success").click(e => {
+        e.preventDefault();
+        $.ajax({
+            url: `/user/${deleteId}`,
+            type: "DELETE",
+            success: (response) => {
+                Toastify({
+                    text: response.message,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, green, green)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                }).showToast();
+                setTimeout(() => {
+                    $("#exampleModalDelete").modal("hide");
+                    location.reload();
+                }, "2000")
+            },
+            error: (data) => {
+                Toastify({
+                    text: data.responseJSON.errorCode,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, red, red)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                    onClick: function () { } // Callback after click
+                }).showToast();
+            }
         })
-    });
+
+    })
+
 </script>
 
 <script>
@@ -389,7 +393,7 @@
                 $.ajax({
                     url: `/category`,
                     type: "GET",
-                    success: (category) => {                       
+                    success: (category) => {
                         let listSelect = category.data.rows.map((e) => {
                             return `<option value = '${e.id}'>${e.name}</option>}`
                         })
@@ -402,7 +406,7 @@
                         $("#weight").val(data.weight)
                         $("#quantity").val(data.quantity)
                         $("#description").val(data.description)
-                        $(".btn-PATCH-update").attr("data-id",id)
+                        $(".btn-PATCH-update").attr("data-id", id)
                     },
                     error: (data) => {
                         console.log(data)
