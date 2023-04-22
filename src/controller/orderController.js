@@ -610,6 +610,7 @@ module.exports = {
       rows: order.rows,
       currentUser: req.currentUser,
       login: req.login,
+      user: req.prefixUser,
     };
 
     // res.status(HTTP_CODE.SUCCESS).json({
@@ -669,5 +670,39 @@ module.exports = {
     // console.log("========> Order: " + JSON.stringify(data));
 
     // res.render("../view/orderDetail.ejs", { data });
+  },
+
+  dashboard: async (req, res, next) => {
+    const { numberMonth } = req.body;
+
+    // if (!start || !end) {
+    //   return next(
+    //     new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+    //   );
+    // }
+
+    const condition = {
+      where: {
+        // [Op.and]: [sequelize.fn('month("Order"."createdAt") =', 4)],
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+      },
+      ...getSort(req.query.title, req.query.type),
+      attributes: [
+        [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
+        [sequelize.fn("sum", sequelize.col("totalPrice")), "total_amount"],
+      ],
+      group: [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
+    };
+
+    const order = await Order.findAll(condition);
+
+    console.log(JSON.stringify(order));
+
+    res.status(HTTP_CODE.SUCCESS).json({
+      isSuccess: true,
+      message: MESSAGE.SUCCESS,
+      data: order,
+      currentUser: req.currentUser,
+    });
   },
 };

@@ -297,10 +297,44 @@
               <th scope="col">Mã đơn hàng</th>
               <th scope="col">Địa chỉ giao</th>
               <th scope="col">Số điện thoại</th>
-              <th scope="col">Thời gian đặt hàng</th>
+              <th scope="col"><div class="custom-sort">
+                <div class="text-sort">Thời gian đặt hàng </div>
+                <div class="title-category-option">
+                  <div class="up">
+                    <a class="a-custom-sort" href="/order/myorder?title=createdAt&type=1" ><i class="fa-solid fa-caret-up"></i></a> 
+                  </div>
+                  <div class="down">
+                    <a  class="a-custom-sort"  href="/order/myorder?title=createdAt&type=0" ><i class="fa-solid fa-caret-down"></i></a>
+                  </div>
+                </div>
+              </div></th>
               <th scope="col">Voucher (giảm)</th>
-              <th scope="col">Tổng đơn giá</th>
-              <th scope="col">Trạng thái đơn</th>
+              <th scope="col">
+                <div class="custom-sort">
+                  <div class="text-sort">Tổng đơn giá </div>
+                  <div class="title-category-option">
+                    <div class="up">
+                      <a class="a-custom-sort" href="/order/myorder?title=totalPrice&type=1" ><i class="fa-solid fa-caret-up"></i></a> 
+                    </div>
+                    <div class="down">
+                      <a  class="a-custom-sort"  href="/order/myorder?title=totalPrice&type=0" ><i class="fa-solid fa-caret-down"></i></a>
+                    </div>
+                  </div>
+                </div>
+            </th>
+              <th scope="col">
+                <div class="custom-sort">
+                  <div class="text-sort">Trạng thái đơn </div>
+                  <div class="title-category-option">
+                    <div class="up">
+                      <a class="a-custom-sort" href="/order/myorder?title=orderStatus&type=1" ><i class="fa-solid fa-caret-up"></i></a> 
+                    </div>
+                    <div class="down">
+                      <a  class="a-custom-sort"  href="/order/myorder?title=orderStatus&type=0" ><i class="fa-solid fa-caret-down"></i></a>
+                    </div>
+                  </div>
+                </div>
+              </th>
               <th scope="col" class="text-end">Hành động</th>
             </tr>
           </thead>

@@ -6,6 +6,11 @@ const AsyncHandle = require("../middleware/asyncHandle");
 const Auth = require("../middleware/authMiddleware");
 const { DEFAULT_VALUE } = require("../helper/constant");
 
+Route.get(
+  "/dashboard",
+  AsyncHandle(OrderController.dashboard)
+);
+
 Route.patch(
   "/confirm/:id",
   Auth.checkToken,
@@ -39,11 +44,7 @@ Route.patch(
 Route.patch(
   "/done/:id",
   Auth.checkToken,
-  Auth.permission(
-    "/order/done/:id/",
-    DEFAULT_VALUE.EDIT,
-    DEFAULT_VALUE.READ
-  ),
+  Auth.permission("/order/done/:id/", DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ),
   AsyncHandle(OrderController.doneStauts)
 );
 Route.delete(
@@ -53,6 +54,7 @@ Route.delete(
 );
 Route.get("/myorder", Auth.checkToken, AsyncHandle(OrderController.getMyOrder));
 Route.get("/:id", Auth.checkToken, AsyncHandle(OrderController.getDetail));
+
 Route.get(
   "/",
   Auth.checkToken,
