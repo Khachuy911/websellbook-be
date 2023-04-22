@@ -682,27 +682,73 @@ module.exports = {
     // }
 
     const condition = {
-      where: {
-        // [Op.and]: [sequelize.fn('month("Order"."createdAt") =', 4)],
-        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-      },
-      ...getSort(req.query.title, req.query.type),
       attributes: [
+        [sequelize.fn("MONTH", sequelize.col("createdAt")), "MonthDate"],
         [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
         [sequelize.fn("sum", sequelize.col("totalPrice")), "total_amount"],
       ],
+      where: {
+        $and: sequelize.where(
+          sequelize.fn("MONTH", sequelize.col("createdAt")),
+          numberMonth
+        ),
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        orderStatus: 4,
+      },
+      ...getSort(req.query.title, req.query.type),
       group: [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
     };
 
     const order = await Order.findAll(condition);
 
-    console.log(JSON.stringify(order));
+    const conditionTotal = {
+      attributes: [
+        [
+          sequelize.fn("sum", sequelize.col("totalPrice")),
+          "total_amount_by_month",
+        ],
+      ],
+      where: {
+        $and: sequelize.where(
+          sequelize.fn("MONTH", sequelize.col("createdAt")),
+          numberMonth
+        ),
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        orderStatus: 4,
+      },
+      ...getSort(req.query.title, req.query.type),
+    };
+
+    const orderTotal = await Order.findAll(conditionTotal);
+
+    const conditionQuantity = {
+      attributes: ["id"],
+      where: {
+        $and: sequelize.where(
+          sequelize.fn("MONTH", sequelize.col("order.createdAt")),
+          numberMonth
+        ),
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        orderStatus: 4,
+      },
+      include: {
+        model: OrderDetail,
+        attributes: [
+          [sequelize.fn("sum", sequelize.col("quantity")), "total_quantity"],
+        ],
+      },
+      ...getSort(req.query.title, req.query.type),
+    };
+
+    const orderQuantity = await Order.findAll(conditionQuantity);
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
       data: order,
       currentUser: req.currentUser,
+      orderTotal,
+      orderQuantity,
     });
   },
 };
