@@ -673,7 +673,7 @@ module.exports = {
   },
 
   dashboard: async (req, res, next) => {
-    const { numberMonth } = req.body;
+    const { numberMonth } = req.query;
 
     // if (!start || !end) {
     //   return next(
@@ -698,7 +698,7 @@ module.exports = {
       ...getSort(req.query.title, req.query.type),
       group: [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
     };
-
+    console.log(condition)
     const order = await Order.findAll(condition);
 
     const conditionTotal = {

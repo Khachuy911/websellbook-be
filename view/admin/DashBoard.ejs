@@ -95,49 +95,45 @@
         $("#route")[0].innerHTML = html.join("");
 
     </script>
-    <script>
-        // Lấy thẻ canvas và thiết lập biểu đồ
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
-                datasets: [{
-                    label: 'Tổng số tiền mua',
-                    data: [1200, 900, 1400, 600, 800, 1100, 1000],
-                    backgroundColor: 'rgb(105, 192, 233)',
-                    borderColor: 'rgb(105, 192, 233)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Biểu đồ doanh thu Tháng 4',
-                        font: {
-                            size: 18
-                        }
-                    }
-                }
-            }
-        });
-        var canvas = document.getElementById('myChart');
-        canvas.style.height = '200px';
-    </script>
+
     <script>
         const numberMonth = 4
         $.ajax({
             url: `/order/dashboard`,
             type: "GET",
-            data:{numberMonth},
+            data: { numberMonth },
             success: (response) => {
                 console.log(response)
+                var ctx = document.getElementById("myChart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
+                        datasets: [{
+                            label: 'Tổng số tiền mua',
+                            data: [1200, 900, 1400, 600, 800, 1100, 1000],
+                            backgroundColor: 'rgb(105, 192, 233)',
+                            borderColor: 'rgb(105, 192, 233)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Biểu đồ doanh thu Tháng 4',
+                                font: {
+                                    size: 18
+                                }
+                            }
+                        }
+                    }
+                });
             },
             error: (response) => {
 
