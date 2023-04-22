@@ -9,10 +9,6 @@ const route = [
         href:"/product"
     },
     {
-        text:"Tài khoản của tôi",
-        href:"/admin/user"
-    },
-    {
         text:"Danh sách User",
         href:"/admin/list-users"
     },
