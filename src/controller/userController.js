@@ -76,11 +76,19 @@ module.exports = {
     if (!user)
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST));
 
-    res.status(HTTP_CODE.SUCCESS).json({
-      isSuccess: true,
-      message: MESSAGE.SUCCESS,
-      data: user
-    })
+    
+    if(req.query.api == 1){
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data: user,
+        user: req.prefixUser,
+        login: req.login,
+      })
+    }
+      
+    res.render("../view/getMe.ejs", { data: user, user: req.prefixUser, login: req.login});    
+
   },
 
   updateUser: async (req, res, next) => {
@@ -106,6 +114,30 @@ module.exports = {
     }
 
     await User.update(data, condition);
+
+    res.status(HTTP_CODE.SUCCESS).json({
+      isSuccess: true,
+      message: MESSAGE.SUCCESS,
+      data: null
+    })
+  },
+
+  updateUserBecomeAdmin: async (req, res, next) => {
+
+    const { id } = req.body;
+
+    const data ={
+      roleId: "df7ccac8-7500-4695-b55d-0c4949cce587"
+    };
+
+    const condition = {
+      where: {
+        userId: id,        
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+      }
+    }
+
+    await UserRole.update(data, condition);
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,

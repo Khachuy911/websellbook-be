@@ -71,10 +71,12 @@ module.exports = {
         );
       }
 
-      const text = `Click here to Verify your Account, you can verify in 5 minutes`;
-      const link = `${req.protocol}://${req.get("host")}/auth/views/check-verify?token=${token}&id=${user.id}`;
-      const html = `<button style="background-color: red; width: 100px; height: 50px; border: 1px solid red">
-      <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`;
+      const text = `Click vào đây để xác thực tài khoản của bạn, bạn có thể xác thực trong vòng 5 phút.`;
+      const link = `${req.protocol}://${req.get(
+        "host"
+      )}/auth/views/check-verify?token=${token}&id=${user.id}`;
+      const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
+      <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">Xác Thực Ngay</a></button>`;
       sendMail(user.email, text, html);
 
       await t.commit();
@@ -124,12 +126,12 @@ module.exports = {
 
     await user.save();
 
-    const text = `Click here to Verify your Account, you can verify in 5 minutes`;
+    const text = `Click vào đây để xác thực tài khoản của bạn, bạn có thể xác thực trong vòng 5 phút.`;
     const link = `${req.protocol}://${req.get(
       "host"
     )}/api/auth/verify?token=${token}&id=${user.id}`;
-    const html = `<button style="background-color: red; width: 100px; height: 50px; border: 1px solid red">
-      <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`;
+    const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
+      <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">Xác Thực Ngay</a></button>`;
 
     sendMail(user.email, text, html);
 
@@ -193,11 +195,11 @@ module.exports = {
     //   message: MESSAGE.SUCCESS,
     //   data: null,
     // });
-    res.render('../view/authPage/verifySuccess.ejs');
+    res.render("../view/authPage/verifySuccess.ejs");
   },
-  logout:(req, res, next) => {
-      res.clearCookie("token")
-      res.redirect("/product")
+  logout: (req, res, next) => {
+    res.clearCookie("token");
+    res.redirect("/auth/views/login");
   },
   login: async (req, res, next) => {
     const { email, password } = req.body;
@@ -224,13 +226,9 @@ module.exports = {
     const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
-    const refreshToken = jwt.sign(
-      { id: user.id },
-      process.env.JWT_SECRET_KEY,
-      {
-        expiresIn: process.env.JWT_EXPIRES_IN_REFRESH_TOKEN,
-      }
-    );
+    const refreshToken = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: process.env.JWT_EXPIRES_IN_REFRESH_TOKEN,
+    });
     if (user.status === 0) {
       let token1 = generator.generate({
         length: DEFAULT_VALUE.LENGTH_TOKEN_VERIFY,
@@ -245,10 +243,12 @@ module.exports = {
 
       await user.save();
 
-      const text = `Click here to Verify your Account, you can verify in 5 minutes`;
-      const link = `${req.protocol}://${req.get("host")}/auth/views/check-verify?token=${token1}&id=${user.id}`;
-      const html = `<button style="background-color: red; width: 100px; height: 50px; border: 1px solid red">
-    <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`;
+      const text = `Click vào đây để xác thực tài khoản của bạn, bạn có thể xác thực trong vòng 5 phút.`;
+      const link = `${req.protocol}://${req.get(
+        "host"
+      )}/auth/views/check-verify?token=${token1}&id=${user.id}`;
+      const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
+    <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">Xác Thực</a></button>`;
       sendMail(user.email, text, html);
       return res.status(403).json({
         isSuccess: true,
@@ -259,12 +259,10 @@ module.exports = {
       // return res.render('../view/authPage/verify.ejs', {email: user.email});
     }
 
-
-    
     // const refreshToken = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
     //   expiresIn: process.env.JWT_EXPIRES_IN_REFRESH_TOKEN
     // });
-    res.cookie("token", token, { maxAge: 9000000, httpOnly: true })
+    res.cookie("token", token, { maxAge: 9000000, httpOnly: true });
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
@@ -378,12 +376,12 @@ module.exports = {
       expiresIn: process.env.JWT_RESET_EXPIRES_IN,
     });
 
-    const text = `Click here to update new password`;
+    const text = `Click vào đây để cập nhật mật khẩu mới!`;
     const link = `${req.protocol}://${req.get(
       "host"
     )}/api/auth/resetPW/${reset}`;
-    const html = `<button style="background-color: red; width: 100px; height: 50px; border: 1px solid red">
-      <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">CLICK NOW</a></button>`;
+    const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
+      <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">Cập Nhật Ngay</a></button>`;
 
     sendMail(user.email, text, html);
 

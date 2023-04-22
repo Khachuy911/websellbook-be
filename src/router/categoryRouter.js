@@ -17,7 +17,6 @@ Route.route('/')
     .delete(Auth.checkToken, Auth.permission('/category/', DEFAULT_VALUE.DELETE, DEFAULT_VALUE.READ), AsyncHandle(CategoryController.deleteHard))
     .post(Upload.single('image'), AsyncHandle(CategoryController.create))
     .get(
-        Auth.checkToken, Auth.permission('/category/', DEFAULT_VALUE.READ), 
         AsyncHandle(CategoryController.getCategory))
 
 
