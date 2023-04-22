@@ -8,9 +8,7 @@ class AdminController{
     DashBoard(req,res,next){
         res.render("../view/admin/dashboard")
     }
-    User(req,res,next){
-        res.render("../view/admin/user")
-    }
+    
     ListOrders(req,res,next){
         res.render("../view/admin/ListOrders")
     }

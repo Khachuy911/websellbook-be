@@ -62,7 +62,7 @@
                     <div class="card text-center">
                         <div class="card-header">Số lượng sách</div>
                         <div class="card-body">
-                            <h3 id="total-order">200</h3>
+                            <h3 id="total-product">200</h3>
                         </div>
                     </div>
                 </div>
@@ -130,7 +130,20 @@
         var canvas = document.getElementById('myChart');
         canvas.style.height = '200px';
     </script>
+    <script>
+        const numberMonth = 4
+        $.ajax({
+            url: `/order/dashboard`,
+            type: "GET",
+            data:{numberMonth},
+            success: (response) => {
+                console.log(response)
+            },
+            error: (response) => {
 
+            }
+        })
+    </script>
 </body>
 <script>
     $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
