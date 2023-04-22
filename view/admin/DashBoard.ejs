@@ -133,9 +133,8 @@
     <script>
         const numberMonth = 4
         $.ajax({
-            url: `/order/dashboard`,
+            url: `/order/dashboard?numberMonth=${numberMonth}`,
             type: "GET",
-            data:{numberMonth},
             success: (response) => {
                 console.log(response)
             },

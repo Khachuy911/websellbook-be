@@ -673,7 +673,9 @@ module.exports = {
   },
 
   dashboard: async (req, res, next) => {
-    const { numberMonth } = req.body;
+    const { numberMonth } = req.query;
+
+    console.log(numberMonth);
 
     // if (!start || !end) {
     //   return next(
