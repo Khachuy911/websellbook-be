@@ -34,7 +34,7 @@
         
     </div> -->
 
-    <div class="nav" >
+    <div class="nav">
         <h1>Dashboard</h1>
         <ul id="route">
             <li><a href="/admin/dashboard">Dashboard</a></li>
@@ -43,7 +43,6 @@
             <li><a href="/product/create">Thêm Product</a></li>
             <li><a href="#">Products</a></li>
             <li><a href="#">Reports</a></li>
-
         </ul>
     </div>
     <div class="containerBox" style="position: relative;">
@@ -57,6 +56,7 @@
                             <th>Họ và tên</th>
                             <th>Email</th>
                             <th>Số điện thoại</th>
+                            <th>Role</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -95,6 +95,24 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="exampleModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Phân quyền</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Bạn có muốn cập nhật quyền tài khoản này thành Admin hay không?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btn-update-success" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
@@ -105,7 +123,7 @@
 <script src="/js/route.js"></script>
 <script>
     let height = window.innerHeight;
-    $(".main")[0].style.minHeight = height+"px";
+    $(".main")[0].style.minHeight = height + "px";
     let html = route.map((e, index) => {
         const pathname = window.location.pathname
         if (e.href == pathname) {
@@ -144,14 +162,17 @@
         url: `/user`,
         type: "GET",
         success: (response) => {
+
+            console.log(response)
             let listSelect = response?.data?.rows.map((item, index) => (`
                                  <tr>
                                     <td style="text-align:center">${index + 1}</td>
-                                    <td>${item.username}</td>
+                                    <td style="max-width:200px">${item.username}</td>
                                     <td>${item.email}</td>
                                     <td>${item.phone}</td>
+                                    <td>${item.UserRoles[0].Role.name}</td>
                                     <td style="max-width:120px;text-align:center">
-                                        <button type="button" data-id="${item.id}" class="btn btn-primary">Theo dõi</button>
+                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn btn-primary">Phân quyền</button>
                                         <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
                                     </td>
                                 </tr>`
@@ -198,7 +219,7 @@
             new $.fn.dataTable.SearchPanes(table, {});
             table.searchPanes.container().prependTo(table.table().container());
             table.searchPanes.resizePanes();
-            try {$(".dtsp-collapseAll")[0].click()} catch (error) {}
+            try { $(".dtsp-collapseAll")[0].click() } catch (error) { }
 
         },
         error: (data) => {
@@ -225,68 +246,128 @@
 
     let deleteId
     $("#exampleModalDelete").on('show.bs.modal', function (event) {
-        const button = $(event.relatedTarget) 
+        const button = $(event.relatedTarget)
         deleteId = button.data("id")
     })
     $("#btn-delete-success").click(e => {
-            e.preventDefault();
-            $.ajax({
-                url: `/user/${deleteId}`,
-                type: "DELETE",
-                success: (response) => {
-                    Toastify({
-                        text: response.message,
-                        duration: 2000,
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, green, green)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                    }).showToast();
-                    setTimeout(() => {
-                        $("#exampleModalDelete").modal("hide");
-                        location.reload();
-                    }, "2000")
-                },
-                error: (data) => {
-                    Toastify({
-                        text: data.responseJSON.errorCode,
-                        duration: 2000,
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, red, red)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                        onClick: function () { } // Callback after click
-                    }).showToast();
-                }
-            })
-
+        e.preventDefault();
+        $.ajax({
+            url: `/user/deletesoft/${deleteId}`,
+            type: "DELETE",
+            success: (response) => {
+                Toastify({
+                    text: response.message,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, green, green)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                }).showToast();
+                setTimeout(() => {
+                    $("#exampleModalDelete").modal("hide");
+                    location.reload();
+                }, "2000")
+            },
+            error: (data) => {
+                Toastify({
+                    text: data.responseJSON.errorCode,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, red, red)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                    onClick: function () { } // Callback after click
+                }).showToast();
+            }
         })
-    
-    
 
+    })
+
+
+    let UpdateId
+
+    $("#exampleModalUpdate").on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        deleteId = button.data("id")
+    })
+
+    $("#btn-update-success").click(e => {
+        e.preventDefault();
+        $.ajax({
+            url: `/user/updateBecomeAdmin/`,
+            type: "DELETE",
+            data:{"id":UpdateId},
+            success: (response) => {
+                Toastify({
+                    text: response.message,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, green, green)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                }).showToast();
+                setTimeout(() => {
+                    $("#exampleModalDelete").modal("hide");
+                    location.reload();
+                }, "2000")
+            },
+            error: (data) => {
+                Toastify({
+                    text: data.responseJSON.errorCode,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, red, red)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                    onClick: function () { } // Callback after click
+                }).showToast();
+            }
+        })
+
+    })
 </script>
 <script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth +"px"
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
 </script>
 
 </html>

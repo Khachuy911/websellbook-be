@@ -17,16 +17,16 @@ module.exports = {
       },
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
-      // include: {
-      //   model: UserRole,
-      //   required: false,
-      //   isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-      //   include: {
-      //     model: Role,
-      //     isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-      //     attributes: ['name']
-      //   }
-      // },
+      include: {
+        model: UserRole,
+        required: false,
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        include: {
+          model: Role,
+          isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+          attributes: ['name']
+        }
+      },
     }
 
     const user = await User.findAndCountAll(condition);
