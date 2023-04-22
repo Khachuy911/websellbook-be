@@ -117,8 +117,11 @@ module.exports = {
       totalPage: Math.ceil(product.count / +pageSize),
       totalSize: product.rows.length || 0,
       rows: product.rows,
-      login: req.login
+      login: req.login,
+      user: req.prefixUser,
     };
+
+    // console.log(JSON.stringify(data));
 
     if (req.query.api == 1) {
       res.status(HTTP_CODE.SUCCESS).json({
@@ -168,7 +171,8 @@ module.exports = {
       totalPage: Math.ceil(product.count / +pageSize),
       totalSize: product.rows.length || 0,
       rows: product.rows,
-      login:req.login
+      login:req.login,
+      user: req.prefixUser,
     };
 
     if (req.query.response === "api") {
@@ -266,7 +270,7 @@ module.exports = {
     //   message: MESSAGE.SUCCESS,
     //   data: product,
     // });
-    const data = { product:product,login:req.login}
+    const data = { product:product,login:req.login, user: req.prefixUser}
 
     if (req.query.api == 1) {
       res.status(HTTP_CODE.SUCCESS).json({
@@ -275,6 +279,9 @@ module.exports = {
         data,
       });
     }
+
+
+    
     console.log("==============> product detail: " + JSON.stringify(data));
     res.render("../view/productDetail.ejs", { data });
   },

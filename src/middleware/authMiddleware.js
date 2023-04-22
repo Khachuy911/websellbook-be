@@ -110,7 +110,28 @@ module.exports.checkLogin = async (req, res, next) => {
     if (!token) {
       login= false;  
     }
-    req.login= login;  
+    req.login= login; 
+
+    if(token){
+      const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  
+      const condition = {
+        where: {
+          id: decode.id,
+          status: 1,
+        },
+        include:{
+          model: UserRole,
+          require: false,
+          include: {
+            model: Role,
+            require: false
+          }
+        }
+      };
+      const user = await User.findOne(condition); 
+      req.prefixUser = user;
+    }
     next();
   } catch (error) {
     return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error?.message));

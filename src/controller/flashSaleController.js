@@ -1,21 +1,40 @@
-const cron = require('node-cron');
+const cron = require("node-cron");
 
-const sequelize = require('../config/connectDB');
-const FlashSale = require('../model/flashSaleModel');
-const FlashSaleProduct = require('../model/flashSaleProductModel');
-const ErrorResponse = require('../helper/errorResponse');
-const { getPagination, getSort, search } = require('../helper/helper');
-const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require('../helper/constant');
+const sequelize = require("../config/connectDB");
+const FlashSale = require("../model/flashSaleModel");
+const FlashSaleProduct = require("../model/flashSaleProductModel");
+const ErrorResponse = require("../helper/errorResponse");
+const { getPagination, getSort, search } = require("../helper/helper");
+const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require("../helper/constant");
+const { Op } = require('sequelize');
+
+const Product = require("../model/productModel");
 
 module.exports = {
   create: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
-      const { name, startDate, endDate, description, discountAmount, productId } = req.body;
+      const {
+        name,
+        startDate,
+        endDate,
+        description,
+        discountAmount,
+        productId,
+      } = req.body;
 
-      if (!name || !description || !startDate || !endDate || !discountAmount || !productId) {
+      if (
+        !name ||
+        !description ||
+        !startDate ||
+        !endDate ||
+        !discountAmount ||
+        !productId
+      ) {
         await t.rollback();
-        return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_LACK))
+        return next(
+          new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_LACK)
+        );
       }
 
       const data = {
@@ -25,7 +44,7 @@ module.exports = {
         endDate,
         createdBy: req.user,
         updateBy: req.user,
-      }
+      };
 
       const flashSale = new FlashSale(data);
 
@@ -33,18 +52,20 @@ module.exports = {
 
       if (!flashSale) {
         await t.rollback();
-        return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+        return next(
+          new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+        );
       }
 
-      const proId = productId.map(ele => {
+      const proId = productId.map((ele) => {
         return {
           productId: ele,
           discountAmount,
           flashSaleId: flashSale.id,
           createdBy: req.user,
-          updateBy: req.user
-        }
-      })
+          updateBy: req.user,
+        };
+      });
 
       await FlashSaleProduct.bulkCreate(proId, { transaction: t });
 
@@ -52,26 +73,25 @@ module.exports = {
       res.status(HTTP_CODE.CREATED).json({
         isSuccess: true,
         message: MESSAGE.CREATED,
-        data: null
-      })
-
+        data: null,
+      });
     } catch (error) {
       await t.rollback();
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message))
+      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message));
     }
   },
 
   getFlashSale: async (req, res, next) => {
     const condition = {
       where: {
-        ...search(req.query.search)
+        ...search(req.query.search),
       },
       // include: {
       //   model: FlashSaleProduct,
       // },
       ...getPagination(req.query.page),
-      ...getSort(req.query.title, req.query.type)
-    }
+      ...getSort(req.query.title, req.query.type),
+    };
 
     const flashSale = await FlashSale.findAndCountAll(condition);
 
@@ -81,21 +101,23 @@ module.exports = {
       pageIndex: req.query.page || process.env.DEFAULT_PAGE,
       totalPage: Math.ceil(flashSale.count / +pageSize),
       totalSize: flashSale.rows.length || 0,
-      rows: flashSale.rows
-    }
+      rows: flashSale.rows,
+    };
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      data
-    })
+      data,
+    });
   },
 
   getDetail: async (req, res, next) => {
     const { id } = req.params;
 
     if (!id)
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
 
     const condition = {
       where: {
@@ -103,16 +125,16 @@ module.exports = {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
       },
       include: {
-        model: FlashSaleProduct
-      }
-    }
+        model: FlashSaleProduct,
+      },
+    };
     const flashSale = await FlashSale.findOne(condition);
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      data: flashSale
-    })
+      data: flashSale,
+    });
   },
 
   update: async (req, res, next) => {
@@ -122,14 +144,25 @@ module.exports = {
 
       if (!id) {
         await t.rollback();
-        return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+        return next(
+          new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+        );
       }
 
-      const { name, startDate, endDate, description, discountAmount, productId } = req.body;
+      const {
+        name,
+        startDate,
+        endDate,
+        description,
+        discountAmount,
+        productId,
+      } = req.body;
 
       if (+discountAmount < 0) {
         await t.rollback();
-        return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+        return next(
+          new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+        );
       }
 
       const data = {
@@ -139,15 +172,15 @@ module.exports = {
         endDate,
         createdBy: req.user,
         updateBy: req.user,
-      }
+      };
 
       const condition = {
         where: {
           id: id,
           isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         },
-        transaction: t
-      }
+        transaction: t,
+      };
 
       await FlashSale.update(data, condition);
 
@@ -157,20 +190,20 @@ module.exports = {
             flashSaleId: id,
             isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
           },
-          transaction: t
-        }
+          transaction: t,
+        };
 
         await FlashSaleProduct.destroy(condition2);
 
-        const proId = productId.map(ele => {
+        const proId = productId.map((ele) => {
           return {
             productId: ele,
             discountAmount,
             flashSaleId: id,
             createdBy: req.user,
-            updateBy: req.user
-          }
-        })
+            updateBy: req.user,
+          };
+        });
 
         await FlashSaleProduct.bulkCreate(proId, { transaction: t });
       }
@@ -180,11 +213,10 @@ module.exports = {
         isSuccess: true,
         message: MESSAGE.SUCCESS,
         data: null,
-      })
-
+      });
     } catch (error) {
       await t.rollback();
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message))
+      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message));
     }
   },
 
@@ -195,20 +227,22 @@ module.exports = {
 
       if (!id) {
         await t.rollback();
-        return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+        return next(
+          new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+        );
       }
 
       const data = {
-        isDeleted: DEFAULT_VALUE.IS_DELETED
-      }
+        isDeleted: DEFAULT_VALUE.IS_DELETED,
+      };
 
       const condition = {
         where: {
           id: id,
           isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         },
-        transaction: t
-      }
+        transaction: t,
+      };
 
       await FlashSale.update(data, condition);
 
@@ -217,8 +251,8 @@ module.exports = {
           flashSaleId: id,
           isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         },
-        transaction: t
-      }
+        transaction: t,
+      };
 
       await FlashSaleProduct.update(data, condition2);
 
@@ -227,11 +261,10 @@ module.exports = {
         isSuccess: true,
         message: MESSAGE.SUCCESS,
         data: null,
-      })
-
+      });
     } catch (error) {
-      await t.rollback()
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message))
+      await t.rollback();
+      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message));
     }
   },
 
@@ -242,24 +275,26 @@ module.exports = {
 
       if (!id) {
         await t.rollback();
-        return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+        return next(
+          new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+        );
       }
 
       const condition = {
         where: {
-          id: id
+          id: id,
         },
-        transaction: t
-      }
+        transaction: t,
+      };
 
       await FlashSale.destroy(condition);
 
       const condition2 = {
         where: {
-          flashSaleId: id
+          flashSaleId: id,
         },
-        transaction: t
-      }
+        transaction: t,
+      };
 
       await FlashSaleProduct.destroy(condition2);
 
@@ -268,11 +303,10 @@ module.exports = {
         isSuccess: true,
         message: MESSAGE.SUCCESS,
         data: null,
-      })
-
+      });
     } catch (error) {
       await t.rollback();
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message))
+      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, error.message));
     }
   },
-}
+};

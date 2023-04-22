@@ -1,19 +1,18 @@
-const Role = require('../model/roleModel');
-const User = require('../model/userModel');
-const sequelize = require('../config/connectDB');
-const UserRole = require('../model/userRoleModel');
-const { getPagination, getSort, search, filter } = require('../helper/helper');
-const ErrorResponse = require('../helper/errorResponse');
-const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require('../helper/constant');
+const Role = require("../model/roleModel");
+const User = require("../model/userModel");
+const sequelize = require("../config/connectDB");
+const UserRole = require("../model/userRoleModel");
+const { getPagination, getSort, search, filter } = require("../helper/helper");
+const ErrorResponse = require("../helper/errorResponse");
+const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require("../helper/constant");
 
 module.exports = {
-
   getUser: async (req, res, next) => {
     const condition = {
       where: {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         ...search(req.query.search),
-        ...filter('status', req.query.status)
+        ...filter("status", req.query.status),
       },
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
@@ -24,10 +23,10 @@ module.exports = {
         include: {
           model: Role,
           isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-          attributes: ['name']
-        }
+          attributes: ["name"],
+        },
       },
-    }
+    };
 
     const user = await User.findAndCountAll(condition);
 
@@ -37,21 +36,23 @@ module.exports = {
       pageIndex: req.query.page || process.env.DEFAULT_PAGE,
       totalPage: Math.ceil(user.count / +pageSize),
       totalSize: user.rows.length || 0,
-      rows: user.rows
-    }
+      rows: user.rows,
+    };
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      data
-    })
+      data,
+    });
   },
 
   getMe: async (req, res, next) => {
     const id = req.user;
 
     if (!id)
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
 
     const condition = {
       where: {
@@ -66,28 +67,42 @@ module.exports = {
           model: Role,
           right: true,
           isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-          attributes: ['name']
-        }
-      }
-    }
+          attributes: ["name"],
+        },
+      },
+    };
 
     const user = await User.findOne(condition);
 
     if (!user)
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST));
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
 
-    res.status(HTTP_CODE.SUCCESS).json({
-      isSuccess: true,
-      message: MESSAGE.SUCCESS,
-      data: user
-    })
+    if (req.query.api == 1) {
+      res.status(HTTP_CODE.SUCCESS).json({
+        isSuccess: true,
+        message: MESSAGE.SUCCESS,
+        data: user,
+        user: req.prefixUser,
+        login: req.login,
+      });
+    }
+
+    res.render("../view/getMe.ejs", {
+      data: user,
+      user: req.prefixUser,
+      login: req.login,
+    });
   },
 
   updateUser: async (req, res, next) => {
     const id = req.user;
 
     if (!id)
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
 
     const { username, age, phone, address } = req.body;
 
@@ -95,70 +110,97 @@ module.exports = {
       age,
       phone,
       address,
-      username
-    }
+      username,
+    };
 
     const condition = {
       where: {
         id: id,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-      }
-    }
+      },
+    };
 
     await User.update(data, condition);
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      data: null
-    })
+      data: null,
+    });
+  },
+
+  updateUserBecomeAdmin: async (req, res, next) => {
+    const { id } = req.body;
+
+    const data = {
+      roleId: "df7ccac8-7500-4695-b55d-0c4949cce587",
+    };
+
+    const condition = {
+      where: {
+        userId: id,
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+      },
+    };
+
+    await UserRole.update(data, condition);
+
+    res.status(HTTP_CODE.SUCCESS).json({
+      isSuccess: true,
+      message: MESSAGE.SUCCESS,
+      data: null,
+    });
   },
 
   deleteSoft: async (req, res, next) => {
     const { id } = req.params;
 
     if (!id)
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
 
     const data = {
-      isDeleted: DEFAULT_VALUE.IS_DELETED
-    }
+      isDeleted: DEFAULT_VALUE.IS_DELETED,
+    };
 
     const condition = {
       where: {
         id: id,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-      }
-    }
+      },
+    };
 
     await User.update(data, condition);
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      data: null
-    })
+      data: null,
+    });
   },
 
   deleteHard: async (req, res, next) => {
     const { id } = req.params;
-    console.log(id)
+    console.log(id);
     if (!id)
-      return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST))
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
 
     const condition = {
       where: {
         id: id,
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-      }
-    }
+      },
+    };
 
     await User.destroy(condition);
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
-      data: null
-    })
+      data: null,
+    });
   },
-}
+};

@@ -32,6 +32,31 @@ header {
   
 }
 
+/* SORT */
+
+.custom-sort{
+  display: flex;
+  justify-content: end;
+  align-items: end;
+}
+
+.text-sort{
+  margin-right: 5px
+}
+
+.title-category-option{
+  display: flex;
+  flex-direction: column;
+  height: 25px;
+}
+
+.up{
+  height: 10px
+}
+
+
+
+
 img:hover {
   opacity: 90%;
   transform: scale(1.01);

@@ -98,7 +98,9 @@ module.exports = {
         }
 
         if (pro[i].FlashSaleProducts.length > 0) {
-          sum +=(pro[i].priceSelling - pro[i].FlashSaleProducts[0].discountAmount) * product[i].quantity;
+          sum +=
+            (pro[i].priceSelling - pro[i].FlashSaleProducts[0].discountAmount) *
+            product[i].quantity;
         } else {
           sum += pro[i].priceSelling * product[i].quantity;
         }
@@ -117,7 +119,9 @@ module.exports = {
         await Product.update(objPro, conditionPro);
 
         let obj = {
-          price: pro[i].priceSelling,
+          price:
+            pro[i].priceSelling -
+            (pro[i]?.FlashSaleProducts[0]?.discountAmount || 0),
           productId: product[i].id,
           quantity: product[i].quantity,
         };
@@ -150,7 +154,7 @@ module.exports = {
         }
 
         totalPrice =
-          sum + (sum * DEFAULT_VALUE.DEFAULT_TAX) - voucher.discountAmount;
+          sum + sum * DEFAULT_VALUE.DEFAULT_TAX - voucher.discountAmount;
 
         const data = {
           quantity: voucher.quantity - 1,
@@ -158,7 +162,7 @@ module.exports = {
 
         await Voucher.update(data, conditionVoucher);
       } else {
-        totalPrice = sum + (sum * DEFAULT_VALUE.DEFAULT_TAX);
+        totalPrice = sum + sum * DEFAULT_VALUE.DEFAULT_TAX;
       }
 
       let orderData;
@@ -538,7 +542,6 @@ module.exports = {
   },
 
   getOrder: async (req, res, next) => {
-
     const condition = {
       where: {
         // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
@@ -552,7 +555,6 @@ module.exports = {
       ...getSort(req.query.title, req.query.type),
     };
 
-
     const order = await Order.findAndCountAll(condition);
 
     const pageSize = req.query.pageSize || process.env.DEFAULT_LIMIT_PAGE;
@@ -563,7 +565,7 @@ module.exports = {
       totalSize: order.rows.length || 0,
       rows: order.rows,
     };
-    console.log(data)
+    console.log(data);
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
@@ -580,17 +582,19 @@ module.exports = {
         // ...search(req.query.search)
       },
       include: [
-      {
-        model: Voucher
-      },{
-        model: OrderDetail,
-        include: {
-          model: Product,
+        {
+          model: Voucher,
+        },
+        {
+          model: OrderDetail,
           include: {
-            model: FlashSaleProduct,
+            model: Product,
+            include: {
+              model: FlashSaleProduct,
+            },
           },
         },
-      }],
+      ],
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
@@ -605,7 +609,8 @@ module.exports = {
       totalSize: order.rows.length || 0,
       rows: order.rows,
       currentUser: req.currentUser,
-      login:req.login
+      login: req.login,
+      user: req.prefixUser,
     };
 
     // res.status(HTTP_CODE.SUCCESS).json({
@@ -635,17 +640,18 @@ module.exports = {
       },
       include: [
         {
-        model: Voucher
+          model: Voucher,
         },
         {
-        model: OrderDetail,
-        include: {
-          model: Product,
+          model: OrderDetail,
           include: {
-            model: FlashSaleProduct,
+            model: Product,
+            include: {
+              model: FlashSaleProduct,
+            },
           },
         },
-      }],
+      ],
     };
 
     const order = await Order.findOne(condition);
@@ -664,5 +670,85 @@ module.exports = {
     // console.log("========> Order: " + JSON.stringify(data));
 
     // res.render("../view/orderDetail.ejs", { data });
+  },
+
+  dashboard: async (req, res, next) => {
+    const { numberMonth } = req.body;
+
+    // if (!start || !end) {
+    //   return next(
+    //     new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+    //   );
+    // }
+
+    const condition = {
+      attributes: [
+        [sequelize.fn("MONTH", sequelize.col("createdAt")), "MonthDate"],
+        [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
+        [sequelize.fn("sum", sequelize.col("totalPrice")), "total_amount"],
+      ],
+      where: {
+        $and: sequelize.where(
+          sequelize.fn("MONTH", sequelize.col("createdAt")),
+          numberMonth
+        ),
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        orderStatus: 4,
+      },
+      ...getSort(req.query.title, req.query.type),
+      group: [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
+    };
+
+    const order = await Order.findAll(condition);
+
+    const conditionTotal = {
+      attributes: [
+        [
+          sequelize.fn("sum", sequelize.col("totalPrice")),
+          "total_amount_by_month",
+        ],
+      ],
+      where: {
+        $and: sequelize.where(
+          sequelize.fn("MONTH", sequelize.col("createdAt")),
+          numberMonth
+        ),
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        orderStatus: 4,
+      },
+      ...getSort(req.query.title, req.query.type),
+    };
+
+    const orderTotal = await Order.findAll(conditionTotal);
+
+    const conditionQuantity = {
+      attributes: ["id"],
+      where: {
+        $and: sequelize.where(
+          sequelize.fn("MONTH", sequelize.col("order.createdAt")),
+          numberMonth
+        ),
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        orderStatus: 4,
+      },
+      include: {
+        model: OrderDetail,
+        attributes: [
+          [sequelize.fn("sum", sequelize.col("quantity")), "total_quantity"],
+        ],
+      },
+      ...getSort(req.query.title, req.query.type),
+    };
+
+    const orderQuantity = await Order.findAll(conditionQuantity);
+
+    res.status(HTTP_CODE.SUCCESS).json({
+      isSuccess: true,
+      message: MESSAGE.SUCCESS,
+      data: order,
+      currentUser: req.currentUser,
+      orderTotal,
+      orderQuantity,
+    });
   },
 };

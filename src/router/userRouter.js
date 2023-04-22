@@ -6,8 +6,9 @@ const Auth = require('../middleware/authMiddleware');
 const AsyncHandle = require('../middleware/asyncHandle');
 const { DEFAULT_VALUE } = require('../helper/constant');
 
-Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/user/deletesoft/:id', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(UserController.deleteSoft));
+Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/user/deletesoft/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(UserController.deleteSoft));
 Route.get('/getme', Auth.checkToken, AsyncHandle(UserController.getMe));
+Route.patch('/updateBecomeAdmin', AsyncHandle(UserController.updateUserBecomeAdmin));
 
 Route.route('/:id')
     .delete(Auth.checkToken, Auth.permission('/user/:id/', DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(UserController.deleteHard))
