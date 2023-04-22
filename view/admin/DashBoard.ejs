@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Chart.js -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.1/dist/chart.min.js"></script>
 
 
 </head>
@@ -33,7 +34,6 @@
             <div style="max-width: 90%;">
                 <div>
                     <div class="card">
-                        <div class="card-header">Doanh thu theo tháng</div>
                         <div class="card-body">
                             <canvas id="myChart"></canvas>
                         </div>
@@ -41,75 +41,20 @@
                 </div>
             </div>
 
-            <div class="row mt-4">
-                <div class="col-md-4">
-                    <div class="card text-center">
-                        <div class="card-header">Total Revenue</div>
+            <div class="row mt-4" style="margin-left: 0;margin-right: 0;">
+                <div class="col-md-4" style="padding-left: 0;">
+                    <div class="card text-center ">
+                        <div class="card-header">Tổng doanh thu</div>
                         <div class="card-body">
-                            <h3>$25,000</h3>
+                            <h3 id="total-money">$25,000</h3>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card text-center">
-                        <div class="card-header">Total Orders</div>
+                        <div class="card-header">Số lượng order</div>
                         <div class="card-body">
-                            <h3>200</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-center">
-                        <div class="card-header">New Customers</div>
-                        <div class="card-body">
-                            <h3>50</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="row mt-4 ml-1">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">Users by Country</div>
-                            <div class="card-body">
-                                <canvas id="users-chart"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">Recent Orders</div>
-                            <div class="card-body">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Customer</th>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>John Doe</td>
-                                            <td>Product A</td>
-                                            <td>$100</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jane Doe</td>
-                                            <td>Product B</td>
-                                            <td>$50</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Bob Smith</td>
-                                            <td>Product C</td>
-                                            <td>$75</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                            <h3 id="total-order">200</h3>
                         </div>
                     </div>
                 </div>
@@ -121,15 +66,13 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="/js/route.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"></script>
-    <script src="https://unpkg.com/chart.js"></script>
-    <script src="https://unpkg.com/chart.js@3.6.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.1/dist/chart.min.js"></script>
     <script>
         let html = route.map((e, index) => {
             const pathname = window.location.pathname
@@ -144,19 +87,16 @@
         $("#route")[0].innerHTML = html.join("");
 
     </script>
-    <script>// Tạo mảng dữ liệu ngày mua hàng và số tiền mua
-        var days = ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"];
-        var sales = [1200, 900, 1400, 600, 800, 1100, 1000];
-
+    <script>
         // Lấy thẻ canvas và thiết lập biểu đồ
         var ctx = document.getElementById("myChart").getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: days,
+                labels: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
                 datasets: [{
-                    label: 'Số tiền mua',
-                    data: sales,
+                    label: 'Tổng số tiền mua',
+                    data: [1200, 900, 1400, 600, 800, 1100, 1000],
                     backgroundColor: 'rgb(105, 192, 233)',
                     borderColor: 'rgb(105, 192, 233)',
                     borderWidth: 1
@@ -164,63 +104,25 @@
             },
             options: {
                 scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Biểu đồ doanh thu Tháng 4',
+                        font: {
+                            size: 18
                         }
-                    }]
+                    }
                 }
             }
         });
+        var canvas = document.getElementById('myChart');
+        canvas.style.height = '200px';
     </script>
-    <script>
-        // Sales Chart
-        var ctx = document.getElementById('sales-chart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                datasets: [{
-                    label: 'Sales',
-                    backgroundColor: 'rgb(54, 162, 235)',
-                    borderColor: 'rgb(54, 162, 235)',
-                    data: [20000, 25000, 30000, 28000, 32000, 27000, 35000]
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
-                }
-            }
-        });
 
-        // Users Chart
-        var ctx = document.getElementById('users-chart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: ['USA', 'Canada', 'Mexico'],
-                datasets: [{
-                    label: 'Users by Country', backgroundColor: [
-                        'rgb(54, 162, 235)',
-                        'rgb(255, 99, 132)',
-                        'rgb(255, 205, 86)'
-                    ],
-                    borderColor: 'white',
-                    data: [55, 30, 15]
-                }]
-            },
-            options: {
-                legend: {
-                    position: 'bottom'
-                }
-            }
-        });
-    </script>
 </body>
 <script>
     $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
