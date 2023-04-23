@@ -58,14 +58,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                <!-- <div class="col-md-4">
                     <div class="card text-center">
                         <div class="card-header">Số lượng sách</div>
                         <div class="card-body">
                             <h3 id="total-product">200</h3>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>
@@ -96,39 +96,7 @@
 
     </script>
     <script>
-        // Lấy thẻ canvas và thiết lập biểu đồ
-        var ctx = document.getElementById("myChart").getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ["Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "Chủ nhật"],
-                datasets: [{
-                    label: 'Tổng số tiền mua',
-                    data: [1200, 900, 1400, 600, 800, 1100, 1000],
-                    backgroundColor: 'rgb(105, 192, 233)',
-                    borderColor: 'rgb(105, 192, 233)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Biểu đồ doanh thu Tháng 4',
-                        font: {
-                            size: 18
-                        }
-                    }
-                }
-            }
-        });
-        var canvas = document.getElementById('myChart');
-        canvas.style.height = '200px';
+
     </script>
     <script>
         const numberMonth = 4
@@ -136,7 +104,47 @@
             url: `/order/dashboard?numberMonth=${numberMonth}`,
             type: "GET",
             success: (response) => {
+
                 console.log(response)
+                let labels = []
+                let dataSet = []
+                data = response.data.map((e)=>{
+                    labels.push(e.Date)
+                    dataSet.push(e.total_amount)
+                    return e
+                })
+                const ctx = document.getElementById("myChart").getContext('2d');
+                const myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Tổng số tiền mua',
+                            data: dataSet,
+                            backgroundColor: 'rgb(105, 192, 233)',
+                            borderColor: 'rgb(105, 192, 233)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Biểu đồ doanh thu Tháng 4',
+                                font: {
+                                    size: 18
+                                }
+                            }
+                        }
+                    }
+                });
+                $("#total-money").html(response?.orderTotal[0]?.total_amount_by_month)
+                $("#total-order").html(response?.orderQuantity[0]?.OrderDetails[0]?.total_quantity)
             },
             error: (response) => {
 
