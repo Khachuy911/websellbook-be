@@ -6,10 +6,7 @@ const AsyncHandle = require("../middleware/asyncHandle");
 const Auth = require("../middleware/authMiddleware");
 const { DEFAULT_VALUE } = require("../helper/constant");
 
-Route.get(
-  "/dashboard",
-  AsyncHandle(OrderController.dashboard)
-);
+Route.get("/dashboard", AsyncHandle(OrderController.dashboard));
 
 Route.patch(
   "/confirm/:id",

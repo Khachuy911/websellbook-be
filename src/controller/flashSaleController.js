@@ -86,9 +86,9 @@ module.exports = {
       where: {
         ...search(req.query.search),
       },
-      // include: {
-      //   model: FlashSaleProduct,
-      // },
+      include: {
+        model: FlashSaleProduct,
+      },
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };

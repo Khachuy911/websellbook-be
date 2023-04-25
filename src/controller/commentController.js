@@ -4,6 +4,7 @@ const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require("../helper/constant");
 const ErrorResponse = require("../helper/errorResponse");
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");
+const Product = require("../model/productModel");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -69,11 +70,16 @@ module.exports = {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         ...filter("userId", req.query.userId),
       },
-      include: {
+      include: [{
         model: User,
         required: false,
         where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
       },
+      {
+        model: Product,
+        required: false,
+        where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+      }],
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };

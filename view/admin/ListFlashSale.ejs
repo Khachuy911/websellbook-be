@@ -58,10 +58,10 @@
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên FlashSale</th>
-                            <th>Description</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
+                            <th>Tên Flash sale</th>
+                            <th>Mô tả Flash sale</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày hết hạn</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -84,8 +84,8 @@
                         Bạn có muốn xoá FlashSale này không?
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btn-delete-success" class="btn btn-danger">Delete</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btn-delete-success" class="btn btn-danger">Xoá</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </div>
             </div>
@@ -97,7 +97,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update FlashSale</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật FlashSale</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="handleSubmitFormUpdate">
@@ -137,8 +137,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btn-update-success" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btn-update-success" class="btn btn-primary">Cập nhật</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </form>
             </div>
@@ -293,8 +293,8 @@
                         <td>${item.startDate}</td>
                         <td>${item.endDate}</td>
                         <td style="max-width:120px;text-align:center">
-                            <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn  btn-update btn-primary">Update</button>
-                            <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Delete</button>
+                            <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn  btn-update btn-primary">Cập nhật</button>
+                            <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
                         </td>
                     </tr>
                 `

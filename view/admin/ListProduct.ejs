@@ -1,507 +1,632 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Danh sách Product</title>
-    <link rel="stylesheet" href="/css/root.css">
-    <link rel="stylesheet" href="/css/dashboard.css">
-    <link rel="stylesheet" href="/css/createProduct.css">
+    <link rel="stylesheet" href="/css/root.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/createProduct.css" />
     <!-- datatable -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/searchpanes/2.0.1/css/searchPanes.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/searchpanes/2.0.1/css/searchPanes.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <!-- Toastify alert -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
 
     <!-- css -->
-    <link rel="stylesheet" href="/css/dataTables.css">
-</head>
+    <link rel="stylesheet" href="/css/dataTables.css" />
+  </head>
 
-<body style="position: relative;">
+  <body style="position: relative">
     <!-- <div class="nav" style="position: fixed;height: 100%; z-index: 1;">
         
     </div> -->
 
     <div class="nav">
-        <h1>Dashboard</h1>
-        <ul id="route">
-            <li><a href="/admin/dashboard">Dashboard</a></li>
-            <li><a href="#">Tài khoản của tôi</a></li>
-            <li><a href="#">Danh sách Products</a></li>
-            <li><a href="/product/create">Thêm Product</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Reports</a></li>
-
-        </ul>
+      <h1>Dashboard</h1>
+      <ul id="route">
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="#">Tài khoản của tôi</a></li>
+        <li><a href="#">Danh sách Products</a></li>
+        <li><a href="/product/create">Thêm Product</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Reports</a></li>
+      </ul>
     </div>
-    <div class="containerBox" style="position: relative;">
-        <div class="main" style="width: 80%;height: 100%;padding-bottom: 60px;">
-            <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách Products</h1>
-            <div class="card" style="width: 95%;margin: auto; ">
-
-                <table id="myTable">
-                    <thead>
-                        <tr>
-                            <th>STT</th>
-                            <th>Tên Products</th>
-                            <th>Mô tả</th>
-                            <th>Ảnh</th>
-                            <th>Số lượng</th>
-                            <th>Giá nhập</th>
-                            <th>Tên Category</th>
-                            <th>Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-
-                    </tbody>
-                </table>
-            </div>
+    <div class="containerBox" style="position: relative">
+      <div class="main" style="width: 80%; height: 100%; padding-bottom: 60px">
+        <h1 style="margin-left: 30px; margin-top: 30px">Danh sách Products</h1>
+        <div class="card" style="width: 95%; margin: auto">
+          <table id="myTable">
+            <thead>
+              <tr>
+                <th>STT</th>
+                <th>Tên sách</th>
+                <th>Mô tả</th>
+                <th>Ảnh</th>
+                <th>Số lượng</th>
+                <th>Giá nhập</th>
+                <th>Tên danh mục</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
         </div>
+      </div>
     </div>
-    <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xoá tài khoản</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Bạn có muốn xoá tài khoản này không?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btn-delete-success" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="exampleModalDelete"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Xoá tài khoản</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">Bạn có muốn xoá sách này không?</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              id="btn-delete-success"
+              class="btn btn-danger"
+            >
+              Xoá ngay
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Đóng
+            </button>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div
+      class="modal fade"
+      id="exampleModalUpdate"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Cập nhật sách</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Đóng"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="HandleSubmitForm" enctype="multipart/form-data">
+              <div style="display: flex; justify-content: center">
+                <div style="width: 162px; text-align: end">
+                  <div cla="" style="min-height: 40px; margin: 20px 20px">
+                    <label for="name"
+                      >Tên Sách<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 22px 20px">
+                    <label for="barCode"
+                      >Mã sách<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 8px 20px">
+                    <label for="priceImport"
+                      >Giá nhập<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 10px 20px">
+                    <label for="priceSelling"
+                      >Giá bán<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 10px 20px">
+                    <label for="weight"
+                      >Số trang<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 20px 20px">
+                    <label for="quantity"
+                      >Số lượng<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 20px">
+                    <label for="categoryId" style="white-space: break-spaces"
+                      >Danh mục<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 18px 20px">
+                    <label for="image"
+                      >Ảnh sách<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 20px 20px">
+                    <label for="description"
+                      >Mô tả<strong style="color: red">*</strong></label
+                    >
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0"></div>
                 </div>
-                <div class="modal-body">
-                    <form id="HandleSubmitForm" enctype="multipart/form-data">
-                        <div style="display: flex;justify-content: center;">
-                            <div style="width: 162px;text-align: end;">
-                                <div cla="" style="min-height: 40px;margin: 20px 20px;">
-                                    <label for="name">Tên Sách<strong style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 22px 20px;">
-                                    <label for="barCode">Mã sách<strong style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 8px 20px;">
-                                    <label for="priceImport">Giá nhập<strong style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 10px 20px;">
-                                    <label for="priceSelling">Giá bán<strong style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 10px 20px;">
-                                    <label for="weight">Số trang<strong style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 20px 20px;">
-                                    <label for="quantity">Số lượng<strong style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 20px;">
-                                    <label for="categoryId" style="white-space: break-spaces;">Danh mục<strong
-                                            style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 18px 20px;">
-                                    <label for="image">Ảnh sách<strong style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 20px 20px;">
-                                    <label for="description">Mô tả<strong style="color: red;">*</strong></label>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-
-                                </div>
-                            </div>
-                            <div style="width: 95%;">
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <input type="text" id="name" name="name" required>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <input type="text" id="barCode" name="barCode" required>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <input type="number" id="priceImport" name="priceImport" min="0" step="0.01"
-                                        required>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <input type="number" id="priceSelling" name="priceSelling" min="0" step="0.01"
-                                        required>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <input type="number" id="weight" name="weight" min="0" step="0.01" required>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <input type="number" id="quantity" name="quantity" min="0" required>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <select name="categoryId" style="width: 100%;" id="categoryId" required>
-
-                                    </select>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <input style="padding:10px 0" type="file" id="image" name="image" accept="image/*"
-                                        multiple>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <textarea id="description" name="description" rows="4"></textarea>
-                                </div>
-                                <div class="" style="min-height: 40px;margin: 12px 0;">
-                                    <button type="submit" class="btn btn-primary btn-PATCH-update">Update
-                                        Product</button>
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                <div style="width: 95%">
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <input type="text" id="name" name="name" required />
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <input type="text" id="barCode" name="barCode" required />
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <input
+                      type="number"
+                      id="priceImport"
+                      name="priceImport"
+                      min="0"
+                      step="0.01"
+                      required
+                    />
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <input
+                      type="number"
+                      id="priceSelling"
+                      name="priceSelling"
+                      min="0"
+                      step="0.01"
+                      required
+                    />
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <input
+                      type="number"
+                      id="weight"
+                      name="weight"
+                      min="0"
+                      step="0.01"
+                      required
+                    />
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <input
+                      type="number"
+                      id="quantity"
+                      name="quantity"
+                      min="0"
+                      required
+                    />
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <select
+                      name="categoryId"
+                      style="width: 100%"
+                      id="categoryId"
+                      required
+                    ></select>
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <input
+                      style="padding: 10px 0"
+                      type="file"
+                      id="image"
+                      name="image"
+                      accept="image/*"
+                      multiple
+                    />
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows="4"
+                    ></textarea>
+                  </div>
+                  <div class="" style="min-height: 40px; margin: 12px 0">
+                    <button
+                      type="submit"
+                      class="btn btn-primary btn-PATCH-update"
+                    >
+                      Cập nhật
+                    </button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Đóng
+                    </button>
+                  </div>
                 </div>
-
-            </div>
+              </div>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
-</body>
+  </body>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-<script src="/js/route.js"></script>
-<script>
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/toastify-js"
+  ></script>
+  <script src="/js/route.js"></script>
+  <script>
     let height = window.innerHeight + 120;
     $(".main")[0].style.minHeight = height + "px";
     let html = route.map((e, index) => {
-        const pathname = window.location.pathname
-        if (e.href == pathname) {
-            return `<li class="active"><a href="${e.href}">${e.text}</a></li>`
-        }
-        else {
-            return `<li><a href="${e.href}">${e.text}</a></li>`
-        }
-
-    })
+      const pathname = window.location.pathname;
+      if (e.href == pathname) {
+        return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
+      } else {
+        return `<li><a href="${e.href}">${e.text}</a></li>`;
+      }
+    });
     $("#route")[0].innerHTML = html.join("");
+  </script>
 
-</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- datatables -->
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/searchpanes/2.0.1/js/dataTables.searchPanes.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"
+  ></script>
 
-
-<!-- datatables -->
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"></script>
-<script type="text/javascript"
-    src="https://cdn.datatables.net/searchpanes/2.0.1/js/dataTables.searchPanes.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
-<script type="text/javascript"
-    src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"
+  ></script>
 
-<!-- toastify -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- toastify -->
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/toastify-js"
+  ></script>
 
-
-<script>
+  <script>
     $.ajax({
-        url: `/product?api=1`,
+      url: `/product?api=1`,
 
-        type: "GET",
-        success: (response) => {
-            console.log(response)
-            let listSelect = response?.data?.rows.map((item, index) => (`
+      type: "GET",
+      success: (response) => {
+        console.log(response);
+        let listSelect = response?.data?.rows.map(
+          (item, index) => `
                                  <tr>
-                                    <td style="text-align:center">${index + 1}</td>
+                                    <td style="text-align:center">${
+                                      index + 1
+                                    }</td>
                                     <td>${item.name}</td>
                                     <td>${item.description}</td>
-                                    <td><img src='${item.ProductImages[0].url.replace("public", "")}' style="width:100px" alt="${item.name}"/></td>
+                                    <td><img src='${item.ProductImages[0].url.replace(
+                                      "public",
+                                      ""
+                                    )}' style="width:100px" alt="${
+            item.name
+          }"/></td>
                                     <td>${item.quantity}</td>
                                     <td>${item.priceImport}</td>
                                     <td>${item.Category.name}</td>
                                     <td style="max-width:120px;text-align:center">
-                                        <button type="button" data-id="${item.id}" style="width: 99px;" class="btn btn-primary btn-update" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" >Update</button>
-                                        <button type="button" data-id="${item.id}"class="btn btn-delete btn-danger mt-2" style="width: 99px;" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" >Xoá</button>
+                                        <button type="button" data-id="${
+                                          item.id
+                                        }" style="width: 99px;" class="btn btn-primary btn-update" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" >Cập nhật</button>
+                                        <button type="button" data-id="${
+                                          item.id
+                                        }"class="btn btn-delete btn-danger mt-2" style="width: 99px;" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" >Xoá</button>
                                     </td>
                                 </tr>`
-            ))
-            $("#table-body")[0].innerHTML = listSelect.join("")
-            let table = $('#myTable').DataTable({
-                select: false,
-                pageLength: 5,
-                stateSave: true,
-                lengthMenu: [5, 10, 15, 20],
-                columnDefs: [
-                    {
-                        searchPanes: {
-                            show: true
-                        },
-                        targets: [1, 4, 5, 6]
-                    }
-                ],
-                "order": [[3, "desc"]],
-                "language": {
-                    "sEmptyTable": "Không có dữ liệu trong bảng",
-                    "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                    "sInfoEmpty": "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
-                    "sInfoFiltered": "(được lọc từ tổng số _MAX_ kết quả)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ",",
-                    "sLengthMenu": "Hiển thị _MENU_ kết quả",
-                    "sLoadingRecords": "Đang tải...",
-                    "sProcessing": "Đang xử lý...",
-                    "sSearch": "Tìm kiếm:",
-                    "sZeroRecords": "Không tìm thấy kết quả phù hợp",
-                    "oPaginate": {
-                        "sFirst": "Đầu",
-                        "sLast": "Cuối",
-                        "sNext": "Tiếp",
-                        "sPrevious": "Trước"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": sắp xếp cột tăng dần",
-                        "sSortDescending": ": sắp xếp cột giảm dần"
-                    },
-                }
-            });
-            new $.fn.dataTable.SearchPanes(table, {});
-            table.searchPanes.container().prependTo(table.table().container());
-            table.searchPanes.resizePanes();
-            try { $(".dtsp-collapseAll")[0].click() } catch (error) { }
-
-
-        },
-        error: (data) => {
-            Toastify({
-                text: data.responseJSON.errorCode,
-                duration: 2000,
-                newWindow: true,
-                //close: true,
-                offset: {
-                    x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                    background: "linear-gradient(to right, red, red)",
-                    width: "250px",
-                    fontSize: "16px"
-                },
-            }).showToast();
-        }
-    })
-
-    let deleteId
-    $("#exampleModalDelete").on('show.bs.modal', function (event) {
-        const button = $(event.relatedTarget)
-        deleteId = button.data("id")
-    })
-    $("#btn-delete-success").click(e => {
-        e.preventDefault();
-        $.ajax({
-            url: `/user/${deleteId}`,
-            type: "DELETE",
-            success: (response) => {
-                Toastify({
-                    text: response.message,
-                    duration: 2000,
-                    newWindow: true,
-                    //close: true,
-                    offset: {
-                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                    },
-                    gravity: "top", // `top` or `bottom`
-                    position: "right", // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
-                    style: {
-                        background: "linear-gradient(to right, green, green)",
-                        width: "250px",
-                        fontSize: "16px"
-                    },
-                }).showToast();
-                setTimeout(() => {
-                    $("#exampleModalDelete").modal("hide");
-                    location.reload();
-                }, "2000")
+        );
+        $("#table-body")[0].innerHTML = listSelect.join("");
+        let table = $("#myTable").DataTable({
+          select: false,
+          pageLength: 5,
+          stateSave: true,
+          lengthMenu: [5, 10, 15, 20],
+          columnDefs: [
+            {
+              searchPanes: {
+                show: true,
+              },
+              targets: [1, 4, 5, 6],
             },
-            error: (data) => {
-                Toastify({
-                    text: data.responseJSON.errorCode,
-                    duration: 2000,
-                    newWindow: true,
-                    //close: true,
-                    offset: {
-                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                    },
-                    gravity: "top", // `top` or `bottom`
-                    position: "right", // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
-                    style: {
-                        background: "linear-gradient(to right, red, red)",
-                        width: "250px",
-                        fontSize: "16px"
-                    },
-                    onClick: function () { } // Callback after click
-                }).showToast();
-            }
-        })
-
-    })
-
-</script>
-
-<script>
-    const listCategory = async () => {
-
-    }
-</script>
-<script>
-    $(document).on("click", ".btn-update", function (e) {
-        const id = $(this).data("id");
-        $.ajax({
-            url: `/product/${id}?api=1`,
-            type: "GET",
-            success: (response) => {
-
-                $.ajax({
-                    url: `/category`,
-                    type: "GET",
-                    success: (category) => {
-                        let listSelect = category.data.rows.map((e) => {
-                            return `<option value = '${e.id}'>${e.name}</option>}`
-                        })
-                        $("#categoryId").html(listSelect.join(""))
-                        const data = response.data.product
-                        $("#name").val(data.name)
-                        $("#barCode").val(data.barCode)
-                        $("#priceImport").val(data.priceImport)
-                        $("#priceSelling").val(data.priceSelling)
-                        $("#weight").val(data.weight)
-                        $("#quantity").val(data.quantity)
-                        $("#description").val(data.description)
-                        $(".btn-PATCH-update").attr("data-id", id)
-                    },
-                    error: (data) => {
-                        console.log(data)
-                    }
-
-                })
+          ],
+          order: [[3, "desc"]],
+          language: {
+            sEmptyTable: "Không có dữ liệu trong bảng",
+            sInfo:
+              "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+            sInfoEmpty: "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
+            sInfoFiltered: "(được lọc từ tổng số _MAX_ kết quả)",
+            sInfoPostFix: "",
+            sInfoThousands: ",",
+            sLengthMenu: "Hiển thị _MENU_ kết quả",
+            sLoadingRecords: "Đang tải...",
+            sProcessing: "Đang xử lý...",
+            sSearch: "Tìm kiếm:",
+            sZeroRecords: "Không tìm thấy kết quả phù hợp",
+            oPaginate: {
+              sFirst: "Đầu",
+              sLast: "Cuối",
+              sNext: "Tiếp",
+              sPrevious: "Trước",
             },
-            error: (data) => {
-                Toastify({
-                    text: data.responseJSON.errorCode,
-                    duration: 2000,
-                    newWindow: true,
-                    //close: true,
-                    offset: {
-                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                    },
-                    gravity: "top", // `top` or `bottom`
-                    position: "right", // `left`, `center` or `right`
-                    stopOnFocus: true, // Prevents dismissing of toast on hover
-                    style: {
-                        background: "linear-gradient(to right, red, red)",
-                        width: "250px",
-                        fontSize: "16px"
-                    },
-                    onClick: function () { } // Callback after click
-                }).showToast();
-            }
-        })
-
-
-
-        $("#HandleSubmitForm").submit(e => {
-            e.preventDefault();
-            const id = $(".btn-PATCH-update").data("id");
-            let form = document.getElementById('HandleSubmitForm');
-            let formData = new FormData(form);
-            $.ajax({
-                url: `/product/${id}`,
-                type: "PATCH",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: (response) => {
-                    Toastify({
-                        text: response.message,
-                        duration: 2000,
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, green, green)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                    }).showToast();
-                    setTimeout(() => {
-                        $("#exampleModalUpdate").modal("hide");
-                        location.reload();
-                    }, "2000")
-                },
-                error: (data) => {
-                    Toastify({
-                        text: data.responseJSON.errorCode,
-                        duration: 2000,
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, red, red)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                        onClick: function () { } // Callback after click
-                    }).showToast();
-                }
-            })
-        })
+            oAria: {
+              sSortAscending: ": sắp xếp cột tăng dần",
+              sSortDescending: ": sắp xếp cột giảm dần",
+            },
+          },
+        });
+        new $.fn.dataTable.SearchPanes(table, {});
+        table.searchPanes.container().prependTo(table.table().container());
+        table.searchPanes.resizePanes();
+        try {
+          $(".dtsp-collapseAll")[0].click();
+        } catch (error) {}
+      },
+      error: (data) => {
+        Toastify({
+          text: data.responseJSON.errorCode,
+          duration: 2000,
+          newWindow: true,
+          //close: true,
+          offset: {
+            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "linear-gradient(to right, red, red)",
+            width: "250px",
+            fontSize: "16px",
+          },
+        }).showToast();
+      },
     });
 
-</script>
-<script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
-</script>
+    let deleteId;
+    $("#exampleModalDelete").on("show.bs.modal", function (event) {
+      const button = $(event.relatedTarget);
+      deleteId = button.data("id");
+    });
+    $("#btn-delete-success").click((e) => {
+      e.preventDefault();
+      $.ajax({
+        url: `/user/${deleteId}`,
+        type: "DELETE",
+        success: (response) => {
+          Toastify({
+            text: response.message,
+            duration: 2000,
+            newWindow: true,
+            //close: true,
+            offset: {
+              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+            },
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, green, green)",
+              width: "250px",
+              fontSize: "16px",
+            },
+          }).showToast();
+          setTimeout(() => {
+            $("#exampleModalDelete").modal("hide");
+            location.reload();
+          }, "2000");
+        },
+        error: (data) => {
+          Toastify({
+            text: data.responseJSON.errorCode,
+            duration: 2000,
+            newWindow: true,
+            //close: true,
+            offset: {
+              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+            },
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, red, red)",
+              width: "250px",
+              fontSize: "16px",
+            },
+            onClick: function () {}, // Callback after click
+          }).showToast();
+        },
+      });
+    });
+  </script>
 
+  <script>
+    const listCategory = async () => {};
+  </script>
+  <script>
+    $(document).on("click", ".btn-update", function (e) {
+      const id = $(this).data("id");
+      $.ajax({
+        url: `/product/${id}?api=1`,
+        type: "GET",
+        success: (response) => {
+          $.ajax({
+            url: `/category`,
+            type: "GET",
+            success: (category) => {
+              let listSelect = category.data.rows.map((e) => {
+                return `<option value = '${e.id}'>${e.name}</option>}`;
+              });
+              $("#categoryId").html(listSelect.join(""));
+              const data = response.data.product;
+              $("#name").val(data.name);
+              $("#barCode").val(data.barCode);
+              $("#priceImport").val(data.priceImport);
+              $("#priceSelling").val(data.priceSelling);
+              $("#weight").val(data.weight);
+              $("#quantity").val(data.quantity);
+              $("#description").val(data.description);
+              $(".btn-PATCH-update").attr("data-id", id);
+            },
+            error: (data) => {
+              console.log(data);
+            },
+          });
+        },
+        error: (data) => {
+          Toastify({
+            text: data.responseJSON.errorCode,
+            duration: 2000,
+            newWindow: true,
+            //close: true,
+            offset: {
+              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+            },
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, red, red)",
+              width: "250px",
+              fontSize: "16px",
+            },
+            onClick: function () {}, // Callback after click
+          }).showToast();
+        },
+      });
+
+      $("#HandleSubmitForm").submit((e) => {
+        e.preventDefault();
+        const id = $(".btn-PATCH-update").data("id");
+        let form = document.getElementById("HandleSubmitForm");
+        let formData = new FormData(form);
+        $.ajax({
+          url: `/product/${id}`,
+          type: "PATCH",
+          data: formData,
+          processData: false,
+          contentType: false,
+          success: (response) => {
+            Toastify({
+              text: response.message,
+              duration: 2000,
+              newWindow: true,
+              //close: true,
+              offset: {
+                x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+              },
+              gravity: "top", // `top` or `bottom`
+              position: "right", // `left`, `center` or `right`
+              stopOnFocus: true, // Prevents dismissing of toast on hover
+              style: {
+                background: "linear-gradient(to right, green, green)",
+                width: "250px",
+                fontSize: "16px",
+              },
+            }).showToast();
+            setTimeout(() => {
+              $("#exampleModalUpdate").modal("hide");
+              location.reload();
+            }, "2000");
+          },
+          error: (data) => {
+            Toastify({
+              text: data.responseJSON.errorCode,
+              duration: 2000,
+              newWindow: true,
+              //close: true,
+              offset: {
+                x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+              },
+              gravity: "top", // `top` or `bottom`
+              position: "right", // `left`, `center` or `right`
+              stopOnFocus: true, // Prevents dismissing of toast on hover
+              style: {
+                background: "linear-gradient(to right, red, red)",
+                width: "250px",
+                fontSize: "16px",
+              },
+              onClick: function () {}, // Callback after click
+            }).showToast();
+          },
+        });
+      });
+    });
+  </script>
+  <script>
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px";
+  </script>
 </html>

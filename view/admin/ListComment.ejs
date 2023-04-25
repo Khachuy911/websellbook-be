@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách Comment</title>
+    <title>Danh sách nhận xét</title>
     <link rel="stylesheet" href="/css/root.css">
     <link rel="stylesheet" href="/css/dashboard.css">
     <link rel="stylesheet" href="/css/createProduct.css">
@@ -48,7 +48,7 @@
     </div>
     <div class="containerBox" style="position: relative;">
         <div class="main" style="width: 80%;height: 100%;padding-bottom: 60px;">
-            <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách Comment</h1>
+            <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách nhận xét</h1>
             <div class="card" style="width: 95%;margin: auto;">
                 
                 <table id="myTable">
@@ -56,9 +56,9 @@
                         <tr>
                             <th>STT</th>
                             <th>User</th>
-                            <th>Product</th>
-                            <th>Comment</th>
-                            <th>Ngày comment</th>
+                            <th>Tên sách</th>
+                            <th>Nhận xét</th>
+                            <th>Ngày nhận xét</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -73,15 +73,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xoá Comment</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Xoá nhận xét</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Bạn có muốn xoá Comment này không?
+                    Bạn có muốn xoá nhận xét này không?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btn-delete-success" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btn-delete-success" class="btn btn-danger">Xoá</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -146,7 +146,7 @@
                                     <td>${item.text}</td>
                                     <td>${item.updatedAt}</td>
                                     <td style="max-width:120px;text-align:center">
-                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Delete</button>
+                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
                                     </td>
                                 </tr>`
             ))
@@ -222,7 +222,7 @@
                 type: "DELETE",
                 success: (response) => {
                     Toastify({
-                        text: response.message,
+                        text: "Xoá thành công",
                         duration: 2000,
                         newWindow: true,
                         //close: true,
@@ -246,7 +246,7 @@
                 },
                 error: (data) => {
                     Toastify({
-                        text: data.responseJSON.errorCode,
+                        text: "Xoá không thành công",
                         duration: 2000,
                         destination: "http://localhost:3000/",
                         newWindow: true,
