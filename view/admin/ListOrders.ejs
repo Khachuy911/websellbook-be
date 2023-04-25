@@ -1,163 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Danh sách Orders</title>
-    <link rel="stylesheet" href="/css/root.css">
-    <link rel="stylesheet" href="/css/dashboard.css">
-    <link rel="stylesheet" href="/css/createProduct.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Danh sách đơn hàng</title>
+    <link rel="stylesheet" href="/css/root.css" />
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/createProduct.css" />
     <!-- datatable -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/searchpanes/2.0.1/css/searchPanes.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/searchpanes/2.0.1/css/searchPanes.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
     <!-- Toastify alert -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
 
     <!-- css -->
-    <link rel="stylesheet" href="/css/dataTables.css">
-</head>
+    <link rel="stylesheet" href="/css/dataTables.css" />
+  </head>
 
-<body style="position: relative;">
+  <body style="position: relative">
     <div class="nav">
-        <h1>Dashboard</h1>
-        <ul id="route">
-            <li><a href="/admin/dashboard">Dashboard</a></li>
-            <li><a href="#">Tài khoản của tôi</a></li>
-            <li><a href="#">Danh sách Products</a></li>
-            <li><a href="/product/create">Thêm Product</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">Reports</a></li>
-
-        </ul>
+      <h1>Dashboard</h1>
+      <ul id="route">
+        <li><a href="/admin/dashboard">Dashboard</a></li>
+        <li><a href="#">Tài khoản của tôi</a></li>
+        <li><a href="#">Danh sách Products</a></li>
+        <li><a href="/product/create">Thêm Product</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Reports</a></li>
+      </ul>
     </div>
-    <div class="containerBox" style="position: relative;">
-
-        <div class="main">
-            <div class=""></div>
-            <h1 style="margin-left: 30px;margin-top: 30px;">Danh sách Orders</h1>
-            <div class="card" style="width: 95%;margin: auto;">
-                <table id="myTable">
-                    <thead>
-                        <tr>
-                            <th>Mã đơn</th>
-                            <th>Thành tiền</th>
-                            <th>Địa chỉ</th>
-                            <th>Số điện thoại</th>
-                            <th>Chi tiết đơn</th>
-                            <th>Trạng thái</th>
-                            <th>Thao tác</th>
-                        </tr>
-                    </thead>
-                    <tbody id="table-body">
-                        
-                    </tbody>
-                </table>
-            </div>
+    <div class="containerBox" style="position: relative">
+      <div class="main">
+        <div class=""></div>
+        <h1 style="margin-left: 30px; margin-top: 30px">Danh sách đơn hàng</h1>
+        <div class="card" style="width: 95%; margin: auto">
+          <table id="myTable">
+            <thead>
+              <tr>
+                <th>Mã đơn</th>
+                <th>Thành tiền</th>
+                <th>Địa chỉ</th>
+                <th>Số điện thoại</th>
+                <th>Chi tiết đơn</th>
+                <th>Trạng thái</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
         </div>
+      </div>
     </div>
-    <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xoá tài khoản</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Bạn có muốn xoá tài khoản này không?
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btn-delete-success" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
+    <div
+      class="modal fade"
+      id="exampleModalDelete"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Xoá tài khoản</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">Bạn có muốn xoá tài khoản này không?</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              id="btn-delete-success"
+              class="btn btn-danger"
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-</body>
+  </body>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-<script src="/js/route.js"></script>
-<script>
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/toastify-js"
+  ></script>
+  <script src="/js/route.js"></script>
+  <script>
     let height = window.innerHeight + 120;
     $(".main")[0].style.minHeight = height + "px";
     let html = route.map((e, index) => {
-        const pathname = window.location.pathname
-        if (e.href == pathname) {
-            return `<li class="active"><a href="${e.href}">${e.text}</a></li>`
-        }
-        else {
-            return `<li><a href="${e.href}">${e.text}</a></li>`
-        }
-
-    })
+      const pathname = window.location.pathname;
+      if (e.href == pathname) {
+        return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
+      } else {
+        return `<li><a href="${e.href}">${e.text}</a></li>`;
+      }
+    });
     $("#route")[0].innerHTML = html.join("");
+  </script>
 
-</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <!-- datatables -->
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/searchpanes/2.0.1/js/dataTables.searchPanes.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"
+  ></script>
+  <script
+    type="text/javascript"
+    src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"
+  ></script>
 
-
-<!-- datatables -->
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"></script>
-<script type="text/javascript"
-    src="https://cdn.datatables.net/searchpanes/2.0.1/js/dataTables.searchPanes.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
-<script type="text/javascript"
-    src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"
+  ></script>
 
-<!-- toastify -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+  <!-- toastify -->
+  <script
+    type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/toastify-js"
+  ></script>
 
-
-<script>
+  <script>
     $.ajax({
-        url: `/order`,
-        type: "GET",
-        success: (response) => {
-            console.log(response)
-            let listSelect = response?.data?.rows.map((item, index) => {
-
-                const statusCode = item.orderStatus
-                let status = "Chờ xác nhận"
-                let td = `<button type="button" data-id="${item.id}" class="btn btn-primary">Xác nhận</button>
-                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>`
-                if (statusCode === 1) {
-                    status = "Chờ ship"
-                    td = `<button type="button" data-id="${item.id}" disabled class="btn btn-warning">Chờ giao hàng</button>`
-                }
-                else if (statusCode === 2) {
-                    status = "Chờ giao"
-                    td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
-                }
-                else if (statusCode === 3) {
-                    status = "Đã giao"
-                    td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
-                }
-                else if (statusCode === 4) {
-                    status = "Huỷ đơn"
-                    td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`
-                }
-                return `
+      url: `/order`,
+      type: "GET",
+      success: (response) => {
+        console.log(response);
+        let listSelect = response?.data?.rows.map((item, index) => {
+          const statusCode = item.orderStatus;
+          let status = "Chờ xác nhận";
+          let td = `<button type="button" data-id="${item.id}" class="btn btn-primary">Xác nhận</button>
+                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>`;
+          if (statusCode === 1) {
+            status = "Chờ ship";
+            td = `<button type="button" data-id="${item.id}" disabled class="btn btn-warning">Chờ giao hàng</button>`;
+          } else if (statusCode === 2) {
+            status = "Chờ giao";
+            td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`;
+          } else if (statusCode === 3) {
+            status = "Đã giao";
+            td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`;
+          } else if (statusCode === 4) {
+            status = "Huỷ đơn";
+            td = `<button type="button" data-id="${item.id}" class="btn btn-warning">Chờ giao hàng</button>`;
+          }
+          return `
                                  <tr>
                                     <td style="text-align:center">${item.orderCode}</td>
                                     <td>${item.totalPrice}</td>
@@ -168,145 +215,143 @@
                                     <td style="max-width:120px;text-align:center">
                                         ${td}
                                     </td>
-                                </tr>`
-            }
-            )
-            $("#table-body")[0].innerHTML = listSelect.join("")
-            let table = $('#myTable').DataTable({
-                select: false,
-                pageLength: 5,
-                stateSave: true,
-                lengthMenu: [5, 10, 15, 20],
-                columnDefs: [
-                    {
-                        searchPanes: {
-                            show: true,
-                        },
-                        targets: [0, 1, 5]
-                    },
-                    {
-                        searchPanes: {
-                            show: false,
-                        },
-                        targets: [2, 3, 4, 6]
-                    }
-                ],
-                "language": {
-                    "sEmptyTable": "Không có dữ liệu trong bảng",
-                    "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-                    "sInfoEmpty": "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
-                    "sInfoFiltered": "(được lọc từ tổng số _MAX_ kết quả)",
-                    "sInfoPostFix": "",
-                    "sInfoThousands": ",",
-                    "sLengthMenu": "Hiển thị _MENU_ kết quả",
-                    "sLoadingRecords": "Đang tải...",
-                    "sProcessing": "Đang xử lý...",
-                    "sSearch": "Tìm kiếm:",
-                    "sZeroRecords": "Không tìm thấy kết quả phù hợp",
-                    "oPaginate": {
-                        "sFirst": "Đầu",
-                        "sLast": "Cuối",
-                        "sNext": "Tiếp",
-                        "sPrevious": "Trước"
-                    },
-                    "oAria": {
-                        "sSortAscending": ": sắp xếp cột tăng dần",
-                        "sSortDescending": ": sắp xếp cột giảm dần"
-                    },
-                }
-            });
+                                </tr>`;
+        });
+        $("#table-body")[0].innerHTML = listSelect.join("");
+        let table = $("#myTable").DataTable({
+          select: false,
+          pageLength: 5,
+          stateSave: true,
+          lengthMenu: [5, 10, 15, 20],
+          columnDefs: [
+            {
+              searchPanes: {
+                show: true,
+              },
+              targets: [0, 1, 5],
+            },
+            {
+              searchPanes: {
+                show: false,
+              },
+              targets: [2, 3, 4, 6],
+            },
+          ],
+          language: {
+            sEmptyTable: "Không có dữ liệu trong bảng",
+            sInfo:
+              "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+            sInfoEmpty: "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
+            sInfoFiltered: "(được lọc từ tổng số _MAX_ kết quả)",
+            sInfoPostFix: "",
+            sInfoThousands: ",",
+            sLengthMenu: "Hiển thị _MENU_ kết quả",
+            sLoadingRecords: "Đang tải...",
+            sProcessing: "Đang xử lý...",
+            sSearch: "Tìm kiếm:",
+            sZeroRecords: "Không tìm thấy kết quả phù hợp",
+            oPaginate: {
+              sFirst: "Đầu",
+              sLast: "Cuối",
+              sNext: "Tiếp",
+              sPrevious: "Trước",
+            },
+            oAria: {
+              sSortAscending: ": sắp xếp cột tăng dần",
+              sSortDescending: ": sắp xếp cột giảm dần",
+            },
+          },
+        });
 
-            new $.fn.dataTable.SearchPanes(table, {});
-            table.searchPanes.container().prependTo(table.table().container());
-            table.searchPanes.resizePanes();
-            try {$(".dtsp-collapseAll")[0].click()} catch (error) {}
+        new $.fn.dataTable.SearchPanes(table, {});
+        table.searchPanes.container().prependTo(table.table().container());
+        table.searchPanes.resizePanes();
+        try {
+          $(".dtsp-collapseAll")[0].click();
+        } catch (error) {}
+      },
+      error: (data) => {
+        Toastify({
+          text: data.responseJSON.errorCode,
+          duration: 2000,
+          newWindow: true,
+          //close: true,
+          offset: {
+            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "linear-gradient(to right, red, red)",
+            width: "250px",
+            fontSize: "16px",
+          },
+        }).showToast();
+      },
+    });
+    let deleteId;
+    $("#exampleModalDelete").on("show.bs.modal", function (event) {
+      const button = $(event.relatedTarget);
+      deleteId = button.data("id");
+    });
+
+    $("#btn-delete-success").click((e) => {
+      e.preventDefault();
+      $.ajax({
+        url: `/user/${deleteId}`,
+        type: "DELETE",
+        success: (response) => {
+          Toastify({
+            text: response.message,
+            duration: 2000,
+            newWindow: true,
+            //close: true,
+            offset: {
+              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+            },
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, green, green)",
+              width: "250px",
+              fontSize: "16px",
+            },
+          }).showToast();
+          setTimeout(() => {
+            $("#exampleModalDelete").modal("hide");
+            location.reload();
+          }, "2000");
         },
         error: (data) => {
-            Toastify({
-                text: data.responseJSON.errorCode,
-                duration: 2000,
-                newWindow: true,
-                //close: true,
-                offset: {
-                    x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                    y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                },
-                gravity: "top", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-                    background: "linear-gradient(to right, red, red)",
-                    width: "250px",
-                    fontSize: "16px"
-                },
-            }).showToast();
-        }
-    })
-    let deleteId
-    $("#exampleModalDelete").on('show.bs.modal', function (event) {
-        const button = $(event.relatedTarget) 
-        deleteId = button.data("id")
-    })
-
-   $("#btn-delete-success").click(e => {
-            e.preventDefault();
-            $.ajax({
-                url: `/user/${deleteId}`,
-                type: "DELETE",
-                success: (response) => {
-                    Toastify({
-                        text: response.message,
-                        duration: 2000,
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, green, green)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                    }).showToast();
-                    setTimeout(() => {
-                        $("#exampleModalDelete").modal("hide");
-                        location.reload();
-                    }, "2000")
-                },
-                error: (data) => {
-                    Toastify({
-                        text: data.responseJSON.errorCode,
-                        duration: 2000,
-                        destination: "http://localhost:3000/",
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, red, red)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                        onClick: function () { } // Callback after click
-                    }).showToast();
-                }
-            })
-
-        })
-    
-
-</script>
-<script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
-</script>
-
+          Toastify({
+            text: data.responseJSON.errorCode,
+            duration: 2000,
+            destination: "http://localhost:3000/",
+            newWindow: true,
+            //close: true,
+            offset: {
+              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+            },
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, red, red)",
+              width: "250px",
+              fontSize: "16px",
+            },
+            onClick: function () {}, // Callback after click
+          }).showToast();
+        },
+      });
+    });
+  </script>
+  <script>
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px";
+  </script>
 </html>

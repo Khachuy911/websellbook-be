@@ -58,11 +58,11 @@
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>Tên Voucher</th>
+                            <th>Tên voucher</th>
                             <th>Chiết khấu</th>
                             <th>Số lượng</th>
-                            <th>Voucher Code</th>
-                            <th>Expire Date</th>
+                            <th>Mã voucher</th>
+                            <th>Ngày hết hạn</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -84,8 +84,8 @@
                     Bạn có muốn xoá voucher này không?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btn-delete-success" class="btn btn-danger">Delete</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" id="btn-delete-success" class="btn btn-danger">Xoá</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Update Voucher</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật Voucher</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form id="handleSubmitFormUpdate">
@@ -120,14 +120,14 @@
                             <input id="quantity" name="quantity" style="width: 100%;" type="number" required>
 
                             <label for="expireDate" class="mt-2"
-                                style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Expire Date<strong
+                                style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày hết hạn<strong
                                     style="color: red;">*</strong></label>
                             <input id="expireDate" name="expireDate" style="width: 100%;" type="date" required>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" id="btn-update-success" class="btn btn-primary">Update</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" id="btn-update-success" class="btn btn-primary">Cập nhật</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </form>
             </div>
@@ -138,8 +138,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Add Voucher</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm Voucher</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Xoá"></button>
                 </div>
                 <form id="handleSubmitFormAdd">
 
@@ -162,14 +162,14 @@
                             <input id="quantity" name="quantity" style="width: 100%;" type="number" required>
 
                             <label for="expireDate" class="mt-2"
-                                style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Expire Date<strong
+                                style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày hết hạn<strong
                                     style="color: red;">*</strong></label>
                             <input id="expireDate" name="expireDate" style="width: 100%;" type="date" required>
                         </div>
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Thêm Voucher</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
                     </div>
                 </form>
             </div>
@@ -228,14 +228,14 @@
             let listSelect = response?.data?.rows.map((item, index) => (`
                                  <tr data-id="${item.id}">
                                     <td style="text-align:center">${index + 1}</td>
-                                    <td>${item.name}</td>
-                                    <td>${item.discountAmount}%</td>
-                                    <td>${item.quantity}</td>
-                                    <td>${item.voucherCode}</td>
-                                    <td>${item.expireDate}</td>
+                                    <td>${item?.name}</td>
+                                    <td>${item?.discountAmount}</td>
+                                    <td>${item?.quantity}</td>
+                                    <td>${item?.voucherCode}</td>
+                                    <td>${item?.expireDate}</td>
                                     <td style="max-width:120px;text-align:center">
-                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn  btn-update btn-primary">Update</button>
-                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Delete</button>
+                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn  btn-update btn-primary">Cập nhật</button>
+                                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
                                     </td>
                                 </tr>`
             ))
@@ -312,7 +312,7 @@
                 type: "DELETE",
                 success: (response) => {
                     Toastify({
-                        text: response.message,
+                        text: "Xoá thành công",
                         duration: 2000,
                         newWindow: true,
                         //close: true,
@@ -332,11 +332,11 @@
                     setTimeout(() => {
                         $("#exampleModalDelete").modal("hide");
                         location.reload();
-                    }, "2000")
+                    }, "1000")
                 },
                 error: (data) => {
                     Toastify({
-                        text: data.responseJSON.errorCode,
+                        text: "Xoá không thành công",
                         duration: 2000,
                         destination: "http://localhost:3000/",
                         newWindow: true,
@@ -383,13 +383,13 @@
                 data: data,
                 success: (response) => {
                     Toastify({
-                        text: response.message,
+                        text: "Cập nhật thành công",
                         duration: 2000,
                         newWindow: true,
                         //close: true,
                         offset: {
                             x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                            y: 10 // vertical axispl - can be a number or a string indicating unity. eg: '2em'
                         },
                         gravity: "top", // `top` or `bottom`
                         position: "right", // `left`, `center` or `right`
@@ -403,11 +403,11 @@
                     setTimeout(() => {
                         $("#exampleModalUpdate").modal("hide");
                         location.reload();
-                    }, "2000")
+                    }, "1000")
                 },
                 error: (data) => {
                     Toastify({
-                        text: data.responseJSON.errorCode,
+                        text: "Cập nhật không thành công",
                         duration: 2000,
                         destination: "http://localhost:3000/",
                         newWindow: true,
@@ -443,7 +443,7 @@
             data:data,
             success: (response) => {
                 Toastify({
-                    text: response.message,
+                    text: "Thêm voucher thành công",
                     duration: 2000,
                     newWindow: true,
                     //close: true,
@@ -463,7 +463,7 @@
                 setTimeout(() => {
                     $("#exampleModalUpdate").modal("hide");
                     location.reload();
-                }, "2000")
+                }, "1000")
             },
             error: (data) => {
                 Toastify({

@@ -1,64 +1,68 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Dashboard</title>
     <!-- Bootstrap CSS -->
     <!-- datatable -->
-    <link rel="stylesheet" type="text/css"
-        href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css"
+    />
 
-    <link rel="stylesheet" href="/css/dashboard.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
     <!-- Chart.js -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.1/dist/chart.min.js"></script>
+  </head>
 
-
-</head>
-
-<body style="position: relative;">
-    <div class="nav" style="position: fixed;height: 100%; margin-left: 8px;">
-        <h1>Dashboard</h1>
-        <ul id="route">
-        </ul>
+  <body style="position: relative">
+    <div class="nav" style="position: fixed; height: 100%; margin-left: 8px">
+      <h1>Dashboard</h1>
+      <ul id="route"></ul>
     </div>
     <div class="containerBox">
+      <div class="main" style="width: 80%; height: 100%; padding-bottom: 60px">
+        <h1
+          class="mb-4"
+          style="
+            font-size: 36px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+          "
+        >
+          Dashboard
+        </h1>
 
-        <div class="main" style="width: 80%;height: 100%;padding-bottom: 60px;">
-            <h1 class="mb-4" style="font-size: 36px;margin-top: 30px;margin-bottom: 30px;text-align: center;">Dashboard
-            </h1>
-
-            <div style="max-width: 90%;">
-                <div>
-                    <div class="card">
-                        <div class="card-body">
-                            <canvas id="myChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+        <div class="row mt-4" style="margin-left: 0; margin-right: 0">
+          <div class="col-md-4" style="padding-left: 0">
+            <div class="card text-center">
+              <div class="card-header">Tổng doanh thu/ tháng</div>
+              <div class="card-body">
+                <h3 id="total-money">0</h3>
+              </div>
             </div>
-
-            <div class="row mt-4" style="margin-left: 0;margin-right: 0;">
-                <div class="col-md-4" style="padding-left: 0;">
-                    <div class="card text-center ">
-                        <div class="card-header">Tổng doanh thu</div>
-                        <div class="card-body">
-                            <h3 id="total-money">$25,000</h3>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card text-center">
-                        <div class="card-header">Số lượng order</div>
-                        <div class="card-body">
-                            <h3 id="total-order">200</h3>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <div class="card text-center">
+              <div class="card-header">Số lượng sách/ tháng</div>
+              <div class="card-body">
+                <h3 id="total-order">0</h3>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-md-4">
                     <div class="card text-center">
                         <div class="card-header">Số lượng sách</div>
                         <div class="card-body">
@@ -66,8 +70,18 @@
                         </div>
                     </div>
                 </div> -->
-            </div>
         </div>
+
+        <div style="max-width: 90%">
+          <div>
+            <div class="card">
+              <div class="card-body">
+                <canvas id="myChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS -->
@@ -77,83 +91,87 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/toastify-js"
+    ></script>
     <script src="/js/route.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.1/dist/chart.min.js"></script>
     <script>
-        let html = route.map((e, index) => {
-            const pathname = window.location.pathname
-            if (e.href == pathname) {
-                return `<li class="active"><a href="${e.href}">${e.text}</a></li>`
-            }
-            else {
-                return `<li><a href="${e.href}">${e.text}</a></li>`
-            }
-
-        })
-        $("#route")[0].innerHTML = html.join("");
-
+      let html = route.map((e, index) => {
+        const pathname = window.location.pathname;
+        if (e.href == pathname) {
+          return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
+        } else {
+          return `<li><a href="${e.href}">${e.text}</a></li>`;
+        }
+      });
+      $("#route")[0].innerHTML = html.join("");
     </script>
+    <script></script>
     <script>
-
-    </script>
-    <script>
-        const numberMonth = 4
-        $.ajax({
-            url: `/order/dashboard?numberMonth=${numberMonth}`,
-            type: "GET",
-            success: (response) => {
-
-                console.log(response)
-                let labels = []
-                let dataSet = []
-                data = response.data.map((e)=>{
-                    labels.push(e.Date)
-                    dataSet.push(e.total_amount)
-                    return e
-                })
-                const ctx = document.getElementById("myChart").getContext('2d');
-                const myChart = new Chart(ctx, {
-                    type: 'line',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: 'Tổng số tiền mua',
-                            data: dataSet,
-                            backgroundColor: 'rgb(105, 192, 233)',
-                            borderColor: 'rgb(105, 192, 233)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        },
-                        plugins: {
-                            title: {
-                                display: true,
-                                text: 'Biểu đồ doanh thu Tháng 4',
-                                font: {
-                                    size: 18
-                                }
-                            }
-                        }
-                    }
-                });
-                $("#total-money").html(response?.orderTotal[0]?.total_amount_by_month)
-                $("#total-order").html(response?.orderQuantity[0]?.OrderDetails[0]?.total_quantity)
+      const numberMonth = 4;
+      $.ajax({
+        url: `/order/dashboard?numberMonth=${numberMonth}`,
+        type: "GET",
+        success: (response) => {
+          console.log(response);
+          let labels = [];
+          let dataSet = [];
+          data = response.data.map((e) => {
+            labels.push(e.Date);
+            dataSet.push(e.total_amount);
+            return e;
+          });
+          const ctx = document.getElementById("myChart").getContext("2d");
+          const myChart = new Chart(ctx, {
+            type: "line",
+            data: {
+              labels: labels,
+              datasets: [
+                {
+                  label: "Tổng số tiền mua",
+                  data: dataSet,
+                  backgroundColor: "rgb(105, 192, 233)",
+                  borderColor: "rgb(105, 192, 233)",
+                  borderWidth: 1,
+                },
+              ],
             },
-            error: (response) => {
-
-            }
-        })
+            options: {
+              scales: {
+                y: {
+                  beginAtZero: true,
+                },
+              },
+              plugins: {
+                title: {
+                  display: true,
+                  text: "Biểu đồ doanh thu Tháng 4",
+                  font: {
+                    size: 18,
+                  },
+                },
+              },
+            },
+          });
+          $("#total-money").html(
+            response?.orderTotal[0]?.total_amount_by_month.toLocaleString() +
+              " đ"
+          );
+          $("#total-order").html(
+            response?.orderQuantity[0]?.OrderDetails[0]?.total_quantity
+          );
+        },
+        error: (response) => {},
+      });
     </script>
-</body>
-<script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
-</script>
-
+  </body>
+  <script>
+    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px";
+  </script>
 </html>

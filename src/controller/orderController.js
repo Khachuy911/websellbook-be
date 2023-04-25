@@ -550,6 +550,13 @@ module.exports = {
       },
       include: {
         model: OrderDetail,
+        required: false,
+        where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+        include: {
+          model: Product,
+          required: false,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+        },
       },
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
@@ -565,7 +572,7 @@ module.exports = {
       totalSize: order.rows.length || 0,
       rows: order.rows,
     };
-    console.log(data);
+    // console.log(data);
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
@@ -675,14 +682,6 @@ module.exports = {
   dashboard: async (req, res, next) => {
     const { numberMonth } = req.query;
 
-    console.log(numberMonth);
-
-    // if (!start || !end) {
-    //   return next(
-    //     new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
-    //   );
-    // }
-
     const condition = {
       attributes: [
         [sequelize.fn("MONTH", sequelize.col("createdAt")), "MonthDate"],
@@ -697,7 +696,7 @@ module.exports = {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         orderStatus: 4,
       },
-      ...getSort(req.query.title, req.query.type),
+      ...getSort("createdAt", "1"),
       group: [sequelize.fn("DATE", sequelize.col("createdAt")), "Date"],
     };
 
@@ -718,7 +717,7 @@ module.exports = {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         orderStatus: 4,
       },
-      ...getSort(req.query.title, req.query.type),
+      ...getSort("createdAt", "1"),
     };
 
     const orderTotal = await Order.findAll(conditionTotal);
@@ -739,7 +738,7 @@ module.exports = {
           [sequelize.fn("sum", sequelize.col("quantity")), "total_quantity"],
         ],
       },
-      ...getSort(req.query.title, req.query.type),
+      ...getSort("createdAt", "1"),
     };
 
     const orderQuantity = await Order.findAll(conditionQuantity);

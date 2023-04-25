@@ -280,9 +280,6 @@ module.exports = {
       });
     }
 
-
-    
-    console.log("==============> product detail: " + JSON.stringify(data));
     res.render("../view/productDetail.ejs", { data });
   },
 
