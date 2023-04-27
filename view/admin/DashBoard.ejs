@@ -1,177 +1,232 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Dashboard</title>
-    <!-- Bootstrap CSS -->
-    <!-- datatable -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css"
-    />
 
-    <link rel="stylesheet" href="/css/dashboard.css" />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <!-- Chart.js -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.1/dist/chart.min.js"></script>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <!-- datatable -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
 
-  <body style="position: relative">
-    <div class="nav" style="position: fixed; height: 100%; margin-left: 8px">
-      <h1>Dashboard</h1>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+  <!-- Chart.js -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.1/dist/chart.min.js"></script>
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 2px;
+    display: flex;
+  }
+
+  nav>div {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-top: 2px solid #ccc;
+    border-left: 2px solid #ccc;
+  }
+
+  nav {
+    background-color: #f4f4f4;
+  }
+
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  nav ul li {
+    margin-bottom: 10px;
+  }
+
+  main {
+    flex: 1;
+    border: 1px solid #ccc;
+  }
+
+  main>div {
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+
+  #route a {
+    color: rgba(58, 53, 65, 0.87);
+    text-decoration: none;
+    font-size: 18px;
+    padding: 12px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+    display: block;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0.15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+  }
+  #route a:hover {
+			box-shadow: 0px 4px 8px -4px rgba(58, 53, 65, 0.42);
+            background-image: linear-gradient(98deg, #C6A7FE, #9155FD 94%);
+            border-top-right-radius: 100px;
+            border-bottom-right-radius: 100px;
+			color: #fff;
+		}
+  .containerBox {
+    height: 100%;
+  }
+
+  .active>a {
+    box-shadow: 0px 4px 8px -4px rgba(58, 53, 65, 0.42);
+    background-image: linear-gradient(98deg, #C6A7FE, #9155FD 94%);
+    border-top-right-radius: 100px !important;
+    border-bottom-right-radius: 100px !important;
+    color: #fff !important;
+    cursor: inherit;
+  }
+</style>
+
+<body>
+  <nav>
+    <div style="height: 71px;">
+      <h3 style="padding: 10px;">Khắc Huy Shop</h3>
+    </div>
+    <div style="border-top: 1px solid #ccc;">
       <ul id="route"></ul>
     </div>
+  </nav>
+
+  <main style="height: 100%;">
+    <div style="display: flex;justify-content: space-between; height: 70px;">
+      <div>
+        <h3 id="page" style="margin: auto 0;padding: 10px;">Tiêu đề trang</h3>
+      </div>
+      <div style="margin-right: 40px;display: flex;">
+        <h4 style="margin: 15px;">Admin</h4>
+        <img style="border-radius: 100%; margin-left: 4px;"
+          src="https://th.bing.com/th?id=OIP.aRRBXrcRda7kFmPMlPnCTQHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
+          height="45" width="45" alt="">
+      </div>
+    </div>
     <div class="containerBox">
-      <div class="main" style="width: 80%; height: 100%; padding-bottom: 60px">
-        <h1
-          class="mb-4"
-          style="
-            font-size: 36px;
-            margin-top: 30px;
-            margin-bottom: 30px;
-            text-align: center;
-          "
-        >
-          Dashboard
-        </h1>
-
-        <div class="row mt-4" style="margin-left: 0; margin-right: 0">
-          <div class="col-md-4" style="padding-left: 0">
-            <div class="card text-center">
-              <div class="card-header">Tổng doanh thu/ tháng</div>
-              <div class="card-body">
-                <h3 id="total-money">0</h3>
-              </div>
+      <div class="row mt-4" style="margin-left: 0; margin-right: 0">
+        <div class="col-md-4" style="padding-left: 0">
+          <div class="card text-center">
+            <div class="card-header">Tổng doanh thu/ tháng</div>
+            <div class="card-body">
+              <h3 id="total-money">0</h3>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card text-center">
-              <div class="card-header">Số lượng sách/ tháng</div>
-              <div class="card-body">
-                <h3 id="total-order">0</h3>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="col-md-4">
-                    <div class="card text-center">
-                        <div class="card-header">Số lượng sách</div>
-                        <div class="card-body">
-                            <h3 id="total-product">200</h3>
-                        </div>
-                    </div>
-                </div> -->
         </div>
+        <div class="col-md-4">
+          <div class="card text-center">
+            <div class="card-header">Số lượng sách/ tháng</div>
+            <div class="card-body">
+              <h3 id="total-order">0</h3>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div style="max-width: 90%">
-          <div>
-            <div class="card">
-              <div class="card-body">
-                <canvas id="myChart"></canvas>
-              </div>
+      <div style="max-width: 90%">
+        <div>
+          <div class="card">
+            <div class="card-body">
+              <canvas id="myChart"></canvas>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </main>
+</body>
 
-    <!-- Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script
-      type="text/javascript"
-      src="https://cdn.jsdelivr.net/npm/toastify-js"
-    ></script>
-    <script src="/js/route.js"></script>
-    <script
-      type="text/javascript"
-      src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"
-    ></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.1/dist/chart.min.js"></script>
-    <script>
-      let html = route.map((e, index) => {
-        const pathname = window.location.pathname;
-        if (e.href == pathname) {
-          return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
-        } else {
-          return `<li><a href="${e.href}">${e.text}</a></li>`;
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/js/route.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.6.1/dist/chart.min.js"></script>
+<script>
+  let html = route.map((e, index) => {
+    const pathname = window.location.pathname;
+    if (e.href == pathname) {
+      return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
+    } else {
+      return `<li><a href="${e.href}">${e.text}</a></li>`;
+    }
+  });
+  $("#route")[0].innerHTML = html.join("");
+  $("#page").text($("#route>.active")[0].innerText)
+</script>
+<script>
+  const numberMonth = 4;
+  $.ajax({
+    url: `/order/dashboard?numberMonth=${numberMonth}`,
+    type: "GET",
+    success: (response) => {
+      console.log(response);
+      let labels = [];
+      let dataSet = [];
+      data = response.data.map((e) => {
+        labels.push(e.Date);
+        dataSet.push(e.total_amount);
+        return e;
       });
-      $("#route")[0].innerHTML = html.join("");
-    </script>
-    <script></script>
-    <script>
-      const numberMonth = 4;
-      $.ajax({
-        url: `/order/dashboard?numberMonth=${numberMonth}`,
-        type: "GET",
-        success: (response) => {
-          console.log(response);
-          let labels = [];
-          let dataSet = [];
-          data = response.data.map((e) => {
-            labels.push(e.Date);
-            dataSet.push(e.total_amount);
-            return e;
-          });
-          const ctx = document.getElementById("myChart").getContext("2d");
-          const myChart = new Chart(ctx, {
-            type: "line",
-            data: {
-              labels: labels,
-              datasets: [
-                {
-                  label: "Tổng số tiền mua",
-                  data: dataSet,
-                  backgroundColor: "rgb(105, 192, 233)",
-                  borderColor: "rgb(105, 192, 233)",
-                  borderWidth: 1,
-                },
-              ],
+      const ctx = document.getElementById("myChart").getContext("2d");
+      const myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Tổng số tiền mua",
+              data: dataSet,
+              backgroundColor: "rgb(105, 192, 233)",
+              borderColor: "rgb(105, 192, 233)",
+              borderWidth: 1,
             },
-            options: {
-              scales: {
-                y: {
-                  beginAtZero: true,
-                },
-              },
-              plugins: {
-                title: {
-                  display: true,
-                  text: "Biểu đồ doanh thu Tháng 4",
-                  font: {
-                    size: 18,
-                  },
-                },
-              },
-            },
-          });
-          $("#total-money").html(
-            response?.orderTotal[0]?.total_amount_by_month.toLocaleString() +
-              " đ"
-          );
-          $("#total-order").html(
-            response?.orderQuantity[0]?.OrderDetails[0]?.total_quantity
-          );
+          ],
         },
-        error: (response) => {},
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+          plugins: {
+            title: {
+              display: true,
+              text: "Biểu đồ doanh thu Tháng 4",
+              font: {
+                size: 18,
+              },
+            },
+          },
+        },
       });
-    </script>
-  </body>
-  <script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px";
-  </script>
+      $("#total-money").html(
+        response?.orderTotal[0]?.total_amount_by_month.toLocaleString() +
+        " đ"
+      );
+      $("#total-order").html(
+        response?.orderQuantity[0]?.OrderDetails[0]?.total_quantity
+      );
+    },
+    error: (response) => { },
+  });
+</script>
+<script>
+</script>
+
 </html>

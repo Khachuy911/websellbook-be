@@ -90,6 +90,6 @@ input[type="number"] {
         appearance: none;
     }
     .form-group label{
-        margin: 36px 0;
+        padding: 8px;
         text-align: end;
     }
