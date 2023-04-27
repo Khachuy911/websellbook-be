@@ -89,7 +89,9 @@ input[type="number"] {
         -moz-appearance: none;
         appearance: none;
     }
-    .form-group label{
-        padding: 8px;
-        text-align: end;
+
+    .form-group>label{
+        margin-right: 10px;
     }
+    
+
