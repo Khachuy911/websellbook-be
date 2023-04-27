@@ -1,32 +1,23 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Add a New Product</title>
-    <link rel="stylesheet" href="/css/root.css" />
-    <link rel="stylesheet" href="/css/dashboard.css" />
-    <link rel="stylesheet" href="/css/createProduct.css" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
-  </head>
 
-  <body style="position: relative">
-    <!-- <div class="nav" style="position: fixed;height: 100%; z-index: 1;">
-        
-    </div> -->
+<head>
+  <title>Add a New Product</title>
+  <link rel="stylesheet" href="/css/root.css" />
+  <link rel="stylesheet" href="/css/dashboard2.css" />
+  <link rel="stylesheet" href="/css/createProduct.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <!-- Toastify alert -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+</head>
 
-    <div class="nav">
-      <h1>Dashboard</h1>
-      <ul id="route">
-        <li><a href="/admin/dashboard">Dashboard</a></li>
-        <li><a href="#">Tài khoản của tôi</a></li>
-        <li><a href="#">Danh sách Products</a></li>
-        <li><a href="/product/create">Thêm Product</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Reports</a></li>
-      </ul>
+<body>
+  <nav>
+    <div style="height: 71px;">
+      <h3 style="padding: 10px;">Khắc Huy Shop</h3>
     </div>
     <div class="containerBox" style="position: relative; ">
         <div class="main" style="width: 80%;padding-bottom: 60px;">
@@ -92,43 +83,102 @@
             </form>
         </div>
 
+
     </div>
-  </body>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  </main>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
-  <script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/toastify-js"
-  ></script>
-  <script src="/js/route.js"></script>
-  <script>
-    let html = route.map((e, index) => {
-      const pathname = window.location.pathname;
-      if (e.href == pathname) {
-        return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
-      } else {
-        return `<li><a href="${e.href}">${e.text}</a></li>`;
-      }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/js/route.js"></script>
+<script>
+  let html = route.map((e, index) => {
+    const pathname = window.location.pathname;
+    if (e.href == pathname) {
+      return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
+    } else {
+      return `<li><a href="${e.href}">${e.text}</a></li>`;
+    }
+  });
+  $("#route")[0].innerHTML = html.join("");
+  $("#page").text($("#route>.active")[0].innerText)
+</script>
+
+
+<script>
+  $(document).ready(function () {
+    $.ajax({
+      url: `/category`,
+      type: "GET",
+      success: (response) => {
+        let listSelect = response?.data?.rows.map(
+          (item, index) => `<option value=${item.id}>${item.name}</option>`
+        );
+        $("#categoryId")[0].innerHTML = listSelect;
+      },
+      error: (data) => {
+        Toastify({
+          text: data.responseJSON.errorCode,
+          duration: 2000,
+          destination: "http://localhost:3000/",
+          newWindow: true,
+          //close: true,
+          offset: {
+            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "linear-gradient(to right, red, red)",
+            width: "250px",
+            fontSize: "16px",
+          },
+          onClick: function () { }, // Callback after click
+        }).showToast();
+      },
     });
-    $("#route")[0].innerHTML = html.join("");
-  </script>
 
-  <script>
-    $(document).ready(function () {
+    $("#HandleSubmitForm").submit((e) => {
+      e.preventDefault();
+      // const data = $("#HandleSubmitForm").serialize();
+      let form = document.getElementById("HandleSubmitForm");
+      let formData = new FormData(form);
+
       $.ajax({
-        url: `/category`,
-        type: "GET",
-        success: (response) => {
-          let listSelect = response?.data?.rows.map(
-            (item, index) => `<option value=${item.id}>${item.name}</option>`
-          );
-          $("#categoryId")[0].innerHTML = listSelect;
-        },
-        error: (data) => {
+        url: "/product",
+        type: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function (data) {
           Toastify({
-            text: data.responseJSON.errorCode,
+            text: "Thêm sách thành công",
+            duration: 2000,
+            newWindow: true,
+            //close: true,
+            offset: {
+              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+            },
+            gravity: "top", // `top` or `bottom`
+            position: "right", // `left`, `center` or `right`
+            stopOnFocus: true, // Prevents dismissing of toast on hover
+            style: {
+              background: "linear-gradient(to right, green, green)",
+              width: "250px",
+              fontSize: "16px",
+            },
+            onClick: function () { }, // Callback after click
+          }).showToast();
+        },
+        error: function (xhr, textStatus, errorThrown) {
+          Toastify({
+            text: "Thêm sách không thành công",
             duration: 2000,
             destination: "http://localhost:3000/",
             newWindow: true,
@@ -271,9 +321,7 @@
         });
       });
     });
-  </script>
+  });
+</script>
 
-  <script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px";
-  </script>
 </html>

@@ -1,76 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Danh sách tài khoản</title>
-    <link rel="stylesheet" href="/css/root.css" />
-    <link rel="stylesheet" href="/css/dashboard.css" />
-    <link rel="stylesheet" href="/css/createProduct.css" />
-    <!-- datatable -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/searchpanes/2.0.1/css/searchPanes.dataTables.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <!-- Toastify alert -->
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css"
-    />
 
-    <!-- css -->
-    <link rel="stylesheet" href="/css/dataTables.css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danh sách tài khoản</title>
+  <link rel="stylesheet" href="/css/root.css" />
+  <link rel="stylesheet" href="/css/dashboard2.css" />
+  <link rel="stylesheet" href="/css/createProduct.css" />
+  <!-- datatable -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/searchpanes/2.0.1/css/searchPanes.dataTables.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/select/1.4.0/css/select.dataTables.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css" />
+  <link rel="stylesheet" type="text/css"
+    href="https://cdn.datatables.net/buttons/2.2.3/css/buttons.dataTables.min.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <!-- Toastify alert -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
 
-  <body style="position: relative">
-    <!-- <div class="nav" style="position: fixed;height: 100%; z-index: 1;">
-        
-    </div> -->
+  <!-- css -->
+  <link rel="stylesheet" href="/css/dataTables.css" />
+</head>
 
-    <div class="nav">
-      <h1>Dashboard</h1>
-      <ul id="route">
-        <li><a href="/admin/dashboard">Dashboard</a></li>
-        <li><a href="#">Tài khoản của tôi</a></li>
-        <li><a href="#">Danh sách Products</a></li>
-        <li><a href="/product/create">Thêm Product</a></li>
-        <li><a href="#">Products</a></li>
-        <li><a href="#">Reports</a></li>
-      </ul>
+<body>
+  <nav >
+    <div style="height: 71px;">
+      <h3 style="padding: 10px;">Khắc Huy Shop</h3>
     </div>
-    <div class="containerBox" style="position: relative">
-      <div class="main" style="width: 80%; height: 100%; padding-bottom: 60px">
-        <h1 style="margin-left: 30px; margin-top: 30px">Danh sách user</h1>
-        <div class="card" style="width: 95%; margin: auto">
+    <div class="nav-item" style="border-top: 1px solid #ccc;border-bottom: none;">
+      <ul id="route"></ul>
+    </div>
+  </nav>
+
+  <main style="height: 100%;">
+    <div style="display: flex;justify-content: space-between; height: 70px;">
+      <div>
+        <h3 id="page" style="margin: auto 0;padding: 10px;">Tiêu đề trang</h3>
+      </div>
+      <div style="margin-right: 40px;display: flex;">
+        <h4 style="margin: 15px;">Admin</h4>
+        <img style="border-radius: 100%; margin-left: 4px;"
+          src="https://th.bing.com/th?id=OIP.aRRBXrcRda7kFmPMlPnCTQHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
+          height="45" width="45" alt="">
+      </div>
+    </div>
+    <div class="containerBox main-item" style="border-bottom: none; margin-bottom: 80px;" >
+        <div class="">
           <table id="myTable">
             <thead>
               <tr>
@@ -85,217 +65,212 @@
             <tbody id="table-body"></tbody>
           </table>
         </div>
-      </div>
+
     </div>
-    <div
-      class="modal fade"
-      id="exampleModalDelete"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Xoá tài khoản</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">Bạn có muốn xoá tài khoản này không?</div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              id="btn-delete-success"
-              class="btn btn-danger"
-            >
-              Xoá ngay
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Đóng
-            </button>
-          </div>
+  </main>
+  <div class="modal fade" id="exampleModalDelete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Xoá tài khoản</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">Bạn có muốn xoá tài khoản này không?</div>
+        <div class="modal-footer">
+          <button type="button" id="btn-delete-success" class="btn btn-danger">
+            Xoá ngay
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Đóng
+          </button>
         </div>
       </div>
     </div>
-    <div
-      class="modal fade"
-      id="exampleModalUpdate"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Phân quyền</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            Bạn có muốn phân quyền tài khoản này thành quền Admin hay không?
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              id="btn-update-success"
-              class="btn btn-primary"
-            >
-              Phân quyền admin
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Đóng
-            </button>
-          </div>
+  </div>
+  <div class="modal fade" id="exampleModalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Phân quyền</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Bạn có muốn phân quyền tài khoản này thành quền Admin hay không?
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="btn-update-success" class="btn btn-primary">
+            Phân quyền admin
+          </button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Đóng
+          </button>
         </div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
 
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-  <script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/toastify-js"
-  ></script>
-  <script src="/js/route.js"></script>
-  <script>
-    let height = window.innerHeight;
-    $(".main")[0].style.minHeight = height + "px";
-    let html = route.map((e, index) => {
-      const pathname = window.location.pathname;
-      if (e.href == pathname) {
-        return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
-      } else {
-        return `<li><a href="${e.href}">${e.text}</a></li>`;
-      }
-    });
-    $("#route")[0].innerHTML = html.join("");
-  </script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<script src="/js/route.js"></script>
+<script>
+  let html = route.map((e, index) => {
+    const pathname = window.location.pathname;
+    if (e.href == pathname) {
+      return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
+    } else {
+      return `<li><a href="${e.href}">${e.text}</a></li>`;
+    }
+  });
+  $("#route")[0].innerHTML = html.join("");
+  $("#page").text($("#route>.active")[0].innerText)
+</script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-  <!-- datatables -->
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/searchpanes/2.0.1/js/dataTables.searchPanes.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"
-  ></script>
-  <script
-    type="text/javascript"
-    src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"
-  ></script>
+<!-- datatables -->
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.js"></script>
+<script type="text/javascript"
+  src="https://cdn.datatables.net/searchpanes/2.0.1/js/dataTables.searchPanes.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/select/1.4.0/js/dataTables.select.min.js"></script>
+<script type="text/javascript"
+  src="https://cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js"></script>
 
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"
-  ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
-  <!-- toastify -->
-  <script
-    type="text/javascript"
-    src="https://cdn.jsdelivr.net/npm/toastify-js"
-  ></script>
+<!-- toastify -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-  <script>
-    $.ajax({
-      url: `/user`,
-      type: "GET",
-      success: (response) => {
-        console.log(response);
-        let listSelect = response?.data?.rows.map(
-          (item, index) => `
+<script>
+  $.ajax({
+    url: `/user`,
+    type: "GET",
+    success: (response) => {
+      console.log(response);
+      let listSelect = response?.data?.rows.map(
+        (item, index) => `
                                  <tr>
-                                    <td style="text-align:center">${
-                                      index + 1
-                                    }</td>
-                                    <td style="max-width:200px">${
-                                      item.username
-                                    }</td>
+                                    <td style="text-align:center">${index + 1
+          }</td>
+                                    <td style="max-width:200px">${item.username
+          }</td>
                                     <td>${item.email}</td>
                                     <td>${item.phone}</td>
                                     <td>${item.UserRoles[0].Role.name}</td>
                                     <td style="max-width:120px;text-align:center">
-                                        <button type="button" data-id="${
-                                          item.id
-                                        }" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn btn-primary">Phân quyền</button>                                    
-                                        <button type="button" data-id="${
-                                          item.id
-                                        }" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá ngay</button>
+                                        <button type="button" data-id="${item.id
+          }" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn btn-primary">Phân quyền</button>                                    
+                                        <button type="button" data-id="${item.id
+          }" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá ngay</button>
                                     </td>
                                 </tr>`
-        );
-        $("#table-body")[0].innerHTML = listSelect.join("");
-        let table = $("#myTable").DataTable({
-          select: false,
-          pageLength: 5,
-          stateSave: true,
-          lengthMenu: [5, 10, 15, 20],
-          columnDefs: [
-            {
-              searchPanes: {
-                show: true,
-              },
-              targets: [1, 2, 3],
+      );
+      $("#table-body")[0].innerHTML = listSelect.join("");
+      let table = $("#myTable").DataTable({
+        select: false,
+        pageLength: 5,
+        stateSave: true,
+        lengthMenu: [5, 10, 15, 20],
+        columnDefs: [
+          {
+            searchPanes: {
+              show: true,
             },
-          ],
-          order: [[3, "desc"]],
-          language: {
-            sEmptyTable: "Không có dữ liệu trong bảng",
-            sInfo:
-              "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
-            sInfoEmpty: "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
-            sInfoFiltered: "(được lọc từ tổng số _MAX_ kết quả)",
-            sInfoPostFix: "",
-            sInfoThousands: ",",
-            sLengthMenu: "Hiển thị _MENU_ kết quả",
-            sLoadingRecords: "Đang tải...",
-            sProcessing: "Đang xử lý...",
-            sSearch: "Tìm kiếm:",
-            sZeroRecords: "Không tìm thấy kết quả phù hợp",
-            oPaginate: {
-              sFirst: "Đầu",
-              sLast: "Cuối",
-              sNext: "Tiếp",
-              sPrevious: "Trước",
-            },
-            oAria: {
-              sSortAscending: ": sắp xếp cột tăng dần",
-              sSortDescending: ": sắp xếp cột giảm dần",
-            },
+            targets: [1, 2, 3],
           },
-        });
-        new $.fn.dataTable.SearchPanes(table, {});
-        table.searchPanes.container().prependTo(table.table().container());
-        table.searchPanes.resizePanes();
-        try {
-          $(".dtsp-collapseAll")[0].click();
-        } catch (error) {}
+        ],
+        order: [[3, "desc"]],
+        language: {
+          sEmptyTable: "Không có dữ liệu trong bảng",
+          sInfo:
+            "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
+          sInfoEmpty: "Hiển thị từ 0 đến 0 trong tổng số 0 kết quả",
+          sInfoFiltered: "(được lọc từ tổng số _MAX_ kết quả)",
+          sInfoPostFix: "",
+          sInfoThousands: ",",
+          sLengthMenu: "Hiển thị _MENU_ kết quả",
+          sLoadingRecords: "Đang tải...",
+          sProcessing: "Đang xử lý...",
+          sSearch: "Tìm kiếm:",
+          sZeroRecords: "Không tìm thấy kết quả phù hợp",
+          oPaginate: {
+            sFirst: "Đầu",
+            sLast: "Cuối",
+            sNext: "Tiếp",
+            sPrevious: "Trước",
+          },
+          oAria: {
+            sSortAscending: ": sắp xếp cột tăng dần",
+            sSortDescending: ": sắp xếp cột giảm dần",
+          },
+        },
+      });
+      new $.fn.dataTable.SearchPanes(table, {});
+      table.searchPanes.container().prependTo(table.table().container());
+      table.searchPanes.resizePanes();
+      try {
+        $(".dtsp-collapseAll")[0].click();
+      } catch (error) { }
+    },
+    error: (data) => {
+      Toastify({
+        text: data.responseJSON.errorCode,
+        duration: 2000,
+        newWindow: true,
+        //close: true,
+        offset: {
+          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+          y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+        },
+        gravity: "top", // `top` or `bottom`
+        position: "right", // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: "linear-gradient(to right, red, red)",
+          width: "250px",
+          fontSize: "16px",
+        },
+      }).showToast();
+    },
+  });
+
+  let deleteId;
+  $("#exampleModalDelete").on("show.bs.modal", function (event) {
+    const button = $(event.relatedTarget);
+    deleteId = button.data("id");
+  });
+  $("#btn-delete-success").click((e) => {
+    e.preventDefault();
+    $.ajax({
+      url: `/user/deletesoft/${deleteId}`,
+      type: "DELETE",
+      success: (response) => {
+        Toastify({
+          text: response.message,
+          duration: 2000,
+          newWindow: true,
+          //close: true,
+          offset: {
+            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "linear-gradient(to right, green, green)",
+            width: "250px",
+            fontSize: "16px",
+          },
+        }).showToast();
+        setTimeout(() => {
+          $("#exampleModalDelete").modal("hide");
+          location.reload();
+        }, "2000");
       },
       error: (data) => {
         Toastify({
@@ -315,130 +290,77 @@
             width: "250px",
             fontSize: "16px",
           },
+          onClick: function () { }, // Callback after click
         }).showToast();
       },
     });
+  });
 
-    let deleteId;
-    $("#exampleModalDelete").on("show.bs.modal", function (event) {
-      const button = $(event.relatedTarget);
-      deleteId = button.data("id");
-    });
-    $("#btn-delete-success").click((e) => {
-      e.preventDefault();
-      $.ajax({
-        url: `/user/deletesoft/${deleteId}`,
-        type: "DELETE",
-        success: (response) => {
-          Toastify({
-            text: response.message,
-            duration: 2000,
-            newWindow: true,
-            //close: true,
-            offset: {
-              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
-            },
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "linear-gradient(to right, green, green)",
-              width: "250px",
-              fontSize: "16px",
-            },
-          }).showToast();
-          setTimeout(() => {
-            $("#exampleModalDelete").modal("hide");
-            location.reload();
-          }, "2000");
-        },
-        error: (data) => {
-          Toastify({
-            text: data.responseJSON.errorCode,
-            duration: 2000,
-            newWindow: true,
-            //close: true,
-            offset: {
-              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
-            },
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "linear-gradient(to right, red, red)",
-              width: "250px",
-              fontSize: "16px",
-            },
-            onClick: function () {}, // Callback after click
-          }).showToast();
-        },
-      });
-    });
+  let UpdateId;
 
-    let UpdateId;
+  $("#exampleModalUpdate").on("show.bs.modal", function (event) {
+    const button = $(event.relatedTarget);
+    UpdateId = button.data("id");
+  });
 
-    $("#exampleModalUpdate").on("show.bs.modal", function (event) {
-      const button = $(event.relatedTarget);
-      UpdateId = button.data("id");
+  $("#btn-update-success").click((e) => {
+    e.preventDefault();
+    $.ajax({
+      url: `/user/updateBecomeAdmin/`,
+      type: "PATCH",
+      data: { id: UpdateId },
+      success: (response) => {
+        Toastify({
+          text: "Phân quyền admin thành công",
+          duration: 2000,
+          newWindow: true,
+          //close: true,
+          offset: {
+            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "linear-gradient(to right, green, green)",
+            width: "300px",
+            fontSize: "16px",
+          },
+        }).showToast();
+        setTimeout(() => {
+          $("#exampleModalDelete").modal("hide");
+          location.reload();
+        }, "1000");
+      },
+      error: (data) => {
+        Toastify({
+          text: data.responseJSON.errorCode,
+          duration: 2000,
+          newWindow: true,
+          //close: true,
+          offset: {
+            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+            y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
+          },
+          gravity: "top", // `top` or `bottom`
+          position: "right", // `left`, `center` or `right`
+          stopOnFocus: true, // Prevents dismissing of toast on hover
+          style: {
+            background: "linear-gradient(to right, red, red)",
+            width: "250px",
+            fontSize: "16px",
+          },
+          onClick: function () { }, // Callback after click
+        }).showToast();
+      },
     });
+  });
+</script>
+<script>
+    let windowHeight = $(window).height();
+    $(".nav-item").css("min-height", windowHeight-70 + "px");  
+    $(".main-item").css("min-height", windowHeight-70 + "px");  
+</script>
 
-    $("#btn-update-success").click((e) => {
-      e.preventDefault();
-      $.ajax({
-        url: `/user/updateBecomeAdmin/`,
-        type: "PATCH",
-        data: { id: UpdateId },
-        success: (response) => {
-          Toastify({
-            text: "Phân quyền admin thành công",
-            duration: 2000,
-            newWindow: true,
-            //close: true,
-            offset: {
-              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
-            },
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "linear-gradient(to right, green, green)",
-              width: "300px",
-              fontSize: "16px",
-            },
-          }).showToast();
-          setTimeout(() => {
-            $("#exampleModalDelete").modal("hide");
-            location.reload();
-          }, "1000");
-        },
-        error: (data) => {
-          Toastify({
-            text: data.responseJSON.errorCode,
-            duration: 2000,
-            newWindow: true,
-            //close: true,
-            offset: {
-              x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-              y: 10, // vertical axis - can be a number or a string indicating unity. eg: '2em'
-            },
-            gravity: "top", // `top` or `bottom`
-            position: "right", // `left`, `center` or `right`
-            stopOnFocus: true, // Prevents dismissing of toast on hover
-            style: {
-              background: "linear-gradient(to right, red, red)",
-              width: "250px",
-              fontSize: "16px",
-            },
-            onClick: function () {}, // Callback after click
-          }).showToast();
-        },
-      });
-    });
-  </script>
-  <script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px";
-  </script>
 </html>
