@@ -81,6 +81,8 @@ module.exports = {
 
       await t.commit();
 
+      console.log("=============" + link);
+
       res.status(HTTP_CODE.CREATED).json({
         isSuccess: true,
         message: MESSAGE.CREATED,
@@ -249,6 +251,8 @@ module.exports = {
       )}/auth/views/check-verify?token=${token1}&id=${user.id}`;
       const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
     <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">Xác Thực</a></button>`;
+
+      console.log("Resend email =============" + link);
       sendMail(user.email, text, html);
       return res.status(403).json({
         isSuccess: true,

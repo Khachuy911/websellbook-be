@@ -76,214 +76,48 @@
         />
       </symbol>
     </svg>
-    <!-- <div class="container-xl"> -->
-
-    <!-- HEAD -->
-    <header
-      class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
-    >
-      <!-- Avatar -->
-      <a
-        href="/product"
-        class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none"
-      >
-        <img
-          class="bi me-2"
-          width="100%"
-          height="50"
-          role="img"
-          aria-label="KhacHuyShop"
-          src="https://source.unsplash.com/random/300x200?sig=${Math.random()}"
-        />
-      </a>
-
-      <!-- Menu -->
-      <ul class="nav col-12 col-md-6 mb-2 justify-content-center mb-md-0">
-        <li>
-          <a href="/product" class="custom-menu-header active nav-link px-2"
-            ><svg class="bi d-block mx-auto mb-1" width="18" height="18">
-              <use xlink:href="#home" /></svg
-            >Trang Chủ</a
-          >
-        </li>
-        <li>
-          <div class="dropdown">
-            <span
-              class="custom-menu-header dropdown-toggle nav-link px-2"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <svg class="bi d-block mx-auto mb-1" width="18" height="18">
-                <use xlink:href="#grid" />
-              </svg>
-              Danh Mục
-            </span>
-            <ul class="dropdown-menu">
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách kinh doanh</a
-                >
-              </li>
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách thiếu nhi</a
-                >
-              </li>
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách else here</a
-                >
-              </li>
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách else here</a
-                >
-              </li>
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách else here</a
-                >
-              </li>
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách else here</a
-                >
-              </li>
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách else here</a
-                >
-              </li>
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách else here</a
-                >
-              </li>
-              <li>
-                <a class="custom-dropdown-item dropdown-item" href="#"
-                  >Sách else here</a
-                >
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <a href="#" class="custom-menu-header nav-link px-2 link-primary"
-            ><svg class="bi d-block mx-auto mb-1" width="18" height="18">
-              <use xlink:href="#table" /></svg
-            >Giỏ Hàng</a
-          >
-        </li>
-        <li>
-          <a href="#" class="custom-menu-header nav-link px-2"
-            ><svg class="bi d-block mx-auto mb-1" width="18" height="18">
-              <use xlink:href="#voucher" /></svg
-            >Voucher</a
-          >
-        </li>
-        <li>
-          <a href="/admin/dashboard" class="custom-menu-header nav-link px-2"
-            ><svg class="bi d-block mx-auto mb-1" width="18" height="18">
-              <use xlink:href="#speedometer2" /></svg
-            >Quản Lý</a
-          >
-        </li>
-      </ul>
-
-      <!-- Search -->
-      <form
-        action="/product/search"
-        class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3"
-      >
-        <input
-          type="search"
-          name="search"
-          class="form-control"
-          placeholder="Nhập tên sách bạn  muốn tìm ?"
-          aria-label="Search"
-        />
-      </form>
-
-      <!-- Profile -->
-      <div class="col-md-0 text-end">
-        <div class="dropdown text-end">
-          <a
-            href="#"
-            class="d-block link-dark text-decoration-none dropdown-toggle"
-            id="dropdownUser1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://4.bp.blogspot.com/-6elQkFTR8gM/V_YKmIlnp5I/AAAAAAAAEZ8/AS_B3lRU2K4h3pjmV_j-nCMZ8dz5kY2gQCLcB/s200/student-avatar.png"
-              alt="mdo"
-              width="32"
-              height="32"
-              class="rounded-circle"
-            />
-          </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-            <li>
-              <a class="custom-dropdown-item dropdown-item" href="#"
-                >Thông Tin</a
-              >
-            </li>
-            <li>
-              <a class="custom-dropdown-item dropdown-item" href="#"
-                >Giỏ Hàng</a
-              >
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="custom-dropdown-item dropdown-item" href="#"
-                >Đăng Nhập</a
-              >
-            </li>
-            <li>
-              <a class="custom-dropdown-item dropdown-item" href="#">Đăng Ký</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </header>
 
     <!-- BODY -->
 
-    <div class="container">
+    <div class="container1111">
       <div class="section">
         <hr />
         <h3>HOÁ ĐƠN MUA SÁCH</h3>
+        <h5>-- KhacHuy Shop --</h5>
         <hr />
         <div class="order-infor">
           <div class="order-user">
-            <h4>THÔNG TIN CÁ NHÂN</h4>
-            <p>Họ tên: <%= data.currentUser.username%></p>
-            <p>Email: <%= data.currentUser.email%></p>
-            <p>Số điện thoại: <%= data.currentUser.phone%></p>
-            <p>Địa chỉ: <%= data.currentUser.address%></p>
+            <h4 style="margin: 25px 0px 25px 0px">THÔNG TIN CÁ NHÂN</h4>
+            <p>Họ tên: <%= data.order.User.username%></p>
+            <p>Email: <%= data.order.User.email%></p>
+            <p>Số điện thoại: <%= data.order.phone%></p>
+            <p>Địa chỉ: <%= data.order.address%></p>
           </div>
           <div class="order-text">
-            <h4>THÔNG TIN ĐƠN HÀNG</h4>
-            <p>Thời gian đặt: <%= data.order.createdAt%></p>
+            <h4 style="margin: 25px 0px 25px 0px">THÔNG TIN ĐƠN HÀNG</h4>
             <p>Mã đơn hàng: <%= data.order.orderCode%></p>
-            <p>Trạng thái đơn: <%= data.order.orderStatus%></p>
-            <p>Voucher: <%= data.order.voucherId%></p>
+            <p>Thời gian đặt: <%= data.order.createdAt%></p>
+            <% if(data.order.Voucher){ %>
+            <p>Voucher: <%= data.order.Voucher.voucherCode%></p>
+            <p>
+              Giảm:
+              <%=(data.order.Voucher.discountAmount).toLocaleString('vn-VN',
+              {style: 'currency', currency: 'VND' })%>
+            </p>
+            <%}%>
             <p>Thuế: <%= data.order.tax%> %</p>
-            <p>Tổng tiền đơn: <%= data.order.totalPrice%></p>
           </div>
         </div>
-        <h4>THÔNG TIN SÁCH</h4>
+        <h4 style="margin: 30px">THÔNG TIN SÁCH</h4>
         <div class="order-book">
           <div class="custom-table">
-            <table class="table table-dark text-left">
+            <table class="table text-left">
               <thead>
                 <tr>
                   <th scope="col">Tên sách</th>
                   <th scope="col">Tác giả</th>
                   <th scope="col">Giá sách</th>
                   <th scope="col">Số lượng</th>
-                  <th scope="col">Flash sale</th>
-                  <th scope="col">Tổng chi phí</th>
                 </tr>
               </thead>
               <tbody>
@@ -292,148 +126,32 @@
                   <td><%= orderDetail.Product.name %></td>
                   <td><%= orderDetail.Product.author %></td>
                   <td>
-                    <%= orderDetail.Product.priceSelling.toLocaleString('vn-VN',
-                    { style: 'currency', currency: 'VND' }) %>
-                  </td>
-                  <td><%= orderDetail.quantity %></td>
-                  <%if(orderDetail?.Product?.FlashSaleProducts[0]){%>
-                  <td>
-                    -<%=
-                    orderDetail?.Product?.FlashSaleProducts[0].discountAmount.toLocaleString('vn-VN',
-                    { style: 'currency', currency: 'VND' })%>
-                  </td>
-                  <td>
-                    <%= (orderDetail.Product.priceSelling * orderDetail.quantity
-                    -
-                    orderDetail?.Product?.FlashSaleProducts[0].discountAmount).toLocaleString('vn-VN',
-                    { style: 'currency', currency: 'VND' }) %>
-                  </td>
-                  <%}else{%>
-                  <td>0</td>
-                  <td>
-                    <%= (orderDetail.Product.priceSelling *
-                    orderDetail.quantity).toLocaleString('vn-VN', { style:
+                    <%= orderDetail.price.toLocaleString('vn-VN', { style:
                     'currency', currency: 'VND' }) %>
                   </td>
-                  <%}%>
+                  <td>x<%= orderDetail.quantity %></td>
                 </tr>
                 <% }); %>
               </tbody>
             </table>
           </div>
         </div>
-        <h3>Thanh toán:</h3>
-        <p>Chi tiết vận chuyển: A -> B</p>
-        <p>Giá sách</p>
-        <p>Voucher</p>
-        <p>flashsale</p>
-        <p>Tổng chi phí</p>
+
+        <p
+          style="
+            font-weight: bolder;
+            font-size: 20px;
+            text-align: right;
+            margin: 40px 20px;
+          "
+        >
+          TỔNG TIỀN ĐƠN: <%= (data.order.totalPrice).toLocaleString('vn-VN', {
+          style: 'currency', currency: 'VND' })%>
+        </p>
       </div>
     </div>
 
     <!-- FOOTER -->
-    <div class="footer">
-      <footer class="py-5">
-        <div class="row">
-          <div class="col-3 col-md-4 mb-1">
-            <h5>HỖ TRỢ KHÁCH HÀNG</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted"
-                  >Sản phẩm & Đơn hàng: 0339118095</a
-                >
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted"
-                  >Kỹ thuật & bảo hành: 0891987832</a
-                >
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted"
-                  >Điện thoại: 0986745062 (giờ hành chính)</a
-                >
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted"
-                  >Email: khachuy469@gmail.com</a
-                >
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted"
-                  >Facebook: Nguyễn Khắc Huy</a
-                >
-              </li>
-            </ul>
-          </div>
-
-          <div class="col-6 col-md-3 mb-3">
-            <h5>LIÊN KẾT NHANH</h5>
-            <ul class="nav flex-column">
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">Sách bán chạy</a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">Sách thiếu nhi</a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">Sách giáo khoa</a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">Sách tâm lý</a>
-              </li>
-              <li class="nav-item mb-2">
-                <a href="#" class="nav-link p-0 text-muted">Sách mới</a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="col-md-4 offset-md-1 mb-3">
-            <form>
-              <h5>Đăng nhập & Đăng ký</h5>
-              <p>Đăng ký đăng nhập bằng email của bạn ngay !</p>
-              <div class="d-flex flex-column flex-sm-row w-100 gap-2">
-                <label for="newsletter1" class="visually-hidden"
-                  >Email address</label
-                >
-                <input
-                  id="newsletter1"
-                  type="text"
-                  class="form-control"
-                  placeholder="Email address"
-                />
-                <button class="btn btn-primary" type="button">Gửi</button>
-              </div>
-            </form>
-          </div>
-        </div>
-
-        <div
-          class="d-flex flex-column flex-sm-row justify-content-between py-4 my-4 border-top"
-        >
-          <p>&copy; Khachuy Shop, Inc. So 5 - hong ha - dan phuong - ha noi.</p>
-          <ul class="list-unstyled d-flex">
-            <li class="ms-3">
-              <a class="link-dark" href="#"
-                ><svg class="bi" width="24" height="24">
-                  <use xlink:href="#twitter" /></svg
-              ></a>
-            </li>
-            <li class="ms-3">
-              <a class="link-dark" href="#"
-                ><svg class="bi" width="24" height="24">
-                  <use xlink:href="#instagram" /></svg
-              ></a>
-            </li>
-            <li class="ms-3">
-              <a class="link-dark" href="#"
-                ><svg class="bi" width="24" height="24">
-                  <use xlink:href="#facebook" /></svg
-              ></a>
-            </li>
-          </ul>
-        </div>
-      </footer>
-    </div>
     <!-- </div> -->
 
     <script

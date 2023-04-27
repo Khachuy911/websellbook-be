@@ -8,6 +8,8 @@ const { DEFAULT_VALUE } = require("../helper/constant");
 
 Route.get("/dashboard", AsyncHandle(OrderController.dashboard));
 
+Route.get("/exportData", AsyncHandle(OrderController.exportData));
+
 Route.patch(
   "/confirm/:id",
   Auth.checkToken,
@@ -50,6 +52,7 @@ Route.delete(
   AsyncHandle(OrderController.cancelOrder)
 );
 Route.get("/myorder", Auth.checkToken, AsyncHandle(OrderController.getMyOrder));
+Route.get("/export/:id", AsyncHandle(OrderController.getDetailToExport));
 Route.get("/:id", Auth.checkToken, AsyncHandle(OrderController.getDetail));
 
 Route.get(

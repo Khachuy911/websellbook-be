@@ -9,6 +9,7 @@ const FlashSale = require("../model/flashSaleModel");
 const FlashSaleProduct = require("../model/flashSaleProductModel");
 const Voucher = require("../model/voucherModel");
 const ErrorResponse = require("../helper/errorResponse");
+const puppeteer = require("puppeteer");
 const {
   getPagination,
   getSort,
@@ -16,6 +17,7 @@ const {
   filter,
 } = require("../helper/helper");
 const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require("../helper/constant");
+const User = require("../model/userModel");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -650,6 +652,9 @@ module.exports = {
           model: Voucher,
         },
         {
+          model: User,
+        },
+        {
           model: OrderDetail,
           include: {
             model: Product,
@@ -669,14 +674,50 @@ module.exports = {
       data: order,
       currentUser: req.currentUser,
     });
+  },
 
-    // const data = {
-    //   order,
-    // };
+  getDetailToExport: async (req, res, next) => {
+    const { id } = req.params;
 
-    // console.log("========> Order: " + JSON.stringify(data));
+    if (!id) {
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
+    }
 
-    // res.render("../view/orderDetail.ejs", { data });
+    const condition = {
+      where: {
+        id,
+        // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+      },
+      include: [
+        {
+          model: Voucher,
+        },
+        {
+          model: User,
+        },
+        {
+          model: OrderDetail,
+          include: {
+            model: Product,
+            include: {
+              model: FlashSaleProduct,
+            },
+          },
+        },
+      ],
+    };
+
+    const order = await Order.findOne(condition);
+
+    const data = {
+      order,
+    };
+
+    res.render("../view/orderDetail.ejs", {
+      data,
+    });
   },
 
   dashboard: async (req, res, next) => {
@@ -751,5 +792,24 @@ module.exports = {
       orderTotal,
       orderQuantity,
     });
+  },
+
+  exportData: async (req, res) => {
+    const idOrder = req.query.order;
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.goto(`http://localhost:3000/order/export/${idOrder}`, {
+      waitUntil: "networkidle2",
+    });
+    await page.setViewport({ width: 1680, height: 1050 });
+    await page.pdf({
+      path: `public/upload/${idOrder}.pdf`,
+      format: "A4",
+      printBackground: true,
+    });
+
+    await browser.close();
+
+    res.redirect(`http://localhost:3000/upload/${idOrder}.pdf`);
   },
 };
