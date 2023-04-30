@@ -78,10 +78,30 @@
         <h3 id="page" style="margin: auto 0;padding: 10px;">Tiêu đề trang</h3>
       </div>
       <div style="margin-right: 40px;display: flex;">
-        <h4 style="margin: 15px;">Admin</h4>
-        <img style="border-radius: 100%; margin-left: 4px;"
-          src="https://th.bing.com/th?id=OIP.aRRBXrcRda7kFmPMlPnCTQHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
-          height="45" width="45" alt="">
+        <div class="col-md-0 text-end">
+          <div class="dropdown text-end">
+            <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <img
+                src="https://4.bp.blogspot.com/-6elQkFTR8gM/V_YKmIlnp5I/AAAAAAAAEZ8/AS_B3lRU2K4h3pjmV_j-nCMZ8dz5kY2gQCLcB/s200/student-avatar.png"
+                alt="mdo" width="32" height="32" class="rounded-circle">
+            </a>
+            <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+              <li><a class="custom-dropdown-item dropdown-item " href="/user/getMe"><i style=" margin-right:5px"
+                    class="fa-solid fa-user"></i> Thông Tin cá nhân</a>
+              </li>
+              <li><a class="custom-dropdown-item dropdown-item" href="/order/myorder"><i style=" margin-right:5px"
+                    class="fa-solid fa-cart-shopping"></i> Đơn Hàng</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="custom-dropdown-item dropdown-item" href="/auth/logout"><i style=" margin-right:5px"
+                    class="fa-solid fa-right-from-bracket"></i> Đăng
+                  xuất</a></li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
     <div class="containerBox main-item" style="border-bottom: none;">
