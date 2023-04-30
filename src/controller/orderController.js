@@ -550,17 +550,21 @@ module.exports = {
         // ...search(req.query.search),
         ...filter("orderStatus", req.query.status),
       },
-      include: {
-        model: OrderDetail,
-        model: User,
-        required: false,
-        where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
-        include: {
-          model: Product,
+      include: [
+        {
+          model: OrderDetail,
           required: false,
           where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          include: {
+            model: Product,
+            required: false,
+            where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          },
         },
-      },
+        {
+          model: User,
+        },
+      ],
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
