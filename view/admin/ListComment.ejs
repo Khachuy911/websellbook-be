@@ -58,7 +58,7 @@
                     <thead>
                         <tr>
                             <th>STT</th>
-                            <th>User</th>
+                            <th>Người dùng</th>
                             <th>Tên sách</th>
                             <th>Nhận xét</th>
                             <th>Ngày nhận xét</th>
@@ -146,9 +146,9 @@
             let listSelect = response?.data?.rows.map((item, index) => (`
                                  <tr data-id="${item.id}">
                                     <td style="text-align:center">${index + 1}</td>
-                                    <td>${item.name}</td>
-                                    <td style="max-width:200px;">${item.text}</td>
-                                    <td style="max-width:200px;">${item.text}</td>
+                                    <td>${item.User.email}</td>
+                                    <td style="max-width:200px;">${item.Product.name}</td>
+                                    <td style="max-width:200px;overflow: hidden;text-overflow:ellipsis">${item.text}</td>
                                     <td>${item.updatedAt}</td>
                                     <td style="max-width:120px;text-align:center">
                                         <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
@@ -166,7 +166,7 @@
                         searchPanes: {
                             show: true
                         },
-                        targets: [1, 2, 3, 5]
+                        targets: [1, 2]
                     }
                 ],
                 "language": {
@@ -193,8 +193,12 @@
                     },
                 }
             });
-            try { $(".dtsp-collapseAll")[0].click() } catch (error) { }
-
+            new $.fn.dataTable.SearchPanes(table, {});
+            table.searchPanes.container().prependTo(table.table().container());
+            table.searchPanes.resizePanes();
+            try {
+                $(".dtsp-collapseAll")[0].click();
+            } catch (error) { }
         },
         error: (data) => {
             Toastify({

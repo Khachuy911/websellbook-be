@@ -29,12 +29,12 @@ const route = [
         href:"/admin/list-catogery"
     },
     {
-        text:"Danh sách Voucher",
-        href:"/admin/list-Voucher"
-    },
-    {
         text:"Danh sách Comment",
         href:"/admin/list-comment"
+    },
+    {
+        text:"Danh sách Voucher",
+        href:"/admin/list-Voucher"
     },
     {
         text:"Danh sách FlashSale",

@@ -126,7 +126,7 @@
                             <label for="expireDate" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày hết
                                 hạn<strong style="color: red;">*</strong></label>
-                            <input id="expireDate" name="expireDate" style="width: 100%;" type="date" required>
+                            <input id="expireDate" name="expireDate" style="width: 100%;" type="datetime-local" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -168,7 +168,7 @@
                             <label for="expireDate" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày hết
                                 hạn<strong style="color: red;">*</strong></label>
-                            <input id="expireDate" name="expireDate" style="width: 100%;" type="date" required>
+                            <input id="expireDate" name="expireDate" style="width: 100%;" type="datetime-local" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -308,12 +308,18 @@
             }).showToast();
         }
     })
-    $(document).on("click", ".btn-delete", function () {
-        const id = $(this).data("id");
-        $("#btn-delete-success").click(e => {
+    
+    let idDelete ;
+    $("#exampleModalDelete").on("show.bs.modal", function (event) {
+        const button = $(event.relatedTarget);
+        idDelete = button.data("id");
+    })
+
+    
+    $("#btn-delete-success").click(e => {
             e.preventDefault();
             $.ajax({
-                url: `/voucher/${id}`,
+                url: `/voucher/${idDelete}`,
                 type: "DELETE",
                 success: (response) => {
                     Toastify({
@@ -343,7 +349,6 @@
                     Toastify({
                         text: "Xoá không thành công",
                         duration: 2000,
-                        destination: "http://localhost:3000/",
                         newWindow: true,
                         //close: true,
                         offset: {
@@ -364,26 +369,29 @@
             })
 
         })
-    });
+    
+    let idUpdate ;
+    $("#exampleModalUpdate").on("show.bs.modal", function (event) {
+        const button = $(event.relatedTarget);
+        idUpdate = button.data("id");
 
-    $(document).on("click", ".btn-update", function (e) {
-        const id = $(this).data("id");
-        const element = $(`tr[data-id="${id}"]`)[0].children;
-
+        const element = $(`tr[data-id="${idUpdate}"]`).children()
+        console.log(element[1].innerText)
         $("#nameVoucher").val(element[1].innerText)
-
         $("#discountAmount").val(element[2].innerText)
-
         $("#quantity").val(element[3].innerText)
+        let datetimeValue = element[5].innerText.replace(" ", "T");
+        datetimeValue = datetimeValue.slice(0, -3);
+        $("#expireDate").val(datetimeValue)
+        
+    })
 
-        const date = new Date(element[5].innerText);
-        $("#expireDate")[0].value = date.toISOString().substr(0, 10);
 
-        $("#handleSubmitFormUpdate").submit(e => {
+     $("#handleSubmitFormUpdate").submit(e => {
             e.preventDefault();
             const data = $("#handleSubmitFormUpdate").serialize();
             $.ajax({
-                url: `/voucher/${id}`,
+                url: `/voucher/${idUpdate}`,
                 type: "PATCH",
                 data: data,
                 success: (response) => {
@@ -414,7 +422,6 @@
                     Toastify({
                         text: "Cập nhật không thành công",
                         duration: 2000,
-                        destination: "http://localhost:3000/",
                         newWindow: true,
                         //close: true,
                         offset: {
@@ -434,7 +441,7 @@
                 }
             })
         })
-    });
+    
 </script>
 
 <script>
@@ -474,7 +481,6 @@
                 Toastify({
                     text: data.responseJSON.errorCode,
                     duration: 2000,
-                    destination: "http://localhost:3000/",
                     newWindow: true,
                     //close: true,
                     offset: {

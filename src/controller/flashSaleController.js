@@ -14,7 +14,7 @@ module.exports = {
   create: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
-      const {
+      let {
         name,
         startDate,
         endDate,
@@ -22,7 +22,9 @@ module.exports = {
         discountAmount,
         productId,
       } = req.body;
-
+      if(typeof(req.body.productId)=="string"){
+        productId = [productId]
+      }
       if (
         !name ||
         !description ||

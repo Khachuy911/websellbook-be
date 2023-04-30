@@ -162,11 +162,11 @@
 
         const OrderDetails = item.OrderDetails.map(e=>(`${e.Product.name} x${e.quantity}<br>`))
 
-        let statusCode = 3;
+        let statusCode = item.orderStatus;
         let status = "Chờ xác nhận";
         let color = 'text-primary'
         let td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary" style="width: 110px;">Xác nhận</button>
-                  <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete"  class="mt-1 btn btn-delete btn-danger" style="width: 110px;">Huỷ đơn</button>`;
+        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-cancel = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-danger"style="width: 110px;">Huỷ đơn</button>`;
         if (statusCode === 1) {
           status = "Chờ giao hàng";
           td = `
@@ -177,18 +177,25 @@
 
         } else if (statusCode === 2) {
           status = "Đang giao hàng";
-          td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary"style="width: 110px;">Hoàn thành</button> 
+          td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-warning"style="width: 110px;">Đã giao</button> 
           <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
           color = 'text-warning'
 
         } else if (statusCode === 3) {
           status = "Đã giao";
-          color = 'text-success'
-          td = ` <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
+          color = 'text-warning'
+          td = ` 
+          <button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary"style="width: 110px;">Hoàn thành</button>
+          <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
         } else if (statusCode === 4) {
+          status = "Hoàn thành";
+          color = 'text-success'
+          td = `<button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
+        }
+        else if(statusCode === 5){
           status = "Huỷ đơn";
           color = 'text-danger'
-          td = `<button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete"  class="mt-1 btn btn-delete btn-danger"style="width: 110px;">Xoá</button>`;
+          td = `<button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
         }
         return `
                                  <tr>
@@ -342,6 +349,7 @@
 <script>
   let idUpdate;
   let urlOrder;
+  let type ="PATCH"
   $("#exampleModalUpdate").on("show.bs.modal", (e)=>{
     const button = $(e.relatedTarget);
     idUpdate = button.data("id");
@@ -351,10 +359,19 @@
       $("#modal-xacnhan").html("Bạn có muốn in hoá đơn cho đơn hàng này hay không?")
       $("#exampleModalUpdate #exampleModalLabel").html("Xác nhận in đơn hàng")
       urlOrder = "exportData"
+      type = "GET"
     }
     else if(statusOrder==0){
-      $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không?")
-      urlOrder = "comfirm"
+      const dataCancel = button.attr("data-cancel")
+      if(dataCancel){
+        $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không?")
+        urlOrder = "cancel"
+        type = "DELETE"
+      }
+      else{
+        $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không?")
+        urlOrder = "confirm"
+      }
     }
     else if(statusOrder==1){
       $("#modal-xacnhan").html("Bạn có muốn ship đơn hàng này hay không?")
@@ -364,16 +381,21 @@
       urlOrder = "delivere"
       $("#modal-xacnhan").html("Bạn có muốn giao đơn hàng này hay không?")
     }
+    else if(statusOrder==3){
+      urlOrder = "done"
+      $("#modal-xacnhan").html("Bạn có muốn giao đơn hàng này hay không?")
+    }
   })
 
   $("#btn-update").click(e=>{
     e.preventDefault();
+
     $.ajax({
       url: `/order/${urlOrder}/${idUpdate}`,
-      type: "PATCH",
+      type: type,
       success: (response) => {
         Toastify({
-          text: response.message,
+          text: "Cập nhật trạng thái thành công",
           duration: 2000,
           newWindow: true,
           //close: true,
@@ -390,10 +412,17 @@
             fontSize: "16px",
           },
         }).showToast();
-        setTimeout(() => {
+        if(response.value){
           $("#exampleModalUpdate").modal("hide");
-          location.reload();
-        }, "2000");
+          window.open(response.value,"_blank");
+        }
+        else{
+          setTimeout(() => {
+            $("#exampleModalUpdate").modal("hide");
+            location.reload();
+          }, "2000");
+        }
+        
       },
       error: (data) => {
         let text = data.statusText||data.responseJSON.errorCode

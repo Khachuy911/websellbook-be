@@ -323,9 +323,11 @@
   });
   $("#btn-delete-success").click((e) => {
     e.preventDefault();
+    const ids = [deleteId]
     $.ajax({
-      url: `/user/${deleteId}`,
+      url: `/product/deletesoft/`,
       type: "DELETE",
+      data:{ids:ids},
       success: (response) => {
         Toastify({
           text: response.message,

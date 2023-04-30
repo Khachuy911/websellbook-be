@@ -64,6 +64,7 @@
                         <th>STT</th>
                         <th>Tên Flash sale</th>
                         <th>Mô tả Flash sale</th>
+                        <th>Chiết khấu</th>
                         <th>Ngày bắt đầu</th>
                         <th>Ngày hết hạn</th>
                         <th>Thao tác</th>
@@ -126,12 +127,12 @@
                             <label for="expireDate" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày bắt
                                 đầu<strong style="color: red;">*</strong></label>
-                            <input id="expireDate" name="startDate" style="width: 100%;" type="date" required>
+                            <input id="expireDate" name="startDate" style="width: 100%;" type="datetime-local" required>
 
                             <label for="expireDate2" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày kết
                                 thúc<strong style="color: red;">*</strong></label>
-                            <input id="expireDate2" name="endDate" style="width: 100%;" type="date" required>
+                            <input id="expireDate2" name="endDate" style="width: 100%;" type="datetime-local" required>
 
                             <label for="productId" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Tên sách</label>
@@ -180,12 +181,16 @@
                             <label for="expireDate" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày bắt
                                 đầu<strong style="color: red;">*</strong></label>
-                            <input id="expireDate" name="startDate" style="width: 100%;" type="date" required>
+                            <div>
+                                <input id="expireDate" name="startDate" style="width: 100%;" type="datetime-local" required>
+                            </div>
 
                             <label for="expireDate2" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày kết
                                 thúc<strong style="color: red;">*</strong></label>
-                            <input id="expireDate2" name="endDate" style="width: 100%;" type="date" required>
+                            <div>
+                                <input id="expireDate2" name="endDate" style="width: 100%;" type="datetime-local" required>
+                            </div>
 
                             <label for="productId" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Tên sách<strong
@@ -224,12 +229,12 @@
     });
     $("#route")[0].innerHTML = html.join("");
     $("#page").text($("#route>.active")[0].innerText)
-  </script>
-  <script>
-    let windowHeight = $(window).height();
-    $(".nav-item").css("min-height", windowHeight - 70 + "px");
-    $(".main-item").css("min-height", windowHeight - 70 + "px");  
-  </script>
+</script>
+<script>
+let windowHeight = $(window).height();
+$(".nav-item").css("min-height", windowHeight - 70 + "px");
+$(".main-item").css("min-height", windowHeight - 70 + "px");  
+</script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
@@ -296,6 +301,7 @@
                         <td style="text-align:center">${index + 1}</td>
                         <td>${item.name}</td>
                         <td>${item.description}</td>
+                        <td data-discount="${item.FlashSaleProducts[0].discountAmount}">${item.FlashSaleProducts[0].discountAmount.toLocaleString()}đ</td>
                         <td>${item.startDate}</td>
                         <td>${item.endDate}</td>
                         <td style="max-width:120px;text-align:center">
@@ -319,7 +325,6 @@
                         targets: [1, 2, 3, 4]
                     }
                 ],
-                "order": [[3, "desc"]],
                 "language": {
                     "sEmptyTable": "Không có dữ liệu trong bảng",
                     "sInfo": "Đang hiển thị từ _START_ đến _END_ trong tổng số _TOTAL_ kết quả",
@@ -372,10 +377,7 @@
         const button = $(event.relatedTarget)
         deleteId = button.data("id")
     })
-    $("#exampleModalDelete").on('show.bs.modal', function (event) {
-        const button = $(event.relatedTarget)
-        deleteId = button.data("id")
-    })
+   
     $("#handleSubmitDelete").submit(e => {
         e.preventDefault();
         $.ajax({
@@ -430,24 +432,32 @@
 
     })
 
-    $(document).on("click", ".btn-update", function (e) {
-        const id = $(this).data("id");
-        const element = $(`tr[data-id="${id}"]`)[0].children;
+    let updateId
+    $("#exampleModalUpdate").on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget)
+        updateId = button.data("id")
 
+        const element = $(`tr[data-id="${updateId}"]`).children()
         $("#nameVoucher").val(element[1].innerText)
-        // $("#discountAmount").val(element[2].innerText)
+        $("#discountAmount").val(element[3].getAttribute("data-discount"))
         $("#description").val(element[2].innerText)
 
-        const date = new Date(element[3].innerText);
-        const date2 = new Date(element[4].innerText);
-        $("#expireDate")[0].value = date.toISOString().substr(0, 10);
-        $("#expireDate2")[0].value = date2.toISOString().substr(0, 10);
+        $("#quantity").val(element[3].innerText)
+        let datetimeValue = element[4].innerText.replace(" ", "T");
+        datetimeValue = datetimeValue.slice(0, -3);
+        $("#expireDate").val(datetimeValue)
 
-        $("#handleSubmitFormUpdate").submit(e => {
+        let datetimeValue2 = element[5].innerText.replace(" ", "T");
+        datetimeValue2 = datetimeValue2.slice(0, -3);
+        $("#expireDate2").val(datetimeValue2)
+    })
+   
+
+    $("#handleSubmitFormUpdate").submit(e => {
             e.preventDefault();
             const data = $("#handleSubmitFormUpdate").serialize();
             $.ajax({
-                url: `/flashsale/${id}`,
+                url: `/flashsale/${updateId}`,
                 type: "PATCH",
                 data: data,
                 success: (response) => {
@@ -498,12 +508,10 @@
             })
         })
 
-        //$("#productId").find("option").filter(e => ($(this).text() === element[6].innerText)).prop("selected", true);
-
-    });
 </script>
 
 <script>
+
     $("#handleSubmitFormAdd").submit(e => {
         e.preventDefault()
         const data = $("#handleSubmitFormAdd").serialize();

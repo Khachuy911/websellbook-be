@@ -800,7 +800,7 @@ module.exports = {
   },
 
   exportData: async (req, res) => {
-    const idOrder = req.query.order;
+    const idOrder = req.params.order;
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(`http://localhost:3000/order/export/${idOrder}`, {
@@ -814,7 +814,9 @@ module.exports = {
     });
 
     await browser.close();
-
-    res.redirect(`http://localhost:3000/upload/${idOrder}.pdf`);
+    res.status(200).json({
+      value:`http://localhost:3000/upload/${idOrder}.pdf`,
+      message:"In hoá đơn thành công"
+    })
   },
 };
