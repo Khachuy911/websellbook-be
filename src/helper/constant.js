@@ -81,7 +81,7 @@ module.exports = {
       "ALO ALO ALO, Flash sale sẽ bắt đầu sau 15 phút nữa. Bắt đầu ngay !",
 
     // ORDER
-    VOUCHER_INVALID: "Voucher không hợp lệ1",
+    VOUCHER_INVALID: "Voucher không hợp lệ",
     ORDER_IS_CANCEL: "This order is canceled or not confirm",
     IS_OUT: "Quantity is out",
     NOT_CONFIRM: "This order is at confirmed status",
