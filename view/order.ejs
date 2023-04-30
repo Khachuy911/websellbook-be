@@ -351,6 +351,8 @@
       e.preventDefault();
       const radio = document.querySelector("input[name='inlineRadioOptions']:checked").value;
 
+      console.log("========>"+ radio);
+
       const checkbox = document.querySelectorAll(".custom-checkbox:checked");
 
       const voucher = $('#select-voucher').val();
@@ -369,7 +371,7 @@
 
       let dataSend;
       if(voucher === 'Không'){
-        dataSend = {product: JSON.stringify(listProductId)}
+        dataSend = {product: JSON.stringify(listProductId), address: address, phone: phone}
       }else{
         dataSend = {product: JSON.stringify(listProductId), voucherCode: voucher, address: address, phone: phone}
       }
@@ -379,8 +381,9 @@
                 dataType: 'json',
                 data: dataSend,
                 success: function (data) {
+                  console.log("======="+ JSON.stringify(data));
                     Toastify({
-                        text: 'Thêm product thành công',
+                        text: 'Mua hàng thành công',
                         duration: 2000,
                         newWindow: true,
                         //close: true,
@@ -399,14 +402,41 @@
                         onClick: function () { } // Callback after click
                     }).showToast();
                     setTimeout(() => {
-                        // $("#exampleModalDelete").modal("hide");
-                        // location.reload();
-                        window.location.href = "/order/myorder";
+                        if(radio === 'Thanh toán online'){
+                          $.ajax({
+                              url: `/order/paypal?order=${data?.data?.id}`,
+                              type: 'POST',
+                              // dataType: 'json',
+                              success: function (data) {
+                                  Toastify({
+                                      text: 'Mua hàng thành công',
+                                      duration: 2000,
+                                      newWindow: true,
+                                      //close: true,
+                                      offset: {
+                                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                                      },
+                                      gravity: "top", // `top` or `bottom`
+                                      position: "right", // `left`, `center` or `right`
+                                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                                      style: {
+                                          background: "linear-gradient(to right, green, green)",
+                                          width: "250px",
+                                          fontSize: "16px"
+                                      },
+                                      onClick: function () { } // Callback after click
+                                  }).showToast();
+                              },
+                          });
+                        }else{
+                          // window.location.href = "/order/myorder";
+                        }
                     }, "500")
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     Toastify({
-                        text: 'Thêm product không thành công',
+                        text: 'Mua hàng không thành công',
                         duration: 2000,
                         newWindow: true,
                         //close: true,
