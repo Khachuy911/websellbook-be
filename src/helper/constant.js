@@ -90,5 +90,8 @@ module.exports = {
     NOT_DONE: "Đơn đặt hàng này không ở trạng thái đang giao hàng",
     NOT_CANCEL: "Đặt hàng không thể hủy bỏ",
     KHONG_XOA_COMMENT: "Không thể xoá nhận xét của người khác",
+
+    DELETE_FALSE: "Không thể xoá sách này!",
+
   },
 };

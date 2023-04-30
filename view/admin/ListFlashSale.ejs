@@ -46,33 +46,53 @@
                 <h3 id="page" style="margin: auto 0;padding: 10px;">Tiêu đề trang</h3>
             </div>
             <div style="margin-right: 40px;display: flex;">
-                <h4 style="margin: 15px;">Admin</h4>
-                <img style="border-radius: 100%; margin-left: 4px;"
-                    src="https://th.bing.com/th?id=OIP.aRRBXrcRda7kFmPMlPnCTQHaFj&w=288&h=216&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2"
-                    height="45" width="45" alt="">
+                <div class="col-md-0 text-end">
+                    <div class="dropdown text-end">
+                        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://4.bp.blogspot.com/-6elQkFTR8gM/V_YKmIlnp5I/AAAAAAAAEZ8/AS_B3lRU2K4h3pjmV_j-nCMZ8dz5kY2gQCLcB/s200/student-avatar.png"
+                                alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="custom-dropdown-item dropdown-item " href="/user/getMe"><i
+                                        style=" margin-right:5px" class="fa-solid fa-user"></i> Thông Tin cá nhân</a>
+                            </li>
+                            <li><a class="custom-dropdown-item dropdown-item" href="/order/myorder"><i
+                                        style=" margin-right:5px" class="fa-solid fa-cart-shopping"></i> Đơn Hàng</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="custom-dropdown-item dropdown-item" href="/auth/logout"><i
+                                        style=" margin-right:5px" class="fa-solid fa-right-from-bracket"></i> Đăng
+                                    xuất</a></li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </div>
         <div class="containerBox main-item" style="border-bottom: none;">
             <div>
                 <button class="btn btn-success btn-addVoucher"
-                style="width: auto;position: absolute; right: 22%; cursor: pointer;z-index: 1;"
-                data-bs-toggle="modal" data-bs-target="#exampleModalAddVoucher">Thêm
-                FlashSale</button>
-            <table id="myTable">
-                <thead>
-                    <tr>
-                        <th>STT</th>
-                        <th>Tên Flash sale</th>
-                        <th>Mô tả Flash sale</th>
-                        <th>Chiết khấu</th>
-                        <th>Ngày bắt đầu</th>
-                        <th>Ngày hết hạn</th>
-                        <th>Thao tác</th>
-                    </tr>
-                </thead>
-                <tbody id="table-body">
-                </tbody>
-            </table>
+                    style="width: auto;position: absolute; right: 22%; cursor: pointer;z-index: 1;"
+                    data-bs-toggle="modal" data-bs-target="#exampleModalAddVoucher">Thêm
+                    FlashSale</button>
+                <table id="myTable">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên Flash sale</th>
+                            <th>Mô tả Flash sale</th>
+                            <th>Chiết khấu</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày hết hạn</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body">
+                    </tbody>
+                </table>
             </div>
 
         </div>
@@ -182,14 +202,16 @@
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày bắt
                                 đầu<strong style="color: red;">*</strong></label>
                             <div>
-                                <input id="expireDate" name="startDate" style="width: 100%;" type="datetime-local" required>
+                                <input id="expireDate" name="startDate" style="width: 100%;" type="datetime-local"
+                                    required>
                             </div>
 
                             <label for="expireDate2" class="mt-2"
                                 style="margin-bottom: 0;font-weight:500;color: rgba(0, 0, 0, 0.553);">Ngày kết
                                 thúc<strong style="color: red;">*</strong></label>
                             <div>
-                                <input id="expireDate2" name="endDate" style="width: 100%;" type="datetime-local" required>
+                                <input id="expireDate2" name="endDate" style="width: 100%;" type="datetime-local"
+                                    required>
                             </div>
 
                             <label for="productId" class="mt-2"
@@ -220,20 +242,20 @@
 <script src="/js/route.js"></script>
 <script>
     let html = route.map((e, index) => {
-      const pathname = window.location.pathname;
-      if (e.href == pathname) {
-        return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
-      } else {
-        return `<li><a href="${e.href}">${e.text}</a></li>`;
-      }
+        const pathname = window.location.pathname;
+        if (e.href == pathname) {
+            return `<li class="active"><a href="${e.href}">${e.text}</a></li>`;
+        } else {
+            return `<li><a href="${e.href}">${e.text}</a></li>`;
+        }
     });
     $("#route")[0].innerHTML = html.join("");
     $("#page").text($("#route>.active")[0].innerText)
 </script>
 <script>
-let windowHeight = $(window).height();
-$(".nav-item").css("min-height", windowHeight - 70 + "px");
-$(".main-item").css("min-height", windowHeight - 70 + "px");  
+    let windowHeight = $(window).height();
+    $(".nav-item").css("min-height", windowHeight - 70 + "px");
+    $(".main-item").css("min-height", windowHeight - 70 + "px");  
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -377,7 +399,7 @@ $(".main-item").css("min-height", windowHeight - 70 + "px");
         const button = $(event.relatedTarget)
         deleteId = button.data("id")
     })
-   
+
     $("#handleSubmitDelete").submit(e => {
         e.preventDefault();
         $.ajax({
@@ -451,62 +473,62 @@ $(".main-item").css("min-height", windowHeight - 70 + "px");
         datetimeValue2 = datetimeValue2.slice(0, -3);
         $("#expireDate2").val(datetimeValue2)
     })
-   
+
 
     $("#handleSubmitFormUpdate").submit(e => {
-            e.preventDefault();
-            const data = $("#handleSubmitFormUpdate").serialize();
-            $.ajax({
-                url: `/flashsale/${updateId}`,
-                type: "PATCH",
-                data: data,
-                success: (response) => {
-                    Toastify({
-                        text: response.message,
-                        duration: 2000,
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, green, green)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                    }).showToast();
-                    setTimeout(() => {
-                        $("#exampleModalUpdate").modal("hide");
-                        location.reload();
-                    }, "2000")
-                },
-                error: (data) => {
-                    Toastify({
-                        text: data.responseJSON.errorCode,
-                        duration: 2000,
-                        newWindow: true,
-                        //close: true,
-                        offset: {
-                            x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
-                            y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
-                        },
-                        gravity: "top", // `top` or `bottom`
-                        position: "right", // `left`, `center` or `right`
-                        stopOnFocus: true, // Prevents dismissing of toast on hover
-                        style: {
-                            background: "linear-gradient(to right, red, red)",
-                            width: "250px",
-                            fontSize: "16px"
-                        },
-                        onClick: function () { } // Callback after click
-                    }).showToast();
-                }
-            })
+        e.preventDefault();
+        const data = $("#handleSubmitFormUpdate").serialize();
+        $.ajax({
+            url: `/flashsale/${updateId}`,
+            type: "PATCH",
+            data: data,
+            success: (response) => {
+                Toastify({
+                    text: response.message,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, green, green)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                }).showToast();
+                setTimeout(() => {
+                    $("#exampleModalUpdate").modal("hide");
+                    location.reload();
+                }, "2000")
+            },
+            error: (data) => {
+                Toastify({
+                    text: data.responseJSON.errorCode,
+                    duration: 2000,
+                    newWindow: true,
+                    //close: true,
+                    offset: {
+                        x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                        y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                    },
+                    gravity: "top", // `top` or `bottom`
+                    position: "right", // `left`, `center` or `right`
+                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                    style: {
+                        background: "linear-gradient(to right, red, red)",
+                        width: "250px",
+                        fontSize: "16px"
+                    },
+                    onClick: function () { } // Callback after click
+                }).showToast();
+            }
         })
+    })
 
 </script>
 

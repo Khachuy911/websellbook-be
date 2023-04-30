@@ -368,8 +368,10 @@ module.exports = {
   deleteSoft: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
-      const { ids } = req.body;
-
+      let { ids } = req.body;
+      if(typeof(ids)=="string"){
+        ids=[ids]
+      }
       if (!ids) {
         await t.rollback();
         return next(
@@ -388,7 +390,7 @@ module.exports = {
       if (order.length > 0) {
         await t.rollback();
         return next(
-          new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+          new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.DELETE_FALSE)
         );
       }
 

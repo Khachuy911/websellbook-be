@@ -1,35 +1,30 @@
 const route = [
     {
-        text:"Dashboard",
+        text:"Thống kê",
         href:"/admin/dashboard"
-    }
-    ,
-    {
-        text:"Trang chủ",
-        href:"/product"
     },
     {
-        text:"Danh sách User",
+        text:"Danh sách người dùng",
         href:"/admin/list-users"
     },
     {
-        text:"Danh sách Products",
+        text:"Danh sách sách",
         href:"/admin/list-products"
     },
     {
-        text:"Thêm Product",
+        text:"Thêm sách",
         href:"/product/create"
     },
     {
-        text:"Danh sách Orders",
+        text:"Danh sách đơn hàng",
         href:"/admin/list-orders"
     },
     {
-        text:"Danh sách Catogery",
+        text:"Danh sách danh mục",
         href:"/admin/list-catogery"
     },
     {
-        text:"Danh sách Comment",
+        text:"Danh sách nhận xét",
         href:"/admin/list-comment"
     },
     {
@@ -39,5 +34,9 @@ const route = [
     {
         text:"Danh sách FlashSale",
         href:"/admin/list-flashsale"
-    }
+    },
+    {
+        text:"Trang chủ",
+        href:"/product"
+    },
 ]
