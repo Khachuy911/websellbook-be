@@ -60,6 +60,7 @@
               <th>Ảnh</th>
               <th>Số lượng</th>
               <th>Giá nhập</th>
+              <th>Giá bán</th>
               <th>Tên danh mục</th>
               <th>Thao tác</th>
             </tr>
@@ -237,6 +238,7 @@
           }"/></td>
                                     <td>${item.quantity}</td>
                                     <td>${item.priceImport}</td>
+                                    <td>${item.priceSelling}</td>
                                     <td>${item.Category.name}</td>
                                     <td style="max-width:120px;text-align:center">
                                         <button type="button" data-id="${item.id
@@ -257,10 +259,9 @@
             searchPanes: {
               show: true,
             },
-            targets: [1, 4, 5, 6],
+            targets: [1, 4, 5, 6, 7],
           },
         ],
-        order: [[3, "desc"]],
         language: {
           sEmptyTable: "Không có dữ liệu trong bảng",
           sInfo:

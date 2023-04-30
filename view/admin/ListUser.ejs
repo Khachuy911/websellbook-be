@@ -28,7 +28,7 @@
 </head>
 
 <body>
-  <nav >
+  <nav>
     <div style="height: 71px;">
       <h3 style="padding: 10px;">Khắc Huy Shop</h3>
     </div>
@@ -49,22 +49,23 @@
           height="45" width="45" alt="">
       </div>
     </div>
-    <div class="containerBox main-item" style="border-bottom: none; margin-bottom: 80px;" >
-        <div class="">
-          <table id="myTable">
-            <thead>
-              <tr>
-                <th>STT</th>
-                <th>Họ và tên</th>
-                <th>Email</th>
-                <th>Số điện thoại</th>
-                <th>Role</th>
-                <th>Thao tác</th>
-              </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
-        </div>
+    <div class="containerBox main-item" style="border-bottom: none; margin-bottom: 80px;">
+      <div class="">
+        <table id="myTable">
+          <thead>
+            <tr>
+              <th>STT</th>
+              <th>Họ và tên</th>
+              <th>Email</th>
+              <th>Số điện thoại</th>
+              <th style="max-width: 120px;">Địa chỉ</th>
+              <th>Role</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="table-body"></tbody>
+        </table>
+      </div>
 
     </div>
   </main>
@@ -152,23 +153,27 @@
     success: (response) => {
       console.log(response);
       let listSelect = response?.data?.rows.map(
-        (item, index) => `
-                                 <tr>
+        (item, index) => {
+          let disabled;
+          if(item.UserRoles[0].Role.name=="admin"){
+            disabled = "disabled"
+          }
+          return `<tr>
                                     <td style="text-align:center">${index + 1
-          }</td>
+            }</td>
                                     <td style="max-width:200px">${item.username
-          }</td>
-                                    <td>${item.email}</td>
+            }</td>
+            <td>${item.email}</td>
                                     <td>${item.phone}</td>
+                                    <td>${item.address}</td>
+
                                     <td>${item.UserRoles[0].Role.name}</td>
                                     <td style="max-width:120px;text-align:center">
-                                        <button type="button" data-id="${item.id
-          }" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn btn-primary">Phân quyền</button>                                    
-                                        <button type="button" data-id="${item.id
-          }" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá ngay</button>
+                                        <button type="button" style="width:120px" data-id="${item.id}" ${disabled} data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn btn-primary">Phân quyền</button>                                    
+                                        <button type="button" style="width:120px;margin-top:4px" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá ngay</button>
                                     </td>
                                 </tr>`
-      );
+        });
       $("#table-body")[0].innerHTML = listSelect.join("");
       let table = $("#myTable").DataTable({
         select: false,
@@ -180,10 +185,10 @@
             searchPanes: {
               show: true,
             },
-            targets: [1, 2, 3],
+            targets: [1, 3, 4 , 5],
           },
         ],
-        order: [[3, "desc"]],
+        order: [[5, "ASC"]],
         language: {
           sEmptyTable: "Không có dữ liệu trong bảng",
           sInfo:
@@ -358,9 +363,9 @@
   });
 </script>
 <script>
-    let windowHeight = $(window).height();
-    $(".nav-item").css("min-height", windowHeight-70 + "px");  
-    $(".main-item").css("min-height", windowHeight-70 + "px");  
+  let windowHeight = $(window).height();
+  $(".nav-item").css("min-height", windowHeight - 70 + "px");
+  $(".main-item").css("min-height", windowHeight - 70 + "px");  
 </script>
 
 </html>

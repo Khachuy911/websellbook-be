@@ -147,8 +147,8 @@
                                  <tr data-id="${item.id}">
                                     <td style="text-align:center">${index + 1}</td>
                                     <td>${item.name}</td>
-                                    <td>${item.text}</td>
-                                    <td>${item.text}</td>
+                                    <td style="max-width:200px;">${item.text}</td>
+                                    <td style="max-width:200px;">${item.text}</td>
                                     <td>${item.updatedAt}</td>
                                     <td style="max-width:120px;text-align:center">
                                         <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
@@ -252,7 +252,6 @@
                     Toastify({
                         text: "Xoá không thành công",
                         duration: 2000,
-                        destination: "http://localhost:3000/",
                         newWindow: true,
                         //close: true,
                         offset: {
@@ -275,9 +274,6 @@
         })
     });
 
-</script>
-<script>
-    $(".main")[0].style.marginLeft = $(".nav")[0].clientWidth + "px"
 </script>
 
 </html>
