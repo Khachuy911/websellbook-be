@@ -408,6 +408,7 @@
                               type: 'POST',
                               // dataType: 'json',
                               success: function (data) {
+                                window.open(data.url, '_blank');
                                   Toastify({
                                       text: 'Mua hàng thành công',
                                       duration: 2000,
@@ -430,7 +431,7 @@
                               },
                           });
                         }else{
-                          // window.location.href = "/order/myorder";
+                          window.location.href = "/order/myorder";
                         }
                     }, "500")
                 },
