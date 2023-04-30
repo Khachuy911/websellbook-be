@@ -8,7 +8,15 @@ const { DEFAULT_VALUE } = require("../helper/constant");
 
 Route.get("/dashboard", AsyncHandle(OrderController.dashboard));
 
-Route.get("/exportData/:order", AsyncHandle(OrderController.exportData));
+Route.patch("/exportData/:order", AsyncHandle(OrderController.exportData));
+Route.get("/exportData", AsyncHandle(OrderController.exportData));
+Route.post("/paypal", AsyncHandle(OrderController.paypal));
+
+Route.get("/viewPaypal", (req, res, next) => {
+  res.render("../view/paypal.ejs");
+});
+
+Route.get("/success", AsyncHandle(OrderController.paypalSuccess));
 
 Route.patch(
   "/confirm/:id",

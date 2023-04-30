@@ -819,4 +819,129 @@ module.exports = {
       message:"In hoá đơn thành công"
     })
   },
+
+  paypalSuccess: async (req, res, next) => {
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+
+    const execute_payment_json = {
+      payer_id: payerId,
+      transactions: [
+        {
+          amount: {
+            currency: "USD",
+            total: totalGlobal,
+          },
+        },
+      ],
+    };
+
+    paypal.payment.execute(
+      paymentId,
+      execute_payment_json,
+      function (error, payment) {
+        if (error) {
+          // res.render('cancle');
+          console.log(error);
+        } else {
+          console.log(JSON.stringify(payment));
+          res.json({ success: true });
+          // res.render('success');
+        }
+      }
+    );
+  },
+
+  paypal: async (req, res, next) => {
+    const id = req.query.order;
+
+    if (!id) {
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
+    }
+
+    const condition = {
+      where: {
+        id,
+        // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+      },
+      include: [
+        {
+          model: Voucher,
+        },
+        {
+          model: User,
+        },
+        {
+          model: OrderDetail,
+          include: {
+            model: Product,
+            include: {
+              model: FlashSaleProduct,
+            },
+          },
+        },
+      ],
+    };
+
+    const order = await Order.findOne(condition);
+
+    let listItems = [];
+    let totalPrice = 0;
+
+    order.OrderDetails.forEach((ele) => {
+      totalPrice += (ele.price / 23000) * ele.quantity;
+      listItems.push({
+        name: ele.Product.name,
+        sku: ele.Product.barCode,
+        price: (ele.price / 23000).toFixed(2).toString(),
+        currency: "USD",
+        quantity: ele.quantity,
+      });
+    });
+
+    // let totalPrice = (order.totalPrice / 23000).toFixed(2).toString();
+    totalGlobal = totalPrice.toFixed(2).toString();
+    paypal.configure({
+      mode: "sandbox", //sandbox or live
+      client_id:
+        "AXOe7Uh36I9ocdaRnCfaUPllor09ZzA2-3sXxsTaYvJY3IzISbEJDnRqqVwIvAVajJdJB0qrtH3e-itD",
+      client_secret:
+        "EOLpJJrRbXD6QwSl0_-Q82RvrzvzDWAzO72DqQ4vDSO7oquXQrtxeLdzdEMVefO1Ah9pl74d8E8J_lKJ",
+    });
+    const create_payment_json = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
+      },
+      redirect_urls: {
+        return_url: "http://localhost:3000/order/success",
+        cancel_url: "http://localhost:3000/cancel",
+      },
+      transactions: [
+        {
+          item_list: {
+            items: listItems,
+          },
+          amount: {
+            currency: "USD",
+            total: totalGlobal,
+          },
+          description: "Hat for the best team ever",
+        },
+      ],
+    };
+    paypal.payment.create(create_payment_json, function (error, payment) {
+      if (error) {
+        console.log(error);
+      } else {
+        for (let i = 0; i < payment.links.length; i++) {
+          if (payment.links[i].rel === "approval_url") {
+            res.redirect(payment.links[i].href);
+          }
+        }
+      }
+    });
+  },
 };
