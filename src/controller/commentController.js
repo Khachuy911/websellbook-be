@@ -13,7 +13,7 @@ module.exports = {
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.INFOR_LACK));
     }
 
-    if(!req.user){
+    if (!req.user) {
       return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, "sai r nay"));
     }
     const userId = req.user;
@@ -41,6 +41,18 @@ module.exports = {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         ...filter("userId", req.query.userId),
       },
+      include: [
+        {
+          model: User,
+          required: false,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+        },
+        {
+          model: Product,
+          required: false,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+        },
+      ],
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
@@ -70,16 +82,18 @@ module.exports = {
         isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         ...filter("userId", req.query.userId),
       },
-      include: [{
-        model: User,
-        required: false,
-        where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
-      },
-      {
-        model: Product,
-        required: false,
-        where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
-      }],
+      include: [
+        {
+          model: User,
+          required: false,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+        },
+        {
+          model: Product,
+          required: false,
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+        },
+      ],
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),
     };
@@ -95,7 +109,7 @@ module.exports = {
       rows: comment.rows,
     };
 
-    // 
+    //
     let token;
     if (req.cookies.token) {
       token = req.cookies.token;
@@ -106,7 +120,7 @@ module.exports = {
         isSuccess: true,
         message: MESSAGE.SUCCESS,
         data,
-        currentUser: 0
+        currentUser: 0,
       });
     }
 
@@ -120,22 +134,22 @@ module.exports = {
     };
     const user = await User.findOne(conditionAuth);
 
-    if (!user){
+    if (!user) {
       res.status(HTTP_CODE.SUCCESS).json({
         isSuccess: true,
         message: MESSAGE.SUCCESS,
         data,
-        currentUser: 0
+        currentUser: 0,
       });
     }
     req.user = user;
-    // 
+    //
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,
       message: MESSAGE.SUCCESS,
       data,
-      currentUser: req.user
+      currentUser: req.user,
     });
   },
 

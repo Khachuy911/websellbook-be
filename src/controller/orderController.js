@@ -547,11 +547,12 @@ module.exports = {
     const condition = {
       where: {
         // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
-        // ...search(req.query.search)
+        ...search(req.query.search),
         ...filter("orderStatus", req.query.status),
       },
       include: {
         model: OrderDetail,
+        model: User,
         required: false,
         where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
         include: {
