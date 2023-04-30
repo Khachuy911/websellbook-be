@@ -55,10 +55,12 @@
           <thead>
             <tr>
               <th>Mã đơn</th>
+              <th>Người đặt</th>
               <th>Thành tiền</th>
               <th>Địa chỉ</th>
               <th>Số điện thoại</th>
               <th>Chi tiết đơn</th>
+              <th>Thời gian đặt</th>
               <th>Trạng thái</th>
               <th>Thao tác</th>
             </tr>
@@ -157,36 +159,54 @@
     success: (response) => {
       console.log(response);
       let listSelect = response?.data?.rows.map((item, index) => {
-        const statusCode = item.orderStatus;
+
+        const OrderDetails = item.OrderDetails.map(e=>(`${e.Product.name} x${e.quantity}<br>`))
+
+        let statusCode = item.orderStatus;
         let status = "Chờ xác nhận";
         let color = 'text-primary'
-        let td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary">Xác nhận</button>
-                        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete"  class="mt-1 btn btn-delete btn-danger">Xoá</button>`;
+        let td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary" style="width: 110px;">Xác nhận</button>
+        <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-cancel = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-danger"style="width: 110px;">Huỷ đơn</button>`;
         if (statusCode === 1) {
-          status = "Chờ ship";
-          td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary">Xác nhận</button> 
-                <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete"  class="mt-1 btn btn-delete btn-danger">Xoá</button>`;
+          status = "Chờ giao hàng";
+          td = `
+          <button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-warning"style="width: 110px;">Giao hàng</button> 
+          <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>
+                `;
+          color = 'text-warning'
+
         } else if (statusCode === 2) {
-          status = "Chờ giao";
-          td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary">Xác nhận</button> 
-                <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete"  class="mt-1 btn btn-delete btn-danger">Xoá</button>`;
+          status = "Đang giao hàng";
+          td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-warning"style="width: 110px;">Đã giao</button> 
+          <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
+          color = 'text-warning'
+
         } else if (statusCode === 3) {
           status = "Đã giao";
-          color = 'text-success'
-          td = ` <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete"  class="mt-1 btn btn-delete btn-danger">Xoá</button>`;
+          color = 'text-warning'
+          td = ` 
+          <button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary"style="width: 110px;">Hoàn thành</button>
+          <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
         } else if (statusCode === 4) {
+          status = "Hoàn thành";
+          color = 'text-success'
+          td = `<button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
+        }
+        else if(statusCode === 5){
           status = "Huỷ đơn";
           color = 'text-danger'
-          td = `<button type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete"  class="mt-1 btn btn-delete btn-danger">Xoá</button>`;
+          td = `<button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
         }
         return `
                                  <tr>
                                     <td style="text-align:center">${item.orderCode}</td>
+                                    <td style="max-width:200px">${item.User.email}</td>
                                     <td>${item.totalPrice}</td>
-                                    <td>${item.email}</td>
+                                    <td>${item.address}</td>
                                     <td>${item.phone}</td>
-                                    <td>${item.phone}</td>
-                                    <td class="${color}">${status}</td>
+                                    <td>${OrderDetails.join("")}</td>
+                                    <td>${item.createdAt}</td>
+                                    <td class="${color}" style="text-align:center">${status}</td>
                                     <td style="max-width:120px;text-align:center">
                                         ${td}
                                     </td>
@@ -203,13 +223,13 @@
             searchPanes: {
               show: true,
             },
-            targets: [0, 1, 5],
+            targets: [0, 1, 2 , 6, 7],
           },
           {
             searchPanes: {
               show: false,
             },
-            targets: [2, 3, 4, 6],
+            targets: [3, 4, 5, 8],
           },
         ],
         language: {
@@ -329,33 +349,53 @@
 <script>
   let idUpdate;
   let urlOrder;
+  let type ="PATCH"
   $("#exampleModalUpdate").on("show.bs.modal", (e)=>{
     const button = $(e.relatedTarget);
     idUpdate = button.data("id");
+    const dataIn = button.attr("data-In")
     let statusOrder = button.attr("data-statusCode");
-    if(statusOrder==0){
-      $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không?")
-      urlOrder = "comfirm"
+    if(dataIn){
+      $("#modal-xacnhan").html("Bạn có muốn in hoá đơn cho đơn hàng này hay không?")
+      $("#exampleModalUpdate #exampleModalLabel").html("Xác nhận in đơn hàng")
+      urlOrder = "exportData"
+      type = "GET"
+    }
+    else if(statusOrder==0){
+      const dataCancel = button.attr("data-cancel")
+      if(dataCancel){
+        $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không?")
+        urlOrder = "cancel"
+        type = "DELETE"
+      }
+      else{
+        $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không?")
+        urlOrder = "confirm"
+      }
     }
     else if(statusOrder==1){
       $("#modal-xacnhan").html("Bạn có muốn ship đơn hàng này hay không?")
       urlOrder = "shipping"
-
     }
     else if(statusOrder==2){
       urlOrder = "delivere"
+      $("#modal-xacnhan").html("Bạn có muốn giao đơn hàng này hay không?")
+    }
+    else if(statusOrder==3){
+      urlOrder = "done"
       $("#modal-xacnhan").html("Bạn có muốn giao đơn hàng này hay không?")
     }
   })
 
   $("#btn-update").click(e=>{
     e.preventDefault();
+
     $.ajax({
       url: `/order/${urlOrder}/${idUpdate}`,
-      type: "PATCH",
+      type: type,
       success: (response) => {
         Toastify({
-          text: response.message,
+          text: "Cập nhật trạng thái thành công",
           duration: 2000,
           newWindow: true,
           //close: true,
@@ -372,10 +412,17 @@
             fontSize: "16px",
           },
         }).showToast();
-        setTimeout(() => {
+        if(response.value){
           $("#exampleModalUpdate").modal("hide");
-          location.reload();
-        }, "2000");
+          window.open(response.value,"_blank");
+        }
+        else{
+          setTimeout(() => {
+            $("#exampleModalUpdate").modal("hide");
+            location.reload();
+          }, "2000");
+        }
+        
       },
       error: (data) => {
         let text = data.statusText||data.responseJSON.errorCode

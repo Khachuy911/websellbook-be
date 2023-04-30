@@ -814,7 +814,9 @@ module.exports = {
     });
 
     await browser.close();
-
-    res.redirect(`http://localhost:3000/upload/${idOrder}.pdf`);
+    res.status(200).json({
+      value:`http://localhost:3000/upload/${idOrder}.pdf`,
+      message:"In hoá đơn thành công"
+    })
   },
 };

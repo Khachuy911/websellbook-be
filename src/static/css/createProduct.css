@@ -46,6 +46,9 @@ textarea {
     border-radius: 5px;
     box-sizing: border-box;
 }
+
+
+input[type="datetime-local"],
 input[type="date"],
 input[type="number"] {
         width: 100%;
