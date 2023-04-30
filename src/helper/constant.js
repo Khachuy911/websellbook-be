@@ -58,10 +58,10 @@ module.exports = {
   },
 
   MESSAGE: {
-    SUCCESS: "Success",
-    BAD_REQUEST: "Bad request",
-    CREATED: "Created successfully",
-    SERVER_ERROR: "Server error",
+    SUCCESS: "Thành công",
+    BAD_REQUEST: "Thất bại",
+    CREATED: "Tạo thành công",
+    SERVER_ERROR: "Lỗi server",
 
     // AUTHENTICATION
     REGISTER_FAIL: "Đăng ký thất bại!",
@@ -82,13 +82,13 @@ module.exports = {
 
     // ORDER
     VOUCHER_INVALID: "Voucher không hợp lệ",
-    ORDER_IS_CANCEL: "This order is canceled or not confirm",
-    IS_OUT: "Quantity is out",
-    NOT_CONFIRM: "This order is at confirmed status",
-    NOT_SHIPPING: "This order is not at confirm status",
-    NOT_DELIVERE: "This order is not at shipping status",
-    NOT_DONE: "This order is not at delivere status",
-    NOT_CANCEL: "Order can not cancel",
+    ORDER_IS_CANCEL: "Đơn hàng này đã bị huỷ",
+    IS_OUT: "Số lượng đã hết",
+    NOT_CONFIRM: "Đơn đặt hàng này ở trạng thái xác nhận",
+    NOT_SHIPPING: "Đơn đặt hàng này không ở trạng thái xác nhận",
+    NOT_DELIVERE: "Đơn đặt hàng này không ở trạng thái chờ giao",
+    NOT_DONE: "Đơn đặt hàng này không ở trạng thái đang giao hàng",
+    NOT_CANCEL: "Đặt hàng không thể hủy bỏ",
     KHONG_XOA_COMMENT: "Không thể xoá nhận xét của người khác",
   },
 };

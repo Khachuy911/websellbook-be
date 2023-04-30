@@ -445,7 +445,7 @@ module.exports = {
 
       const order = await Order.findOne(condition);
 
-      if (order.orderStatus >= 2) {
+      if (order.orderStatus > 1) {
         await t.rollback();
         return next(
           new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.NOT_CANCEL)
@@ -800,7 +800,7 @@ module.exports = {
   },
 
   exportData: async (req, res) => {
-    const idOrder = req.query.order;
+    const idOrder = req.params.order;
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto(`http://localhost:3000/order/export/${idOrder}`, {
