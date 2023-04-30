@@ -426,7 +426,7 @@ module.exports = {
       const condition = {
         where: {
           id: id,
-          isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+          // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
         },
         include: {
           model: OrderDetail,
