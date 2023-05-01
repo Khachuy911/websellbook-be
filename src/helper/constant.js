@@ -4,6 +4,9 @@ module.exports = {
     IS_ACTIVE: 1,
     IS_NOT_ACTIVE: 0,
 
+    IS_ONLINE: 2,
+    IS_OFFLINE: 1,
+
     // STATUS DELETE
     IS_DELETED: 1,
     IS_NOT_DELETED: 0,

@@ -1,6 +1,6 @@
 const { Op } = require("sequelize");
 const moment = require("moment");
-
+const paypal = require("paypal-rest-sdk");
 const sequelize = require("../config/connectDB");
 const Order = require("../model/orderModel");
 const OrderDetail = require("../model/orderDetailModel");
@@ -19,6 +19,7 @@ const {
 const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require("../helper/constant");
 const User = require("../model/userModel");
 
+let totalGlobal;
 module.exports = {
   create: async (req, res, next) => {
     const t = await sequelize.transaction();
@@ -36,6 +37,25 @@ module.exports = {
 
       product = JSON.parse(product);
 
+      let count = {};
+
+      for (var i = 0; i < product.length; i++) {
+          var item = product[i];
+          let id = item.id;
+          if (count[id]) {
+              count[id] += item.quantity;
+          } else {
+              count[id] = item.quantity;
+          }
+      }
+
+      let bookInfo = [];
+
+      for (let id in count) {
+          bookInfo.push({ id: id, quantity: count[id] });
+      }               
+
+      product = bookInfo
       product.sort((a, b) => {
         if (a.id < b.id) {
           return -1;
@@ -94,9 +114,15 @@ module.exports = {
       let sum = 0;
 
       for (var i = 0; i < pro.length; i++) {
-        if (!pro || pro[i].quantityDisplay < product[i].quantity) {
-          await t.rollback();
-          return next(new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.IS_OUT));
+        for (var j = 0; j < product.length; j++) {
+          if (pro[i].id === product[j].id) {
+            if (!pro || pro[i].quantityDisplay < product[j].quantity) {
+              await t.rollback();
+              return next(
+                new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.IS_OUT)
+              );
+            }
+          }
         }
 
         if (pro[i].FlashSaleProducts.length > 0) {
@@ -211,7 +237,7 @@ module.exports = {
       res.status(HTTP_CODE.CREATED).json({
         isSuccess: true,
         message: MESSAGE.CREATED,
-        data: null,
+        data: order,
       });
     } catch (error) {
       await t.rollback();
@@ -814,9 +840,136 @@ module.exports = {
     });
 
     await browser.close();
-    res.status(200).json({
-      value:`http://localhost:3000/upload/${idOrder}.pdf`,
-      message:"In hoá đơn thành công"
-    })
+
+    res.redirect(`http://localhost:3000/upload/${idOrder}.pdf`);
+  },
+
+  paypalSuccess: async (req, res, next) => {
+    const payerId = req.query.PayerID;
+    const paymentId = req.query.paymentId;
+
+    const execute_payment_json = {
+      payer_id: payerId,
+      transactions: [
+        {
+          amount: {
+            currency: "USD",
+            total: totalGlobal,
+          },
+        },
+      ],
+    };
+
+    paypal.payment.execute(
+      paymentId,
+      execute_payment_json,
+      function (error, payment) {
+        if (error) {
+          // res.render('cancle');
+          console.log(error);
+        } else {
+          console.log(JSON.stringify(payment));
+          res.json({ success: true });
+          // res.render('success');
+        }
+      }
+    );
+  },
+
+  paypal: async (req, res, next) => {
+    const id = req.query.order;
+
+    if (!id) {
+      return next(
+        new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
+      );
+    }
+
+    const condition = {
+      where: {
+        id,
+        // isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+      },
+      include: [
+        {
+          model: Voucher,
+        },
+        {
+          model: User,
+        },
+        {
+          model: OrderDetail,
+          include: {
+            model: Product,
+            include: {
+              model: FlashSaleProduct,
+            },
+          },
+        },
+      ],
+    };
+
+    const order = await Order.findOne(condition);
+
+    console.log("+++++++++++++" + JSON.stringify(order.OrderDetails.length));
+
+    let listItems = [];
+    let totalPrice = 0;
+
+    order.OrderDetails.forEach((ele) => {
+      let total = (ele.price / 23000).toFixed(2);
+      totalPrice = (
+        parseFloat(totalPrice) +
+        parseFloat(total) * parseInt(ele.quantity)
+      ).toFixed(2);
+      listItems.push({
+        name: ele.Product.name,
+        sku: ele.Product.barCode,
+        price: total.toString(),
+        currency: "USD",
+        quantity: ele.quantity,
+      });
+    });
+    totalGlobal = totalPrice
+    paypal.configure({
+      mode: "sandbox", //sandbox or live
+      client_id:
+        "AXOe7Uh36I9ocdaRnCfaUPllor09ZzA2-3sXxsTaYvJY3IzISbEJDnRqqVwIvAVajJdJB0qrtH3e-itD",
+      client_secret:
+        "EOLpJJrRbXD6QwSl0_-Q82RvrzvzDWAzO72DqQ4vDSO7oquXQrtxeLdzdEMVefO1Ah9pl74d8E8J_lKJ",
+    });
+    const create_payment_json = {
+      intent: "sale",
+      payer: {
+        payment_method: "paypal",
+      },
+      redirect_urls: {
+        return_url: "http://localhost:3000/order/success",
+        cancel_url: "http://localhost:3000/cancel",
+      },
+      transactions: [
+        {
+          item_list: {
+            items: listItems,
+          },
+          amount: {
+            currency: "USD",
+            total: totalPrice.toString(),
+          },
+          description: "Hat for the best team ever",
+        },
+      ],
+    };
+    paypal.payment.create(create_payment_json, function (error, payment) {
+      if (error) {
+        console.log(error);
+      } else {
+        for (let i = 0; i < payment.links.length; i++) {
+          if (payment.links[i].rel === "approval_url") {
+            res.status(200).json({ url: payment.links[i].href, mesage: true });
+          }
+        }
+      }
+    });
   },
 };

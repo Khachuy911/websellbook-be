@@ -297,40 +297,66 @@
               <th scope="col">Mã đơn hàng</th>
               <th scope="col">Địa chỉ giao</th>
               <th scope="col">Số điện thoại</th>
-              <th scope="col"><div class="custom-sort">
-                <div class="text-sort">Thời gian đặt hàng </div>
-                <div class="title-category-option">
-                  <div class="up">
-                    <a class="a-custom-sort" href="/order/myorder?title=createdAt&type=1" ><i class="fa-solid fa-caret-up"></i></a> 
-                  </div>
-                  <div class="down">
-                    <a  class="a-custom-sort"  href="/order/myorder?title=createdAt&type=0" ><i class="fa-solid fa-caret-down"></i></a>
+              <th scope="col">
+                <div class="custom-sort">
+                  <div class="text-sort">Thời gian đặt hàng</div>
+                  <div class="title-category-option">
+                    <div class="up">
+                      <a
+                        class="a-custom-sort"
+                        href="/order/myorder?title=createdAt&type=1"
+                        ><i class="fa-solid fa-caret-up"></i
+                      ></a>
+                    </div>
+                    <div class="down">
+                      <a
+                        class="a-custom-sort"
+                        href="/order/myorder?title=createdAt&type=0"
+                        ><i class="fa-solid fa-caret-down"></i
+                      ></a>
+                    </div>
                   </div>
                 </div>
-              </div></th>
+              </th>
               <th scope="col">Voucher (giảm)</th>
               <th scope="col">
                 <div class="custom-sort">
-                  <div class="text-sort">Tổng đơn giá </div>
+                  <div class="text-sort">Tổng đơn giá</div>
                   <div class="title-category-option">
                     <div class="up">
-                      <a class="a-custom-sort" href="/order/myorder?title=totalPrice&type=1" ><i class="fa-solid fa-caret-up"></i></a> 
+                      <a
+                        class="a-custom-sort"
+                        href="/order/myorder?title=totalPrice&type=1"
+                        ><i class="fa-solid fa-caret-up"></i
+                      ></a>
                     </div>
                     <div class="down">
-                      <a  class="a-custom-sort"  href="/order/myorder?title=totalPrice&type=0" ><i class="fa-solid fa-caret-down"></i></a>
+                      <a
+                        class="a-custom-sort"
+                        href="/order/myorder?title=totalPrice&type=0"
+                        ><i class="fa-solid fa-caret-down"></i
+                      ></a>
                     </div>
                   </div>
                 </div>
-            </th>
+              </th>
               <th scope="col">
                 <div class="custom-sort">
-                  <div class="text-sort">Trạng thái đơn </div>
+                  <div class="text-sort">Trạng thái đơn</div>
                   <div class="title-category-option">
                     <div class="up">
-                      <a class="a-custom-sort" href="/order/myorder?title=orderStatus&type=1" ><i class="fa-solid fa-caret-up"></i></a> 
+                      <a
+                        class="a-custom-sort"
+                        href="/order/myorder?title=orderStatus&type=1"
+                        ><i class="fa-solid fa-caret-up"></i
+                      ></a>
                     </div>
                     <div class="down">
-                      <a  class="a-custom-sort"  href="/order/myorder?title=orderStatus&type=0" ><i class="fa-solid fa-caret-down"></i></a>
+                      <a
+                        class="a-custom-sort"
+                        href="/order/myorder?title=orderStatus&type=0"
+                        ><i class="fa-solid fa-caret-down"></i
+                      ></a>
                     </div>
                   </div>
                 </div>
@@ -485,6 +511,8 @@
                 </div>
               </div>
               <p id="orderTime" style="margin-left: 20px"></p>
+              <p id="orderAddress" style="margin-left: 20px"></p>
+              <p id="orderPhone" style="margin-left: 20px"></p>
               <p id="orderVoucher" style="margin-left: 20px"></p>
               <div id="listProduct" style="margin-left: 20px"></div>
             </div>
@@ -722,6 +750,10 @@
               "Mã đơn hàng: " + "<b>" + data?.data?.orderCode + "</b>";
             $("#orderTime")[0].innerHTML =
               "Thời gian đặt hàng: " + "<b>" + data?.data?.createdAt + "</b>";
+            $("#orderAddress")[0].innerHTML =
+              "Địa chỉ giao hàng: " + "<b>" + data?.data?.address + "</b>";
+            $("#orderPhone")[0].innerHTML =
+              "Số điện thoại: " + "<b>" + data?.data?.phone + "</b>";
             if (data?.data?.Voucher) {
               $("#orderVoucher")[0].innerHTML =
                 "Voucher: " +
@@ -779,7 +811,7 @@
           },
           error: function (xhr, textStatus, errorThrown) {
             Toastify({
-              text: "Thêm product không thành công",
+              text: "Server đang bảo trì",
               duration: 2000,
               destination: "http://localhost:3000/",
               newWindow: true,
