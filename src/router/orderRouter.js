@@ -8,7 +8,7 @@ const { DEFAULT_VALUE } = require("../helper/constant");
 
 Route.get("/dashboard", AsyncHandle(OrderController.dashboard));
 
-Route.patch("/exportData/:order", AsyncHandle(OrderController.exportData));
+Route.get("/exportData/:order", AsyncHandle(OrderController.exportData));
 
 Route.get("/exportData", AsyncHandle(OrderController.exportData));
 Route.post("/paypal", AsyncHandle(OrderController.paypal));

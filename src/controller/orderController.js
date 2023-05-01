@@ -40,22 +40,22 @@ module.exports = {
       let count = {};
 
       for (var i = 0; i < product.length; i++) {
-          var item = product[i];
-          let id = item.id;
-          if (count[id]) {
-              count[id] += item.quantity;
-          } else {
-              count[id] = item.quantity;
-          }
+        var item = product[i];
+        let id = item.id;
+        if (count[id]) {
+          count[id] += item.quantity;
+        } else {
+          count[id] = item.quantity;
+        }
       }
 
       let bookInfo = [];
 
       for (let id in count) {
-          bookInfo.push({ id: id, quantity: count[id] });
-      }               
+        bookInfo.push({ id: id, quantity: count[id] });
+      }
 
-      product = bookInfo
+      product = bookInfo;
       product.sort((a, b) => {
         if (a.id < b.id) {
           return -1;
@@ -841,7 +841,12 @@ module.exports = {
 
     await browser.close();
 
-    res.redirect(`http://localhost:3000/upload/${idOrder}.pdf`);
+    // res.redirect(`http://localhost:3000/upload/${idOrder}.pdf`);
+
+    res.status(200).json({
+      isSuccess: true,
+      value: `http://localhost:3000/upload/${idOrder}.pdf`,
+    });
   },
 
   paypalSuccess: async (req, res, next) => {
@@ -930,7 +935,7 @@ module.exports = {
         quantity: ele.quantity,
       });
     });
-    totalGlobal = totalPrice
+    totalGlobal = totalPrice;
     paypal.configure({
       mode: "sandbox", //sandbox or live
       client_id:

@@ -435,6 +435,7 @@
         if (response.value) {
           $("#exampleModalUpdate").modal("hide");
           window.open(response.value, "_blank");
+          location.reload();
         }
         else {
           setTimeout(() => {
