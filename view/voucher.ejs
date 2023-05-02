@@ -309,6 +309,11 @@
         </div>
       </div>
       <div class="row justify-content-md-left">
+        <%if(data?.rows.length <=0 ){%>
+          <div class="empty text-center">
+            <i class="fa-brands fa-dropbox" style="font-size: 50px;"></i> <span style="font-weight:lighter; font-style: italic; opacity: 50%; ">Chưa có sản phẩm nào... </span>
+          </div>
+        <%}else{%>
         <% data?.rows.forEach(voucher => { %>
         <div class="card mb-3 col-3" style="max-width: 308px; margin: 10px">
           <div
@@ -330,6 +335,7 @@
           </div>
         </div>
         <% }); %>
+        <% } %>
       </div>
     </div>
 

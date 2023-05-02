@@ -81,6 +81,7 @@
               <th>Số điện thoại</th>
               <th>Chi tiết đơn</th>
               <th>Thời gian đặt</th>
+              <th>Phương thức</th>
               <th>Trạng thái</th>
               <th>Thao tác</th>
             </tr>
@@ -224,8 +225,9 @@
                                     <td>${item.totalPrice.toLocaleString()}đ</td>
                                     <td>${item.address}</td>
                                     <td>${item.phone}</td>
-                                    <td>${OrderDetails.join("")}</td>
+                                    <td>${OrderDetails.join("")}</td>                                    
                                     <td>${item.createdAt}</td>
+                                    <td>${item.payment === 1 ? "Offline" : "Online"}</td>
                                     <td class="${color}" style="text-align:center">${status}</td>
                                     <td style="max-width:120px;text-align:center">
                                         ${td}
@@ -243,13 +245,13 @@
             searchPanes: {
               show: true,
             },
-            targets: [0, 1, 2, 6, 7],
+            targets: [0, 6, 7, 8],
           },
           {
             searchPanes: {
               show: false,
             },
-            targets: [3, 4, 5, 8],
+            targets: [1, 2, 3, 4, 5, 9],
           },
         ],
         language: {

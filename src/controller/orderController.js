@@ -874,8 +874,20 @@ module.exports = {
           console.log(error);
         } else {
           console.log(JSON.stringify(payment));
-          res.json({ success: true });
+          const conditionOrder = {
+            where: {
+              paymentId: payment.id,
+              isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+            },
+          };
+          const data = {
+            payment: DEFAULT_VALUE.IS_ONLINE,
+          };
+
+          Order.update(data, conditionOrder);
+          // res.json({ success: true });
           // res.render('success');
+          res.redirect("/order/myorder");
         }
       }
     );
@@ -915,8 +927,6 @@ module.exports = {
     };
 
     const order = await Order.findOne(condition);
-
-    console.log("+++++++++++++" + JSON.stringify(order.OrderDetails.length));
 
     let listItems = [];
     let totalPrice = 0;
@@ -969,6 +979,17 @@ module.exports = {
       if (error) {
         console.log(error);
       } else {
+        console.log("====" + JSON.stringify(payment));
+        const data = {
+          paymentId: payment.id,
+        };
+        const conditionOrder = {
+          where: {
+            id: id,
+            isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+          },
+        };
+        Order.update(data, conditionOrder);
         for (let i = 0; i < payment.links.length; i++) {
           if (payment.links[i].rel === "approval_url") {
             res.status(200).json({ url: payment.links[i].href, mesage: true });

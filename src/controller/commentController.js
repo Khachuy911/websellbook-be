@@ -5,6 +5,7 @@ const ErrorResponse = require("../helper/errorResponse");
 const User = require("../model/userModel");
 const jwt = require("jsonwebtoken");
 const Product = require("../model/productModel");
+const UserRole = require("../model/userRoleModel");
 
 module.exports = {
   create: async (req, res, next) => {
@@ -215,9 +216,27 @@ module.exports = {
         );
       }
 
-      const comment = await Comment.findOne({ where: { id } });
+      const conditionUser = {
+        where: {
+          id,
+        },
+        include: {
+          model: User,
+          include: {
+            model: UserRole,
+          },
+        },
+      };
 
-      if (comment?.userId !== req.user) {
+      const comment = await Comment.findOne(conditionUser);
+
+      console.log(JSON.stringify(comment));
+
+      if (
+        comment?.userId !== req.user &&
+        comment.User.UserRoles[0].roleId ===
+          "df7ccac8-7500-4695-b55d-0c4949cce586"
+      ) {
         return next(
           new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.KHONG_XOA_COMMENT)
         );

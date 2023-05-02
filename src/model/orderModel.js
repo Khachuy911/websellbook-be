@@ -42,6 +42,10 @@ Order.init(
       type: DataTypes.INTEGER,
       defaultValue: DEFAULT_VALUE.IS_OFFLINE,
     },
+    paymentId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     phone: {
       type: DataTypes.INTEGER,
     },

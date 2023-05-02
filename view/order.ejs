@@ -381,9 +381,8 @@
                 dataType: 'json',
                 data: dataSend,
                 success: function (data) {
-                  console.log("======="+ JSON.stringify(data));
                     Toastify({
-                        text: 'Mua hàng thành công',
+                        text: 'Đang xử lý mua hàng',
                         duration: 2000,
                         newWindow: true,
                         //close: true,
@@ -408,9 +407,9 @@
                               type: 'POST',
                               // dataType: 'json',
                               success: function (data) {
-                                window.open(data.url, '_blank');
+                                window.open(data.url, '_self');
                                   Toastify({
-                                      text: 'Mua hàng thành công',
+                                      text: 'Bạn cần thanh toán qua paypal',
                                       duration: 2000,
                                       newWindow: true,
                                       //close: true,
@@ -431,9 +430,30 @@
                               },
                           });
                         }else{
-                          window.location.href = "/order/myorder";
+                          Toastify({
+                                      text: 'Mua hàng thành công',
+                                      duration: 2000,
+                                      newWindow: true,
+                                      //close: true,
+                                      offset: {
+                                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                                      },
+                                      gravity: "top", // `top` or `bottom`
+                                      position: "right", // `left`, `center` or `right`
+                                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                                      style: {
+                                          background: "linear-gradient(to right, green, green)",
+                                          width: "250px",
+                                          fontSize: "16px"
+                                      },
+                                      onClick: function () { } // Callback after click
+                                  }).showToast();
+                                  setTimeout(()=>{
+                                    window.location.href = "/order/myorder";
+                                  }, 1000)
                         }
-                    }, "500")
+                    }, "1000")
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     Toastify({

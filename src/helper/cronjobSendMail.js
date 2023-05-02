@@ -32,9 +32,12 @@ var task = cron.schedule(`*/1 * * * *`, async () => {
 
     const user = await User.findAll(condition2);
 
+    const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
+      <a style="text-decoration: none; color: white; font-size: 15pxs;" href="http://localhost:3000/product">Truy cập ngay</a></button>`;
+
     if (user.length > 0) {
       for (let i = 0; i < user.length; i++) {
-        sendMail(user[i].email, title, null)
+        sendMail(user[i].email, title, html)
       }
     }
   }

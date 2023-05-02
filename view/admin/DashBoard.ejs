@@ -89,7 +89,9 @@
         <div>
           <div class="card">
             <div class="card-body">
-              <canvas id="myChart"></canvas>
+              <div id="idFake">
+                <canvas id="myChart"></canvas>
+              </div>
             </div>
           </div>
         </div>
@@ -137,8 +139,8 @@
         dataSet.push(e.total_amount);
         return e;
       });
-      const ctx = document.getElementById("myChart").getContext("2d");
-      const myChart = new Chart(ctx, {
+      let ctx = document.getElementById("myChart").getContext("2d");
+      let myChart = new Chart(ctx, {
         type: "line",
         data: {
           labels: labels,
@@ -161,7 +163,7 @@
           plugins: {
             title: {
               display: true,
-              text: "Biểu đồ doanh thu Tháng 4",
+              text: `Biểu đồ doanh thu Tháng ${date.getMonth() + 1}`,
               font: {
                 size: 18,
               },
@@ -184,10 +186,20 @@
 <script>
   $("#getdate").change(e => {
     let date = $("#getdate").val()
+    if(date <= 0 || date >=13 ){
+      if(date <=0){
+        $("#getdate").val(1)
+      }else{
+        $("#getdate").val(12)
+      }
+    }
+
+    date = $("#getdate").val();
     $.ajax({
       url: `/order/dashboard?numberMonth=${date}`,
       type: "GET",
-      success: (response) => {
+      success: (response) => {   
+      $("#idFake").html("<canvas id='myChart'></canvas>")
         console.log(response);
         let labels = [];
         let dataSet = [];
@@ -196,7 +208,8 @@
           dataSet.push(e.total_amount);
           return e;
         });
-        const ctx = document.getElementById("myChart").getContext("2d");
+        let ctx = document.getElementById("myChart").getContext("2d");
+
         const myChart = new Chart(ctx, {
           type: "line",
           data: {
@@ -220,7 +233,7 @@
             plugins: {
               title: {
                 display: true,
-                text: "Biểu đồ doanh thu Tháng 4",
+                text: `Biểu đồ doanh thu Tháng ${date}`,
                 font: {
                   size: 18,
                 },
@@ -228,12 +241,14 @@
             },
           },
         });
+        let totalMoney = response?.orderTotal[0]?.total_amount_by_month?.toLocaleString() || 0;
+        let totalOrder = response?.orderQuantity[0]?.OrderDetails[0]?.total_quantity || 0;
         $("#total-money").html(
-          response?.orderTotal[0]?.total_amount_by_month.toLocaleString() +
+          totalMoney +
           " đ"
         );
         $("#total-order").html(
-          response?.orderQuantity[0]?.OrderDetails[0]?.total_quantity
+          totalOrder
         );
       },
       error: (response) => { },

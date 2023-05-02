@@ -71,10 +71,10 @@ module.exports = {
         );
       }
 
-      const text = `Click vào đây để xác thực tài khoản của bạn, bạn có thể xác thực trong vòng 5 phút.`;
+      const text = `Click vào đây để xác thực tài khoản của bạn, bạn có thể xác thực trong vòng 5 phút!!!`;
       const link = `${req.protocol}://${req.get(
         "host"
-      )}/auth/views/check-verify?token=${token}&id=${user.id}`;
+      )}/auth/verify?token=${token}&id=${user.id}`;
       const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
       <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">Xác Thực Ngay</a></button>`;
       sendMail(user.email, text, html);
@@ -180,6 +180,7 @@ module.exports = {
       user.verifyCode !== token ||
       moment().isBefore(user.verifyCodeValid) == false
     ) {
+      res.render("../view/authPage/verifyFail.ejs");
       return next(
         new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.VERIFY_FAIL)
       );
@@ -245,10 +246,10 @@ module.exports = {
 
       await user.save();
 
-      const text = `Click vào đây để xác thực tài khoản của bạn, bạn có thể xác thực trong vòng 5 phút.`;
+      const text = `${new Date().toLocaleString()}: Click vào đây để xác thực tài khoản của bạn, bạn có thể xác thực trong vòng 5 phút.`;
       const link = `${req.protocol}://${req.get(
         "host"
-      )}/auth/views/check-verify?token=${token1}&id=${user.id}`;
+      )}/auth/verify?token=${token1}&id=${user.id}`;
       const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
     <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">Xác Thực</a></button>`;
 
@@ -376,36 +377,40 @@ module.exports = {
         .status(HTTP_CODE.BAD_REQUEST)
         .json({ message: MESSAGE.INFOR_WRONG });
 
-    const reset = await jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+    const reset = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
       expiresIn: process.env.JWT_RESET_EXPIRES_IN,
     });
 
     const text = `Click vào đây để cập nhật mật khẩu mới!`;
     const link = `${req.protocol}://${req.get(
       "host"
-    )}/api/auth/resetPW/${reset}`;
+    )}/auth/update-password/${reset}`;
     const html = `<button style="background-color: rgb(105, 192, 233); width: 100px; height: 50px; border: 1px solid red">
       <a style="text-decoration: none; color: white; font-size: 15pxs;" href="${link}">Cập Nhật Ngay</a></button>`;
 
     sendMail(user.email, text, html);
 
-    res.status(HTTP_CODE.SUCCESS).json({
-      isSuccess: true,
-      message: MESSAGE.SEND_MAIL,
-      data: link,
-    });
+    // res.status(HTTP_CODE.SUCCESS).json({
+    //   isSuccess: true,
+    //   message: MESSAGE.SEND_MAIL,
+    //   data: link,
+    // });
+
+    res.render("../view/authPage/verify.ejs");
   },
 
   resetPW: async (req, res, next) => {
     const { reset } = req.params;
     const { newPassword, repeatNewPassword } = req.body;
 
-    if (!reset)
+    if (!reset){
+      res.render("../view/authPage/updatePWFail.ejs");
       return next(
         new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
       );
+    }
 
-    const decode = await jwt.verify(reset, process.env.JWT_SECRET_KEY);
+    const decode = jwt.verify(reset, process.env.JWT_SECRET_KEY);
 
     const condition = {
       where: {
@@ -415,10 +420,12 @@ module.exports = {
     };
     const user = await User.findOne(condition);
 
-    if (!user)
+    if (!user){
+      res.render("../view/authPage/updatePWFail.ejs");
       return next(
         new ErrorResponse(HTTP_CODE.BAD_REQUEST, MESSAGE.BAD_REQUEST)
       );
+    }
 
     if (newPassword !== repeatNewPassword)
       return next(
@@ -426,9 +433,11 @@ module.exports = {
       );
 
     // user.password = await Bcrypt.hashSync(newPassword, 12);
-    user.password = await md5(newPassword);
+    user.password = md5(newPassword);
 
     await user.save();
+
+    // res.render("../view/authPage/updatePWSuccess.ejs");
 
     res.status(HTTP_CODE.SUCCESS).json({
       isSuccess: true,

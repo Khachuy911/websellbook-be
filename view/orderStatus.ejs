@@ -290,13 +290,11 @@
       <hr />
       <h4>Xin chào, <%= data.currentUser.username%></h4>
       <div class="custom-tbl-order">
-        <table class="table">
+        <table class="table text-center">
           <thead>
             <tr class="text-center">
               <th scope="col"></th>
               <th scope="col">Mã đơn hàng</th>
-              <th scope="col">Địa chỉ giao</th>
-              <th scope="col">Số điện thoại</th>
               <th scope="col">
                 <div class="custom-sort">
                   <div class="text-sort">Thời gian đặt hàng</div>
@@ -340,6 +338,7 @@
                   </div>
                 </div>
               </th>
+              <th scope="col">Thanh toán</th>
               <th scope="col">
                 <div class="custom-sort">
                   <div class="text-sort">Trạng thái đơn</div>
@@ -368,9 +367,7 @@
             <% data.rows.forEach(order => { %>
             <tr data-order="<%= order.id%>" class="text-center">
               <th scope="row"><i class="fa-solid fa-dolly"></i></th>
-              <td><%= order.orderCode %></td>
-              <td><%= order.address %></td>
-              <td><%= order.phone %></td>
+              <td><%= order.orderCode %></td>              
               <td><%= order.createdAt %></td>
               <td>
                 <%= order?.Voucher?.discountAmount.toLocaleString('vn-VN', {
@@ -380,6 +377,11 @@
                 <%= order.totalPrice.toLocaleString('vn-VN', { style:
                 'currency', currency: 'VND' }) %>
               </td>
+              <%if(order.payment === 1){%>
+                <td>Thanh toán khi nhận</td>
+                <%}else{%>
+                <td style="color: seagreen">Đã thanh toán paypal</td>
+                  <%}%>
               <% if(order.orderStatus == 0){ %>
               <td>Chờ xác nhận</td>
               <td class="text-end">
@@ -511,6 +513,7 @@
                 </div>
               </div>
               <p id="orderTime" style="margin-left: 20px"></p>
+              <p id="orderPayment" style="margin-left: 20px"></p>
               <p id="orderAddress" style="margin-left: 20px"></p>
               <p id="orderPhone" style="margin-left: 20px"></p>
               <p id="orderVoucher" style="margin-left: 20px"></p>
@@ -754,6 +757,13 @@
               "Địa chỉ giao hàng: " + "<b>" + data?.data?.address + "</b>";
             $("#orderPhone")[0].innerHTML =
               "Số điện thoại: " + "<b>" + data?.data?.phone + "</b>";
+            if(data?.data?.payment === 1){
+              $("#orderPayment")[0].innerHTML =
+              "Phương thức thanh toán: " + "<b>" + "Thanh toán khi nhận hàng" + "</b>";
+            }else{
+              $("#orderPayment")[0].innerHTML =
+              "Phương thức thanh toán: " + "<b>" + "Đã thanh toán online qua Paypal" + "</b>";
+            }
             if (data?.data?.Voucher) {
               $("#orderVoucher")[0].innerHTML =
                 "Voucher: " +

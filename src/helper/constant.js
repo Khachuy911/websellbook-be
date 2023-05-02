@@ -81,7 +81,7 @@ module.exports = {
     // EMAIL
     SEND_MAIL: "Kiểm tra email để cập nhật mật khẩu",
     TITLE_FLASHSALE:
-      "ALO ALO ALO, Flash sale sẽ bắt đầu sau 15 phút nữa. Bắt đầu ngay !",
+      "ALO ALO ALO, Flash sale sẽ bắt đầu sau 15 phút nữa. Bắt đầu mua sách tại KhacHuy Shop ngay !",
 
     // ORDER
     VOUCHER_INVALID: "Voucher không hợp lệ",

@@ -89,6 +89,10 @@ a:hover {
   color: black;
 }
 
+i{
+  color:rgb(105, 192, 233);
+}
+
 .title-category-option{
   display:flex;
   justify-content: right;

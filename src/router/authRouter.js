@@ -1,27 +1,41 @@
-const express = require('express');
+const express = require("express");
 const Route = express.Router();
 
-const AsyncHandle = require('../middleware/asyncHandle')
-const Auth = require('../middleware/authMiddleware');
-const AuthController = require('../controller/authController');
+const AsyncHandle = require("../middleware/asyncHandle");
+const Auth = require("../middleware/authMiddleware");
+const AuthController = require("../controller/authController");
 
-Route.post('/register', AsyncHandle(AuthController.register));
-Route.get('/verify', AsyncHandle(AuthController.verifyEmail));
-Route.post('/resendemail', AsyncHandle(AuthController.reSendMail));
-Route.post('/login', AuthController.login);
-Route.post('/refreshToken', AuthController.refreshAccessToken);
-Route.patch('/updatePW', Auth.checkToken, AsyncHandle(AuthController.updatePW));
-Route.post('/forgotPW', AsyncHandle(AuthController.forgotPW));
-Route.patch('/resetPW/:reset', AsyncHandle(AuthController.resetPW));
+Route.post("/register", AsyncHandle(AuthController.register));
+Route.get("/verify", AsyncHandle(AuthController.verifyEmail));
+Route.post("/resendemail", AsyncHandle(AuthController.reSendMail));
+Route.post("/login", AuthController.login);
+Route.post("/refreshToken", AuthController.refreshAccessToken);
+Route.patch("/updatePW", Auth.checkToken, AsyncHandle(AuthController.updatePW));
 
-Route.get('/views/login', (req,res,next)=>{res.render("../view/authPage/login")});
-Route.get('/views/regester', (req,res,next)=>{res.render("../view/authPage/regester")});
-Route.get('/views/verify', AuthController.verify);
-Route.get('/views/check-verify', (req,res,next)=>{res.render("../view/authPage/check-verify",{token:req.query.token,id:req.query.id})});
-Route.get('/views/forgot-password',(req,res,next)=>{res.render("../view/authPage/forgotpassword")});
+Route.post("/forgotPW", AsyncHandle(AuthController.forgotPW));
+Route.patch("/resetPW/:reset", AsyncHandle(AuthController.resetPW));
+Route.get("/views/forgot-password/", (req, res, next) => {
+  res.render("../view/authPage/forgotpassword");
+});
+Route.get("/update-password/:reset", (req, res, next) => {
+  const { reset } = req.params;
+  res.render("../view/authPage/updatePW.ejs", { reset: reset });
+});
 
-Route.get('/roleModule', AuthController.roleModule);
-Route.get('/logout', AuthController.logout);
+Route.get("/views/login", (req, res, next) => {
+  res.render("../view/authPage/login");
+});
+Route.get("/views/regester", (req, res, next) => {
+  res.render("../view/authPage/regester");
+});
+Route.get("/views/verify", (req, res, next) => {
+  res.render("../view/authPage/verify.ejs");
+});
+// Route.get('/views/check-verify', (req,res,next)=>{res.render("../view/authPage/check-verify",{token:req.query.token,id:req.query.id})});
+
+
+Route.get("/roleModule", AuthController.roleModule);
+Route.get("/logout", AuthController.logout);
 
 /**
  * @swagger
@@ -33,23 +47,23 @@ Route.get('/logout', AuthController.logout);
 /**
  * @swagger
  *  components:
- *      schemas:    
+ *      schemas:
  *          User:
  *              type: object
- *              properties:     
- *                  username: 
+ *              properties:
+ *                  username:
  *                      type: string
- *                  email: 
+ *                  email:
  *                      type: string
- *                  password: 
+ *                  password:
  *                      type: string
  *                  age:
  *                      type: integer
- *                  address: 
+ *                  address:
  *                      type: string
  *                  phone:
  *                      type: string
- *                  
+ *
  */
 
 /**
@@ -58,14 +72,14 @@ Route.get('/logout', AuthController.logout);
  *      schemas:
  *          ResponseSuccess:
  *              type: object
- *              properties:     
- *                  isSuccess: 
+ *              properties:
+ *                  isSuccess:
  *                      example: true
- *                  message: 
+ *                  message:
  *                      example: Success
- *                  data: 
+ *                  data:
  *                      example: {}
- *          
+ *
  */
 
 /**
@@ -74,12 +88,12 @@ Route.get('/logout', AuthController.logout);
  *      schemas:
  *          ResponseFail:
  *              type: object
- *              properties:     
- *                  isSuccess: 
+ *              properties:
+ *                  isSuccess:
  *                      example: false
- *                  errorCode: 
+ *                  errorCode:
  *                      example: string
- *          
+ *
  */
 
 /**
@@ -89,29 +103,29 @@ Route.get('/logout', AuthController.logout);
  *      summary: return a new user
  *      description: post a new user
  *      tags: [AUTH]
- *      requestBody: 
- *          content: 
+ *      requestBody:
+ *          content:
  *              application/json:
  *                  schema:
  *                      $ref: '#/components/schemas/User'
  *      responses:
  *          '201':
  *              description: create success
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          type: object
- *                          properties:     
- *                              isSuccess: 
+ *                          properties:
+ *                              isSuccess:
  *                                  example: true
- *                              message: 
+ *                              message:
  *                                  example: Created successfully
- *                              data: 
- *                                  example: {}                          
- *                         
+ *                              data:
+ *                                  example: {}
+ *
  *          '400':
  *              description: bad request
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/ResponseFail'
@@ -121,7 +135,7 @@ Route.get('/logout', AuthController.logout);
  * @swagger
  * /auth/resendemail/:
  *  post:
- *      summary: return a verify account 
+ *      summary: return a verify account
  *      description: verify a your account
  *      tags: [AUTH]
  *      requestBody:
@@ -136,13 +150,13 @@ Route.get('/logout', AuthController.logout);
  *      responses:
  *          '200':
  *              description: create success
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/ResponseSuccess'
  *          '400':
  *              description: bad request
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/ResponseFail'
@@ -153,7 +167,7 @@ Route.get('/logout', AuthController.logout);
  * @swagger
  * /auth/verify/:
  *  get:
- *      summary: return verify account 
+ *      summary: return verify account
  *      description: verify a your account
  *      tags: [AUTH]
  *      parameters:
@@ -164,13 +178,13 @@ Route.get('/logout', AuthController.logout);
  *      responses:
  *          '201':
  *              description: create success
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/ResponseSuccess'
  *          '400':
  *              description: bad request
- *              content: 
+ *              content:
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/ResponseFail'
@@ -209,7 +223,7 @@ Route.get('/logout', AuthController.logout);
  *                application/json:
  *                    schema:
  *                        $ref: '#/components/schemas/ResponseFail'
- *              
+ *
  */
 
 /**
@@ -223,7 +237,7 @@ Route.get('/logout', AuthController.logout);
  *      content:
  *        application/json:
  *          schema:
- *            type: object 
+ *            type: object
  *            properties:
  *              "refreshToken":
  *                  type: string
@@ -250,14 +264,14 @@ Route.get('/logout', AuthController.logout);
  *    summary: return message success
  *    description: patch to update user
  *    tags: [AUTH]
- *    security: 
+ *    security:
  *        - bearerAuth: []
  *    requestBody:
  *      content:
  *        application/json:
  *          schema:
- *            type: object 
- *            properties: 
+ *            type: object
+ *            properties:
  *              'oldPW':
  *                  type: string
  *                  example: 12345
@@ -293,7 +307,7 @@ Route.get('/logout', AuthController.logout);
  *      content:
  *        application/json:
  *          schema:
- *            type: object 
+ *            type: object
  *            properties:
  *              "email":
  *                  type: string
@@ -314,39 +328,39 @@ Route.get('/logout', AuthController.logout);
  */
 
 /**
-* @swagger
-* /auth/resetPW/{reset}:
-*  patch:
-*    summary: return a new PW
-*    description: patch to reset PW
-*    tags: [AUTH]
-*    requestBody:
-*      content:
-*        application/json:
-*          schema:
-*            type: object 
-*            properties:
-*              "newPassword":
-*                  type: string
-*              "repeatNewPassword":
-*                  type: string
-*    parameters:
-*      - in: path 
-*        name: reset
-*    responses:
-*        '200':
-*            description: ok
-*            content:
-*                application/json:
-*                    schema:
-*                        $ref: '#/components/schemas/ResponseSuccess'
-*        '400':
-*             description: bad request
-*             content:
-*                application/json:
-*                    schema:
-*                        $ref: '#/components/schemas/ResponseFail' 
-*  
-*/
+ * @swagger
+ * /auth/resetPW/{reset}:
+ *  patch:
+ *    summary: return a new PW
+ *    description: patch to reset PW
+ *    tags: [AUTH]
+ *    requestBody:
+ *      content:
+ *        application/json:
+ *          schema:
+ *            type: object
+ *            properties:
+ *              "newPassword":
+ *                  type: string
+ *              "repeatNewPassword":
+ *                  type: string
+ *    parameters:
+ *      - in: path
+ *        name: reset
+ *    responses:
+ *        '200':
+ *            description: ok
+ *            content:
+ *                application/json:
+ *                    schema:
+ *                        $ref: '#/components/schemas/ResponseSuccess'
+ *        '400':
+ *             description: bad request
+ *             content:
+ *                application/json:
+ *                    schema:
+ *                        $ref: '#/components/schemas/ResponseFail'
+ *
+ */
 
 module.exports = Route;
