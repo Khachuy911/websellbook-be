@@ -128,7 +128,9 @@ module.exports = {
       totalSize: cart.rows.length || 0,
       rows: cart.rows,
       currentUser: req.currentUser,
-      login: req.login
+      login: req.login,
+      user: req.prefixUser,
+
     };
 
     // res.status(HTTP_CODE.SUCCESS).json({

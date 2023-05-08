@@ -91,183 +91,64 @@
     <!-- <div class="container-xl"> -->
 
     <!-- HEAD -->
-    <header
-      class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom"
-    >
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
       <!-- Avatar -->
-      <a
-        href="/product"
-        class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none"
-      >
-        <img
-          class="bi me-2"
-          width="100%"
-          height="50"
-          role="img"
-          aria-label="KhacHuyShop"
-          src="https://source.unsplash.com/random/300x200?sig=${Math.random()}"
-        />
+      <a href="/product" class="d-flex align-items-center col-md-2 mb-2 mb-md-0 text-dark text-decoration-none">
+        <img class="bi me-2" width="100%" height="50" role="img" aria-label="KhacHuyShop" src="/upload/khachuybook.png"/>
       </a>
 
       <!-- Menu -->
-      <ul class="nav col-12 col-md-6 mb-2 justify-content-center mb-md-0">
-        <li>
-          <a
-            href="/product"
-            class="custom-menu-header active nav-link px-2 link-primary"
-            ><svg class="bi d-block mx-auto mb-1" width="18" height="18">
-              <use xlink:href="#home" /></svg
-            >Trang Chủ</a
-          >
-        </li>
-        <li>
-          <div class="dropdown">
-            <span
-              class="custom-menu-header dropdown-toggle nav-link px-2"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <svg class="bi d-block mx-auto mb-1" width="18" height="18">
-                <use xlink:href="#grid" />
-              </svg>
-              Danh Mục
-            </span>
-            <ul class="dropdown-menu">
-              <li>
-                <a
-                  class="custom-dropdown-item dropdown-item"
-                  href="/product/productByCategory?category=Sách kinh doanh"
-                  >Sách kinh doanh</a
-                >
-              </li>
-              <li>
-                <a
-                  class="custom-dropdown-item dropdown-item"
-                  href="/product/productByCategory?category=Sách thiếu nhi"
-                  >Sách thiếu nhi</a
-                >
-              </li>
-              <li>
-                <a
-                  class="custom-dropdown-item dropdown-item"
-                  href="/product/productByCategory?category=Sách tâm lý"
-                  >Sách tâm lý</a
-                >
-              </li>
-              <li>
-                <a
-                  class="custom-dropdown-item dropdown-item"
-                  href="/product/productByCategory?category=Sách giáo dục"
-                  >Sách giáo dục</a
-                >
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li>
-          <a href="/cart" class="custom-menu-header nav-link px-2"
-            ><svg class="bi d-block mx-auto mb-1" width="18" height="18">
-              <use xlink:href="#table" /></svg
-            >Giỏ Hàng</a
-          >
-        </li>
-        <li>
-          <a href="/voucher" class="custom-menu-header nav-link px-2"
-            ><svg class="bi d-block mx-auto mb-1" width="18" height="18">
-              <use xlink:href="#voucher" /></svg
-            >Voucher</a
-          >
-        </li>
-        <li>
-          <a href="/admin/dashboard" class="custom-menu-header nav-link px-2"
-            ><svg class="bi d-block mx-auto mb-1" width="18" height="18">
-              <use xlink:href="#speedometer2" /></svg
-            >Quản Lý</a
-          >
-        </li>
+      <ul class="nav col-12 col-md-4 mb-2 justify-content-center mb-md-0">
+          <li><a href="/product" class="custom-menu-header active nav-link px-2 link-primary"><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#home"/></svg>Trang Chủ</a></li>    
+          <li>
+            <div class="dropdown">
+              <span class="custom-menu-header dropdown-toggle nav-link px-2" data-bs-toggle="dropdown" aria-expanded="false">
+                <svg class="bi d-block mx-auto mb-1" width="18" height="18">
+                  <use xlink:href="#grid"/>
+                </svg>
+                Danh Mục
+              </span>
+              <ul class="dropdown-menu">                
+              </ul>
+            </div>
+            </li>    
+          <li><a href="/cart" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#table"/></svg>Giỏ Hàng</a></li>
+          <li><a href="/voucher" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#voucher"/></svg>Voucher</a></li>
+          
+          <%if(data?.user?.UserRoles[0]?.Role?.name === 'admin'){%>
+          <li><a href="/admin/dashboard" class="custom-menu-header nav-link px-2 "><svg class="bi d-block mx-auto mb-1" width="18" height="18"><use xlink:href="#speedometer2"/></svg>Quản Lý</a></li>
+          <%}%>
       </ul>
 
       <!-- Search -->
-      <form
-        action="/product/search"
-        class="col-12 col-lg-3 mb-3 mb-lg-0 me-lg-3"
-      >
-        <input
-          type="search"
-          name="search"
-          class="form-control"
-          placeholder="Nhập tên sách bạn muốn tìm ?"
-          aria-label="Search"
-        />
+      <form action="/product/search" class="col-9 col-lg-3 mb-3 mb-lg-0 me-lg-3">
+        <input type="search" name="search" class="form-control" placeholder="Nhập tên sách bạn muốn tìm ?" aria-label="Search">
       </form>
 
+      <div class="col-md-2 text-end">
+        <h5 style="font-size: 16px; margin-top: 15px"> <%= data?.user?.email%> </h5>
+      </div>
+      
       <!-- Profile -->
       <div class="col-md-0 text-end">
         <div class="dropdown text-end">
-          <a
-            href="#"
-            class="d-block link-dark text-decoration-none dropdown-toggle"
-            id="dropdownUser1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              src="https://4.bp.blogspot.com/-6elQkFTR8gM/V_YKmIlnp5I/AAAAAAAAEZ8/AS_B3lRU2K4h3pjmV_j-nCMZ8dz5kY2gQCLcB/s200/student-avatar.png"
-              alt="mdo"
-              width="32"
-              height="32"
-              class="rounded-circle"
-            />
-          </a>
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="https://4.bp.blogspot.com/-6elQkFTR8gM/V_YKmIlnp5I/AAAAAAAAEZ8/AS_B3lRU2K4h3pjmV_j-nCMZ8dz5kY2gQCLcB/s200/student-avatar.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          </a>          
           <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
             <% if(data?.login){ %>
-            <li>
-              <a class="custom-dropdown-item dropdown-item" href="#"
-                >Thông Tin</a
-              >
-            </li>
-            <li>
-              <a
-                class="custom-dropdown-item dropdown-item"
-                href="/order/myorder"
-                >Đơn Hàng</a
-              >
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a class="custom-dropdown-item dropdown-item" href="/auth/logout"
-                >Đăng xuất</a
-              >
-            </li>
+              <li><a class="custom-dropdown-item dropdown-item " href="/user/getMe"><i style=" margin-right:5px" class="fa-solid fa-user"></i> Thông Tin cá nhân</a></li>
+              <li><a class="custom-dropdown-item dropdown-item" href="/order/myorder"><i style=" margin-right:5px" class="fa-solid fa-cart-shopping"></i> Đơn Hàng</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="custom-dropdown-item dropdown-item" href="/auth/logout"><i style=" margin-right:5px" class="fa-solid fa-right-from-bracket"></i> Đăng xuất</a></li>
             <%}else{%>
-            <li>
-              <a class="custom-dropdown-item dropdown-item" href="#"
-                >Thông Tin</a
-              >
-            </li>
-            <li>
-              <a
-                class="custom-dropdown-item dropdown-item"
-                href="/order/myorder"
-                >Đơn Hàng</a
-              >
-            </li>
-            <li><hr class="dropdown-divider" /></li>
-            <li>
-              <a
-                class="custom-dropdown-item dropdown-item"
-                href="/auth/views/login"
-                >Đăng Nhập</a
-              >
-            </li>
-            <li>
-              <a
-                class="custom-dropdown-item dropdown-item"
-                href="/auth/views/regester"
-                >Đăng Ký</a
-              >
-            </li>
+              <li><a class="custom-dropdown-item dropdown-item " href="/user/getMe"><i style=" margin-right:5px" class="fa-solid fa-user"></i> Thông Tin cá nhân</a></li>
+              <li><a class="custom-dropdown-item dropdown-item" href="/order/myorder"><i style=" margin-right:5px" class="fa-solid fa-cart-shopping"></i> Đơn Hàng</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/login"><i style=" margin-right:5px" class="fa-solid fa-right-to-bracket"></i> Đăng Nhập</a></li>
+              <li><a class="custom-dropdown-item dropdown-item" href="/auth/views/regester"><i style=" margin-right:5px" class="fa-solid fa-user-plus"></i> Đăng Ký</a></li>
             <%}%>
+
           </ul>
         </div>
       </div>
@@ -854,5 +735,39 @@
       integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
       crossorigin="anonymous"
     ></script>
+    <script>
+      $.ajax({
+          url: `/category`,
+          type: "GET",
+          success: (response) => {
+              let listSelect = response?.data?.rows.map((item, index) => (     
+                `
+                <li><a class="custom-dropdown-item  dropdown-item" href="/product/productByCategory?category=${item.name}">${item.name}</a></li>
+                `
+              ))
+              $('.dropdown-menu')[0].innerHTML =  listSelect.join('')       
+          },
+          error: (data) => {
+              Toastify({
+                  text: data.responseJSON.errorCode,
+                  duration: 2000,
+                  newWindow: true,
+                  //close: true,
+                  offset: {
+                      x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                      y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                  },
+                  gravity: "top", // `top` or `bottom`
+                  position: "right", // `left`, `center` or `right`
+                  stopOnFocus: true, // Prevents dismissing of toast on hover
+                  style: {
+                      background: "linear-gradient(to right, red, red)",
+                      width: "250px",
+                      fontSize: "16px"
+                  },
+              }).showToast();
+          }
+      })
+    </script>
   </body>
 </html>

@@ -79,7 +79,9 @@ module.exports = {
       totalPage: Math.ceil(voucher.count / +pageSize),
       totalSize: voucher.rows.length || 0,
       rows: voucher.rows,
-      login:req.login
+      login:req.login,
+      user: req.prefixUser,
+
     }
 
     if(req.query.api == 1){
