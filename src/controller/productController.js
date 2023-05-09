@@ -171,7 +171,7 @@ module.exports = {
       totalPage: Math.ceil(product.count / +pageSize),
       totalSize: product.rows.length || 0,
       rows: product.rows,
-      login:req.login,
+      login: req.login,
       user: req.prefixUser,
     };
 
@@ -186,6 +186,58 @@ module.exports = {
     // console.log("=====>Product:" + JSON.stringify(product));
 
     res.render("../view/productByCategory.ejs", { data: data });
+  },
+
+  getProductNotFlashsale: async (req, res, next) => {
+    const conditionFlashsale = {
+      where: {
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+      },
+      attributes: ["productId"],
+    };
+    const arrProductId = await FlashSaleProduct.findAll(conditionFlashsale);
+
+    console.log(JSON.stringify(arrProductId));
+
+    const idProduct = arrProductId.map((ele) => ele.productId);
+    console.log(idProduct);
+
+    // res.status(200).json({data: arrProductId})
+
+    const condition = {
+      where: {
+        isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        id: {
+          [Op.notIn]: idProduct,
+        },
+      },
+      attributes: ["id", "name"],
+    };
+
+    const product = await Product.findAndCountAll(condition);
+
+    // const pageSize = req.query.pageSize || process.env.DEFAULT_LIMIT_PAGE;
+    // const data = {
+    //   pageSize,
+    //   pageIndex: req.query.page || process.env.DEFAULT_PAGE,
+    //   totalPage: Math.ceil(product.count / +pageSize),
+    //   totalSize: product.rows.length || 0,
+    //   rows: product.rows,
+    //   login:req.login,
+    //   user: req.prefixUser,
+    // };
+
+    // if (req.query.response === "api") {
+    res.status(HTTP_CODE.SUCCESS).json({
+      isSuccess: true,
+      message: MESSAGE.SUCCESS,
+      data: product,
+    });
+    // }
+
+    // // console.log("=====>Product:" + JSON.stringify(product));
+
+    // res.render("../view/productByCategory.ejs", { data: data });
   },
 
   searchProduct: async (req, res, next) => {
@@ -270,7 +322,7 @@ module.exports = {
     //   message: MESSAGE.SUCCESS,
     //   data: product,
     // });
-    const data = { product:product,login:req.login, user: req.prefixUser}
+    const data = { product: product, login: req.login, user: req.prefixUser };
 
     if (req.query.api == 1) {
       res.status(HTTP_CODE.SUCCESS).json({
@@ -369,8 +421,8 @@ module.exports = {
     const t = await sequelize.transaction();
     try {
       let { ids } = req.body;
-      if(typeof(ids)=="string"){
-        ids=[ids]
+      if (typeof ids == "string") {
+        ids = [ids];
       }
       if (!ids) {
         await t.rollback();

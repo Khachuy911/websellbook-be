@@ -4,8 +4,9 @@ const Route = express.Router();
 const CommentController = require('../controller/commentController');
 const Auth = require('../middleware/authMiddleware');
 const AsyncHandle = require('../middleware/asyncHandle');
+const { DEFAULT_VALUE } = require('../helper/constant');
 
-Route.delete('/deletesoft/:id', Auth.checkToken, AsyncHandle(CommentController.deleteSoft));
+Route.delete('/deletesoft/:id', Auth.checkToken, Auth.permission('/comment/', DEFAULT_VALUE.ADD, DEFAULT_VALUE.EDIT, DEFAULT_VALUE.READ, DEFAULT_VALUE.DELETE), AsyncHandle(CommentController.deleteSoft));
 Route.get('/getCommentByProduct/:id', AsyncHandle(CommentController.getCommentByProduct))
 
 Route.route('/:id')

@@ -9,6 +9,7 @@
   <title>HuyKhac Shop</title>
   <link rel="stylesheet" href="/css/root.css" />
   <link rel="stylesheet" href="/css/dashboard2.css" />
+  <link rel="stylesheet" href="/fonts/css/all.min.css">
   <link rel="stylesheet" href="/css/createProduct.css" />
   <!-- datatable -->
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
@@ -387,26 +388,26 @@
     else if (statusOrder == 0) {
       const dataCancel = button.attr("data-cancel")
       if (dataCancel) {
-        $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không?")
+        $("#modal-xacnhan").html("Bạn có muốn huỷ bỏ đơn hàng này hay không ?")
         urlOrder = "cancel"
         type = "DELETE"
       }
       else {
-        $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không?")
+        $("#modal-xacnhan").html("Bạn có muốn xác nhận đơn hàng này hay không ?")
         urlOrder = "confirm"
       }
     }
     else if (statusOrder == 1) {
-      $("#modal-xacnhan").html("Bạn có muốn ship đơn hàng này hay không?")
+      $("#modal-xacnhan").html("Bạn muốn cập nhật trạng thái cho đơn hàng này ?")
       urlOrder = "shipping"
     }
     else if (statusOrder == 2) {
       urlOrder = "delivere"
-      $("#modal-xacnhan").html("Bạn có muốn giao đơn hàng này hay không?")
+      $("#modal-xacnhan").html("Bạn muốn cập nhật trạng thái cho đơn hàng này ?")
     }
     else if (statusOrder == 3) {
       urlOrder = "done"
-      $("#modal-xacnhan").html("Bạn có muốn giao đơn hàng này hay không?")
+      $("#modal-xacnhan").html("Bạn muốn cập nhật trạng thái cho đơn hàng này ?")
     }
   })
 

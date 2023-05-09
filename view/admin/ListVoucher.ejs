@@ -9,7 +9,8 @@
     <title>HuyKhac Shop</title>
     <link rel="stylesheet" href="/css/root.css">
     <link rel="stylesheet" href="/css/dashboard2.css">
-    <link rel="stylesheet" href="/css/createProduct.css">
+  <link rel="stylesheet" href="/fonts/css/all.min.css">
+  <link rel="stylesheet" href="/css/createProduct.css">
     <!-- datatable -->
     <link rel="stylesheet" type="text/css"
         href="https://cdn.datatables.net/v/dt/dt-1.12.1/rg-1.2.0/datatables.min.css" />
@@ -311,7 +312,7 @@
         },
         error: (data) => {
             Toastify({
-                text: data.responseJSON.errorCode,
+                text: data?.responseJSON?.errorCode,
                 duration: 2000,
                 newWindow: true,
                 //close: true,
@@ -369,7 +370,7 @@
             },
             error: (data) => {
                 Toastify({
-                    text: "Xoá không thành công",
+                    text: data?.responseJSON?.errorCode || "Xoá không thành công",
                     duration: 2000,
                     newWindow: true,
                     //close: true,
@@ -441,7 +442,7 @@
             },
             error: (data) => {
                 Toastify({
-                    text: "Cập nhật không thành công",
+                    text: data?.responseJSON?.errorCode || "Cập nhật không thành công",
                     duration: 2000,
                     newWindow: true,
                     //close: true,
@@ -500,7 +501,7 @@
             },
             error: (data) => {
                 Toastify({
-                    text: data.responseJSON.errorCode,
+                    text: data?.responseJSON?.errorCode,
                     duration: 2000,
                     newWindow: true,
                     //close: true,

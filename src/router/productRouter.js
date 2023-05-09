@@ -27,6 +27,10 @@ Route.route("/productBycategory").get(
   AsyncHandle(ProductController.getProductByCategory)
 );
 
+Route.route("/getProductNotFlashsale").get(
+  AsyncHandle(ProductController.getProductNotFlashsale)
+);
+
 Route.route("/search").get(AsyncHandle(ProductController.searchProduct));
 
 Route.route("/:id")
