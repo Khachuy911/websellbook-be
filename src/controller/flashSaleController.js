@@ -6,7 +6,7 @@ const FlashSaleProduct = require("../model/flashSaleProductModel");
 const ErrorResponse = require("../helper/errorResponse");
 const { getPagination, getSort, search } = require("../helper/helper");
 const { DEFAULT_VALUE, MESSAGE, HTTP_CODE } = require("../helper/constant");
-const { Op } = require('sequelize');
+const { Op } = require("sequelize");
 
 const Product = require("../model/productModel");
 
@@ -14,16 +14,10 @@ module.exports = {
   create: async (req, res, next) => {
     const t = await sequelize.transaction();
     try {
-      let {
-        name,
-        startDate,
-        endDate,
-        description,
-        discountAmount,
-        productId,
-      } = req.body;
-      if(typeof(req.body.productId)=="string"){
-        productId = [productId]
+      let { name, startDate, endDate, description, discountAmount, productId } =
+        req.body;
+      if (typeof req.body.productId == "string") {
+        productId = [productId];
       }
       if (
         !name ||
@@ -90,6 +84,9 @@ module.exports = {
       },
       include: {
         model: FlashSaleProduct,
+        include: {
+          model: Product,
+        },
       },
       ...getPagination(req.query.page),
       ...getSort(req.query.title, req.query.type),

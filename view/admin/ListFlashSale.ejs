@@ -280,7 +280,7 @@
 
 <script>
     $.ajax({
-        url: `/product?api=1`,
+        url: `/product/getProductNotFlashsale`,
         type: "GET",
         success: (response) => {
             let listSelect = response?.data?.rows.map((item, index) => (`
@@ -318,7 +318,6 @@
         success: (response) => {
             console.log(response)
             let listSelect = response?.data?.rows.map((item, index) => {
-
 
                 return `
                     <tr data-id="${item.id}">
