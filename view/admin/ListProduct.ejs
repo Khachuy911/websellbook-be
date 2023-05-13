@@ -427,6 +427,7 @@
             $("#quantity").val(data.quantity);
             $("#description").val(data.description);
             $(".btn-PATCH-update").attr("data-id", idUpdate);
+            $("#categoryId").val(data.categoryId)
           },
           error: (data) => {
             console.log(data);
@@ -456,7 +457,9 @@
       },
     });
 
-    $("#HandleSubmitForm").submit((e) => {
+  });
+
+  $("#HandleSubmitForm").submit((e) => {
       e.preventDefault();
       const id = $(".btn-PATCH-update").data("id");
       let form = document.getElementById("HandleSubmitForm");
@@ -514,7 +517,7 @@
         },
       });
     });
-  });
+  
 </script>
 
 
