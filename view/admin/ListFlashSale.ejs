@@ -463,18 +463,16 @@
     $("#exampleModalUpdate").on('show.bs.modal', function (event) {
         const button = $(event.relatedTarget)
         updateId = button.data("id")
-
         const element = $(`tr[data-id="${updateId}"]`).children()
         $("#nameVoucher").val(element[1].innerText)
-        $("#discountAmount").val(element[3].getAttribute("data-discount"))
         $("#description").val(element[2].innerText)
-
-        $("#quantity").val(element[3].innerText)
-        let datetimeValue = element[4].innerText.replace(" ", "T");
+        
+        $("#discountAmount").val(element[4].getAttribute("data-discount"))
+        let datetimeValue = element[5].innerText.replace(" ", "T");
         datetimeValue = datetimeValue.slice(0, -3);
         $("#expireDate").val(datetimeValue)
 
-        let datetimeValue2 = element[5].innerText.replace(" ", "T");
+        let datetimeValue2 = element[6].innerText.replace(" ", "T");
         datetimeValue2 = datetimeValue2.slice(0, -3);
         $("#expireDate2").val(datetimeValue2)
     })
