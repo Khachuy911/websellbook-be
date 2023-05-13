@@ -403,6 +403,7 @@
   $("#exampleModalUpdate").on("show.bs.modal", function (event) {
     const button = $(event.relatedTarget);
     idUpdate = button.data("id");
+    console.log("vao day")
   });
   $(document).on("click", ".btn-update", function (e) {
     $.ajax({
@@ -425,7 +426,7 @@
             $("#weight").val(data.weight);
             $("#quantity").val(data.quantity);
             $("#description").val(data.description);
-            $(".btn-PATCH-update").attr("data-id", id);
+            $(".btn-PATCH-update").attr("data-id", idUpdate);
           },
           error: (data) => {
             console.log(data);
