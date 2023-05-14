@@ -366,6 +366,9 @@ module.exports = {
         transaction: t,
       };
 
+      const product = await Product.findOne(condition);
+      const duSoLuongSach = product.quantity - product.quantityDisplay;
+
       const data = {
         name,
         barCode,
@@ -373,6 +376,7 @@ module.exports = {
         priceSelling,
         weight,
         quantity,
+        quantityDisplay: +quantity - duSoLuongSach,
         description,
         createdBy: req.user,
         updateBy: req.user,

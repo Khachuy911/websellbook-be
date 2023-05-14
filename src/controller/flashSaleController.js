@@ -148,14 +148,8 @@ module.exports = {
         );
       }
 
-      const {
-        name,
-        startDate,
-        endDate,
-        description,
-        discountAmount,
-        productId,
-      } = req.body;
+      let { name, startDate, endDate, description, discountAmount, productId } =
+        req.body;
 
       if (+discountAmount < 0) {
         await t.rollback();
@@ -169,6 +163,7 @@ module.exports = {
         description,
         startDate,
         endDate,
+        discountAmount: +discountAmount,
         createdBy: req.user,
         updateBy: req.user,
       };
@@ -182,8 +177,19 @@ module.exports = {
       };
 
       await FlashSale.update(data, condition);
+      const conditionFlashsaleProduct = {
+        where: {
+          flashSaleId: id,
+          isDeleted: DEFAULT_VALUE.IS_NOT_DELETED,
+        },
+        transaction: t,
+      };
+      await FlashSaleProduct.update(data, conditionFlashsaleProduct);
 
       if (productId) {
+        if (typeof productId == "string") {
+          productId = [productId];
+        }
         const condition2 = {
           where: {
             flashSaleId: id,

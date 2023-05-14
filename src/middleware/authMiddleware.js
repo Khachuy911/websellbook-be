@@ -28,6 +28,9 @@ module.exports.checkToken = async (req, res, next) => {
         id: decode.id,
         status: 1,
       },
+      include: {
+        model: UserRole,
+      },
     };
     const user = await User.findOne(condition);
 
@@ -108,28 +111,28 @@ module.exports.checkLogin = async (req, res, next) => {
     }
     let login = true;
     if (!token) {
-      login= false;  
+      login = false;
     }
-    req.login= login; 
+    req.login = login;
 
-    if(token){
+    if (token) {
       const decode = jwt.verify(token, process.env.JWT_SECRET_KEY);
-  
+
       const condition = {
         where: {
           id: decode.id,
           status: 1,
         },
-        include:{
+        include: {
           model: UserRole,
           require: false,
           include: {
             model: Role,
-            require: false
-          }
-        }
+            require: false,
+          },
+        },
       };
-      const user = await User.findOne(condition); 
+      const user = await User.findOne(condition);
       req.prefixUser = user;
     }
     next();

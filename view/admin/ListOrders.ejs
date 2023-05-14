@@ -196,17 +196,17 @@
           <button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-warning"style="width: 110px;">Giao hàng</button> 
           <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>
                 `;
-          color = 'text-warning'
+          color = 'text-info'
 
         } else if (statusCode === 2) {
           status = "Đang giao hàng";
           td = `<button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-warning"style="width: 110px;">Đã giao</button> 
           <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;
-          color = 'text-warning'
+          color = 'text-info'
 
         } else if (statusCode === 3) {
           status = "Đã giao";
-          color = 'text-warning'
+          color = 'text-info'
           td = ` 
           <button type="button" data-id="${item.id}" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-primary"style="width: 110px;">Hoàn thành</button>
           <button type="button" data-id="${item.id}" data-bs-toggle="modal" data-In = "true" data-statusCode="${statusCode}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="mt-1 btn btn-success"style="width: 110px;">In hoá đơn</button>`;

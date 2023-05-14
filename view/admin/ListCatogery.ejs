@@ -386,7 +386,7 @@
       },
       error: (data) => {
         Toastify({
-          text: data.responseJSON.errorCode,
+          text: data.responseJSON.errorCode || "Xoá thất bại",
           duration: 2000,
           newWindow: true,
           //close: true,

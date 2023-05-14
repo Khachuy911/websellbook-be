@@ -592,6 +592,28 @@
               type: 'POST',
               data: {productId: productId, quantity: quantity},              
               success: function (data) {
+                if(data.length >= 1000){
+                  Toastify({
+                      text: 'Bạn cần đăng nhập trước khi nhận xét !',
+                      duration: 2000,
+                      destination: "http://localhost:3000/",
+                      newWindow: true,
+                      //close: true,
+                      offset: {
+                          x: 50, // horizontal axis - can be a number or a string indicating unity. eg: '2em'
+                          y: 10 // vertical axis - can be a number or a string indicating unity. eg: '2em'
+                      },
+                      gravity: "top", // `top` or `bottom`
+                      position: "right", // `left`, `center` or `right`
+                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      style: {
+                          background: "linear-gradient(to right, red, red)",
+                          width: "250px",
+                          fontSize: "16px"
+                      },
+                      onClick: function () { } // Callback after click
+                  }).showToast();
+                  }else{
                   Toastify({
                       text: 'Thêm sản phẩm thành công',
                       duration: 2000,
@@ -612,6 +634,7 @@
                       },
                       onClick: function () { } // Callback after click
                   }).showToast();
+                  }
                   setTimeout(() => {
                         window.location.href = "/cart";
                     }, "1000")

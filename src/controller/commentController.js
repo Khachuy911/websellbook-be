@@ -234,7 +234,7 @@ module.exports = {
 
       if (
         comment?.userId !== req.user &&
-        comment.User.UserRoles[0].roleId ===
+        req.currentUser.UserRoles[0].roleId ===
           "df7ccac8-7500-4695-b55d-0c4949cce586"
       ) {
         return next(

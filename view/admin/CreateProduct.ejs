@@ -231,6 +231,9 @@
             },
             onClick: function () { }, // Callback after click
           }).showToast();
+          setTimeout(()=>{
+            location.reload();
+          }, 500)
         },
         error: function (data) {
           Toastify({
