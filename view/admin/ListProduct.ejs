@@ -79,6 +79,7 @@
               <th>Tên sách</th>
               <th>Mô tả</th>
               <th>Ảnh</th>
+              <th>Số lượng bán</th>
               <th>Số lượng</th>
               <th>Giá nhập</th>
               <th>Giá bán</th>
@@ -139,6 +140,9 @@
                 <div class="" style="min-height: 40px; margin: 10px 20px">
                   <label for="weight">Số trang<strong style="color: red">*</strong></label>
                 </div>
+                <div class="" style="min-height: 40px; margin: 10px 20px">
+                  <label for="author">Tác giả<strong style="color: red">*</strong></label>
+                </div>
                 <div class="" style="min-height: 40px; margin: 20px 20px">
                   <label for="quantity">Số lượng<strong style="color: red">*</strong></label>
                 </div>
@@ -169,6 +173,9 @@
                 </div>
                 <div class="" style="min-height: 40px; margin: 12px 0">
                   <input type="number" id="weight" name="weight" min="0" step="0.01" required />
+                </div>
+                <div class="" style="min-height: 40px; margin: 12px 0">
+                  <input type="text" id="author" name="author" required />
                 </div>
                 <div class="" style="min-height: 40px; margin: 12px 0">
                   <input type="number" id="quantity" name="quantity" min="0" required />
@@ -258,6 +265,7 @@
           )}' style="width:100px" alt="${item.name
           }"/></td>
                                     <td>${item.quantity}</td>
+                                    <td>${item.quantityDisplay}</td>
                                     <td data-priceImport=${item.priceImport}>${item.priceImport.toLocaleString()}đ</td>
                                     <td data-priceSelling="${item.priceSelling}">${item.priceSelling.toLocaleString()}đ</td>
                                     <td>${item.Category.name}</td>
@@ -403,7 +411,6 @@
   $("#exampleModalUpdate").on("show.bs.modal", function (event) {
     const button = $(event.relatedTarget);
     idUpdate = button.data("id");
-    console.log("vao day")
   });
   $(document).on("click", ".btn-update", function (e) {
     $.ajax({
@@ -424,6 +431,7 @@
             $("#priceImport").val(data.priceImport);
             $("#priceSelling").val(data.priceSelling);
             $("#weight").val(data.weight);
+            $("#author").val(data.author);
             $("#quantity").val(data.quantity);
             $("#description").val(data.description);
             $(".btn-PATCH-update").attr("data-id", idUpdate);

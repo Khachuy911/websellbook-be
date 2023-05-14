@@ -24,6 +24,7 @@ module.exports = {
         priceSelling,
         weight,
         quantity,
+        author,
         description,
         categoryId,
       } = req.body;
@@ -32,6 +33,7 @@ module.exports = {
         !barCode ||
         !priceImport ||
         !priceSelling ||
+        !author ||
         !weight ||
         !quantity ||
         !description
@@ -50,6 +52,7 @@ module.exports = {
         priceImport,
         priceSelling,
         weight,
+        author,
         quantity,
         quantityDisplay: quantity,
         description,
@@ -353,6 +356,7 @@ module.exports = {
         priceImport,
         priceSelling,
         weight,
+        author,
         quantity,
         description,
         categoryId,
@@ -375,6 +379,7 @@ module.exports = {
         priceImport,
         priceSelling,
         weight,
+        author,
         quantity,
         quantityDisplay: +quantity - duSoLuongSach,
         description,
