@@ -25,6 +25,10 @@ FlashSale.init({
   endDate: {
     type: DataTypes.DATE
   },
+  isActive: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
   isDeleted: {
     type: DataTypes.INTEGER,
     defaultValue: DEFAULT_VALUE.IS_NOT_DELETED

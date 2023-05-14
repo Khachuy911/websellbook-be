@@ -43,7 +43,7 @@ app.set("view engine", "ejs");
 
 // cronjob
 // run cron job send mail before 15' flash sale
-// task.start();
+task.start();
 // cron job FLASHSALE AND VOUCHER
 // task2.start();
 

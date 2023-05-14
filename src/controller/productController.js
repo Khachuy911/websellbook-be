@@ -103,7 +103,7 @@ module.exports = {
         { model: Comment },
         {
           model: FlashSaleProduct,
-          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED, isActive: 1 },
           required: false,
         },
       ],
@@ -156,7 +156,7 @@ module.exports = {
         },
         {
           model: FlashSaleProduct,
-          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED, isActive: 1 },
           required: false,
         },
       ],
@@ -255,7 +255,7 @@ module.exports = {
         { model: ProductImage },
         {
           model: FlashSaleProduct,
-          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED, isActive: 1 },
           required: false,
         },
       ],
@@ -308,12 +308,12 @@ module.exports = {
         },
         {
           model: FlashSaleProduct,
-          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+          where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED, isActive: 1 },
           required: false,
           include: {
             model: FlashSale,
             required: false,
-            where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+            where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED, isActive: 1 },
           },
         },
       ],

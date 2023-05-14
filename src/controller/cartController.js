@@ -102,7 +102,7 @@ module.exports = {
           // attributes: ["id","name", "author", "priceSelling"],
           include: {
             model: FlashSaleProduct,
-            where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED },
+            where: { isDeleted: DEFAULT_VALUE.IS_NOT_DELETED, isActive: 1 },
             required: false,
             attributes: ["discountAmount"],
           },

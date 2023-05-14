@@ -21,6 +21,10 @@ FlashSaleProduct.init({
       min: 0
     }
   },
+  isActive: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
   isDeleted: {
     type: DataTypes.INTEGER,
     defaultValue: DEFAULT_VALUE.IS_NOT_DELETED
