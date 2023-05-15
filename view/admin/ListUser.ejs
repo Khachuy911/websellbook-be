@@ -80,6 +80,7 @@
               <th>Email</th>
               <th>Số điện thoại</th>
               <th style="max-width: 120px;">Địa chỉ</th>
+              <th>Xác thực</th>
               <th>Role</th>
               <th>Thao tác</th>
             </tr>
@@ -179,6 +180,10 @@
           if(item.UserRoles[0].Role.name=="admin"){
             disabled = "disabled"
           }
+          let disabledVerify;
+          if(item.status === 0){
+            disabledVerify = "disabled"
+          }
           return `<tr>
                                     <td style="text-align:center">${index + 1
             }</td>
@@ -187,10 +192,11 @@
             <td>${item.email}</td>
                                     <td>${item.phone}</td>
                                     <td>${item.address}</td>
+                                    <td>${item.status === 0 ? "Chưa xác thực" : "Đã xác thực"}</td>
 
                                     <td>${item.UserRoles[0].Role.name}</td>
                                     <td style="max-width:120px;text-align:center">
-                                        <button type="button" style="width:120px" data-id="${item.id}" ${disabled} data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn btn-primary">Phân quyền</button>                                    
+                                        <button type="button" style="width:120px" data-id="${item.id}" ${disabled} ${disabledVerify} data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn btn-primary">Phân quyền</button>                                    
                                         <button type="button" style="width:120px;margin-top:4px" data-id="${item.id}" ${disabled} data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá ngay</button>
                                     </td>
                                 </tr>`

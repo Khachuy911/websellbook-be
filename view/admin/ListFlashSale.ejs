@@ -323,6 +323,7 @@
             let listPorduct =  item?.FlashSaleProducts.map((product, index) => {
                 return `<p style="margin-bottom:4px">+ ${product?.Product?.name}</p>`
             })
+            let disable = item.isActive === 2 ? "disabled" : "enabled"
                 return `
                     <tr data-id="${item.id}">
                         <td style="text-align:center">${index + 1}</td>
@@ -332,9 +333,9 @@
                         <td data-discount="${item.FlashSaleProducts[0].discountAmount}">${item.FlashSaleProducts[0].discountAmount.toLocaleString()}đ</td>
                         <td>${item.startDate}</td>
                         <td>${item.endDate}</td>
-                        <td>${item.isActive === 1 ? "Đang diễn ra" : "Đã diễn ra/ Chưa diễn ra"}</td>                        
+                        <td>${item.isActive === 1 ? "Đang diễn ra" : item.isActive === 2 ? "Đã diễn ra" : "Chưa diễn ra"}</td>                        
                         <td style="max-width:120px;text-align:center">
-                            <button style="width:100px" type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn  btn-update btn-primary">Cập nhật</button>
+                            <button style="width:100px" type="button" data-id="${item.id}" ${disable} data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn  btn-update btn-primary">Cập nhật</button>
                             <button style="width:100px;margin-top:4px" type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
                         </td>
                     </tr>

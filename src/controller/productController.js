@@ -272,6 +272,8 @@ module.exports = {
       totalPage: Math.ceil(product.count / +pageSize),
       totalSize: product.rows.length || 0,
       rows: product.rows,
+      login: req.login,
+      user: req.prefixUser,
     };
 
     // res.status(HTTP_CODE.SUCCESS).json({
