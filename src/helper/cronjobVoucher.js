@@ -29,6 +29,11 @@ var task = cron.schedule(
       isDeleted: DEFAULT_VALUE.IS_DELETED,
     };
 
+    const dataFlashsale = {
+      isDeleted: DEFAULT_VALUE.IS_DELETED,
+      isActive: 2,
+    };
+
     if (flashSale.length > 0) {
       const arrIdFlashSale = flashSale.map((ele) => {
         return (ele = ele.id);
@@ -41,7 +46,7 @@ var task = cron.schedule(
         },
       };
 
-      await FlashSale.update(data, condition2);
+      await FlashSale.update(dataFlashsale, condition2);
 
       const condition3 = {
         where: {
@@ -50,7 +55,7 @@ var task = cron.schedule(
         },
       };
 
-      await FlashSaleProduct.update(data, condition3);
+      await FlashSaleProduct.update(dataFlashsale, condition3);
     }
 
     // PROCESS VOUCHER

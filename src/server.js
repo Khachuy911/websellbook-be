@@ -45,7 +45,7 @@ app.set("view engine", "ejs");
 // run cron job send mail before 15' flash sale
 task.start();
 // cron job FLASHSALE AND VOUCHER
-// task2.start();
+task2.start();
 
 app.set("views", path.join(__dirname, "../view"));
 const methodOverride = require("method-override");

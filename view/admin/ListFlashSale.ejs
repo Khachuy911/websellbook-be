@@ -90,6 +90,7 @@
                             <th>Chiết khấu</th>
                             <th>Ngày bắt đầu</th>
                             <th>Ngày hết hạn</th>
+                            <th>Trạng thái</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -320,7 +321,7 @@
             console.log(response)
             let listSelect = response?.data?.rows.map((item, index) => {
             let listPorduct =  item?.FlashSaleProducts.map((product, index) => {
-                return `<p style="margin-bottom:4px">${product?.Product?.name}</p>`
+                return `<p style="margin-bottom:4px">+ ${product?.Product?.name}</p>`
             })
                 return `
                     <tr data-id="${item.id}">
@@ -331,6 +332,7 @@
                         <td data-discount="${item.FlashSaleProducts[0].discountAmount}">${item.FlashSaleProducts[0].discountAmount.toLocaleString()}đ</td>
                         <td>${item.startDate}</td>
                         <td>${item.endDate}</td>
+                        <td>${item.isActive === 1 ? "Đang diễn ra" : "Đã diễn ra/ Chưa diễn ra"}</td>                        
                         <td style="max-width:120px;text-align:center">
                             <button style="width:100px" type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalUpdate" class="btn  btn-update btn-primary">Cập nhật</button>
                             <button style="width:100px;margin-top:4px" type="button" data-id="${item.id}" data-bs-toggle="modal" data-bs-target="#exampleModalDelete" class="btn btn-delete btn-danger">Xoá</button>
