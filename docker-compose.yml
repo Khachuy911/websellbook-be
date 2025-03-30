@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mydb
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 123456789
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  nodejs:
+    image: node:18
+    container_name: nodejs_server
+    restart: always
+    depends_on:
+      - mysql
+    working_dir: /app
+    volumes:
+      - ./nodejs:/app
+    environment:
+      DB_HOST: mysql
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_NAME: mydb
+    ports:
+      - "3000:3000"
+    command: ["node", "server.js"]
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx_proxy
+    restart: always
+    depends_on:
+      - nodejs
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+
+volumes:
+  mysql_data:
