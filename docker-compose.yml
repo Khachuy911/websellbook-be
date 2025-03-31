@@ -23,15 +23,10 @@ services:
       - mysql
     working_dir: /app
     volumes:
-      - ./nodejs:/app
-    environment:
-      DB_HOST: mysql
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_NAME: mydb
+      - .:/app
     ports:
       - "3000:3000"
-    command: ["node", "server.js"]
+    command: ["npm", "start"]
 
   nginx:
     image: nginx:latest
@@ -42,7 +37,7 @@ services:
     ports:
       - "80:80"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
 volumes:
   mysql_data:
