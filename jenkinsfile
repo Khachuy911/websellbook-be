@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = '0981987832/wsb'
         IMAGE_TAG  = 'latest'
-        COMPOSE_DIR = '/home/ubuntu/workspace/websellbook-be'
+        COMPOSE_DIR = '/home/ubuntu/workspace/build-wsb-ec2'
     }
 
     stages {
