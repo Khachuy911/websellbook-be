@@ -15,6 +15,8 @@ const sequelize = new Sequelize(
     collate: 'utf8_general_ci',
     timezone: '+07:00'
   });
+// Test the connection
+// sequelize.sync({ force: true }) // Use this line to drop and recreate the database schema
 
 (async () => {
   try {
