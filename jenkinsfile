@@ -1,5 +1,5 @@
 pipeline {
-    agent WinAgent
+    agent { label 'WinAgent' }
 
     environment {
         IMAGE_NAME = '0981987832/wsb'
