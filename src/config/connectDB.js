@@ -15,7 +15,6 @@ const sequelize = new Sequelize(
     collate: 'utf8_general_ci',
     timezone: '+07:00'
   });
-// Test the connection
 
 (async () => {
   try {
