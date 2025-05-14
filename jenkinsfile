@@ -1,0 +1,49 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = '0981987832/wsb'
+        IMAGE_TAG  = 'latest'
+    }
+
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git branch: 'develop', url: 'https://github.com/Khachuy911/websellbook-be.git'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            steps {
+                script {
+                    withDockerRegistry([credentialsId: 'docker-hub-credentials-id', url: '']) {
+                        sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to EC2') {
+            steps {
+                sshagent (credentials: ['ssh-ec2-credentials-id']) {
+                    sh """
+                        ssh -o StrictHostKeyChecking=no ec2-user@your-ec2-ip << EOF
+                            docker pull ${IMAGE_NAME}:${IMAGE_TAG}
+                            docker stop your-nodejs-app || true
+                            docker rm your-nodejs-app || true
+                            docker run -d --name your-nodejs-app -p 3000:3000 ${IMAGE_NAME}:${IMAGE_TAG}
+                        EOF
+                    """
+                }
+            }
+        }
+    }
+}
