@@ -16,7 +16,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
+                    bat "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
         }
@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry([credentialsId: 'docker-hub-credentials-id', url: '']) {
-                        sh "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
+                        bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
             }
@@ -34,7 +34,7 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 sshagent (credentials: ['ssh-ec2-credentials-id']) {
-                    sh """
+                    bat """
                         ssh -o StrictHostKeyChecking=no ec2-user@your-ec2-ip << EOF
                             docker pull ${IMAGE_NAME}:${IMAGE_TAG}
                             docker stop your-nodejs-app || true
