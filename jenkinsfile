@@ -4,6 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = '0981987832/wsb'
         IMAGE_TAG  = 'latest'
+        COMPOSE_DIR = '/home/ubuntu/workspace/websellbook-be'
     }
 
     stages {
@@ -33,13 +34,12 @@ pipeline {
 
         stage('Deploy to EC2') {
             steps {
-                sshagent (credentials: ['ssh-ec2-credentials-id']) {
+                sshagent (credentials: ['ssh-ec2']) {
                     bat """
-                        ssh -o StrictHostKeyChecking=no ec2-user@your-ec2-ip << EOF
-                            docker pull ${IMAGE_NAME}:${IMAGE_TAG}
-                            docker stop your-nodejs-app || true
-                            docker rm your-nodejs-app || true
-                            docker run -d --name your-nodejs-app -p 3000:3000 ${IMAGE_NAME}:${IMAGE_TAG}
+                        ssh -o StrictHostKeyChecking=no ubuntu@52.63.107.219 << EOF
+                            cd ${COMPOSE_DIR}
+                            docker-compose pull
+                            docker-compose up -d --force-recreate
                         EOF
                     """
                 }
